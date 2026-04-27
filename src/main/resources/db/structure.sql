@@ -23,8 +23,6 @@ CREATE TABLE usuarios (
     password VARCHAR(255) NOT NULL,
     nombre_completo VARCHAR(100) NOT NULL,
     registro_academico VARCHAR(20) UNIQUE,
-    biografia TEXT,
-    foto_perfil_url VARCHAR(255),
     id_rol INTEGER NOT NULL,
     id_carrera INTEGER,
     enabled BOOLEAN DEFAULT TRUE,

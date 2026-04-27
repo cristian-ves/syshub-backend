@@ -2,15 +2,15 @@ package com.syshub.modules.identity.dtos;
 
 import lombok.*;
 
-import java.util.UUID;
-
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserResponseDTO {
-    private UUID id;
+public class RegisterRequestDTO {
     private String username;
     private String email;
+    private String password;
     private String nombreCompleto;
-    private String role;
+    private String registroAcademico;
+    private Integer idCarrera;
 }

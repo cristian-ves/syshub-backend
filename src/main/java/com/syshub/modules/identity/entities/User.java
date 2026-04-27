@@ -39,11 +39,6 @@ public class User implements UserDetails{
     @Column(name = "registro_academico", unique = true)
     private String registroAcademico;
 
-    private String biografia;
-
-    @Column(name = "foto_perfil_url")
-    private String fotoPerfilUrl;
-
     private boolean enabled = true;
 
     @Column(name = "created_at", insertable = false, updatable = false)
