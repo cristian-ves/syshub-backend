@@ -103,7 +103,7 @@ public class AuthServiceImpl implements IAuthService {
 
         String resetToken = jwtService.generateResetToken(user);
 
-        emailService.sendPasswordResetEmail(user.getEmail(), resetToken);
+        emailService.sendPasswordResetEmail(user.getEmail(), user.getUsername(), resetToken);
     }
 
 
