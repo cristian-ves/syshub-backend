@@ -72,6 +72,10 @@ public class AuthServiceImpl implements IAuthService {
             throw new AppException("El correo electrónico ya está registrado", HttpStatus.CONFLICT);
         }
 
+        if (userRepository.existsByRegistroAcademico(request.getRegistroAcademico())) {
+            throw new AppException("El número de carné ya está registrado", HttpStatus.CONFLICT);
+        }
+
         Role userRole = roleRepository.findByNombre("ROLE_ESTUDIANTE")
                 .orElseThrow(() -> new RuntimeException("Error: Rol no encontrado."));
         Carrera carrera = carreraRepository.findById(request.getIdCarrera())
