@@ -2,10 +2,10 @@ package com.syshub.modules.identity.services.impl;
 
 import com.syshub.core.exceptions.AppException;
 import com.syshub.core.security.JwtService;
+import com.syshub.core.services.EmailService;
 import com.syshub.modules.identity.dtos.AuthRequestDTO;
 import com.syshub.modules.identity.dtos.AuthResponseDTO;
 import com.syshub.modules.identity.dtos.RegisterRequestDTO;
-import com.syshub.modules.identity.dtos.UserResponseDTO;
 import com.syshub.modules.identity.entities.Carrera;
 import com.syshub.modules.identity.entities.Role;
 import com.syshub.modules.identity.entities.User;
@@ -36,6 +36,7 @@ public class AuthServiceImpl implements IAuthService {
     private final UserMapper userMapper;
     private final AuthenticationManager authenticationManager;
     private final JwtService jwtService;
+    private final EmailService emailService;
 
     @Override
     public AuthResponseDTO login(AuthRequestDTO request) {
@@ -55,7 +56,7 @@ public class AuthServiceImpl implements IAuthService {
                 .orElseThrow(() -> new AppException("El usuario no existe", HttpStatus.NOT_FOUND));
 
 
-        String jwtToken = jwtService.generateToken(user);
+        String jwtToken = jwtService.generateAccessToken(user);
 
         return userMapper.toAuthResponseDTO(user, jwtToken);
     }
@@ -77,9 +78,10 @@ public class AuthServiceImpl implements IAuthService {
         }
 
         Role userRole = roleRepository.findByNombre("ROLE_ESTUDIANTE")
-                .orElseThrow(() -> new RuntimeException("Error: Rol no encontrado."));
+                .orElseThrow(() -> new AppException("Error: El rol 'ROLE_ESTUDIANTE' no existe en la base de datos.", HttpStatus.INTERNAL_SERVER_ERROR));
+
         Carrera carrera = carreraRepository.findById(request.getIdCarrera())
-                .orElseThrow(() -> new RuntimeException("Error: Carrera no encontrada."));
+                .orElseThrow(() -> new AppException("La carrera seleccionada no es válida o no existe.", HttpStatus.NOT_FOUND));
 
         User user = userMapper.toEntity(request);
 
@@ -89,9 +91,31 @@ public class AuthServiceImpl implements IAuthService {
         user.setEnabled(true);
 
         userRepository.save(user);
-        String token = jwtService.generateToken(user);
+        String token = jwtService.generateAccessToken(user);
 
         return userMapper.toAuthResponseDTO(user, token);
+    }
+
+    @Override
+    public void forgotPassword(String email) {
+        var user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new AppException("No existe un usuario con ese correo", HttpStatus.NOT_FOUND));
+
+        String resetToken = jwtService.generateResetToken(user);
+
+        emailService.sendPasswordResetEmail(user.getEmail(), resetToken);
+    }
+
+
+    @Override
+    public void resetPassword(String token, String newPassword) {
+        String username = jwtService.extractUsername(token);
+
+        var user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new AppException("El usuario asociado al token no existe.", HttpStatus.NOT_FOUND));
+
+        user.setPassword(passwordEncoder.encode(newPassword));
+        userRepository.save(user);
     }
 
 }

@@ -2,7 +2,6 @@ package com.syshub.modules.identity.mappers;
 
 import com.syshub.modules.identity.dtos.AuthResponseDTO;
 import com.syshub.modules.identity.dtos.RegisterRequestDTO;
-import com.syshub.modules.identity.dtos.UserResponseDTO;
 import com.syshub.modules.identity.entities.User;
 import org.springframework.stereotype.Component;
 
@@ -18,18 +17,6 @@ public class UserMapper {
         user.setNombreCompleto(dto.getNombreCompleto());
         user.setRegistroAcademico(dto.getRegistroAcademico());
         return user;
-    }
-
-    public UserResponseDTO toResponseDTO(User entity) {
-        if (entity == null) return null;
-
-        return new UserResponseDTO(
-                entity.getId(),
-                entity.getUsername(),
-                entity.getEmail(),
-                entity.getNombreCompleto(),
-                entity.getRol() != null ? entity.getRol().getNombre() : null
-        );
     }
 
     public AuthResponseDTO toAuthResponseDTO(User user, String token) {

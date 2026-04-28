@@ -19,6 +19,9 @@ import java.util.function.Function;
 @Service
 public class JwtService {
 
+    private static final long SESSION_EXPIRATION = 1000L * 60 * 60 * 24 * 14; // 14 days
+    private static final long RESET_EXPIRATION = 1000L * 60 * 15; // 15 minutes
+
     @Value("${jwt.secret.key}")
     private String secretKey;
 
@@ -31,7 +34,7 @@ public class JwtService {
         return claimsResolver.apply(claims);
     }
 
-    public String generateToken(UserDetails userDetails) {
+    public String generateToken(UserDetails userDetails, long expirationMillis) {
         Map<String, Object> extraClaims = new HashMap<>();
         extraClaims.put("role", userDetails.getAuthorities());
 
@@ -39,9 +42,17 @@ public class JwtService {
                 .setClaims(extraClaims)
                 .setSubject(userDetails.getUsername())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 24 * 14))
+                .setExpiration(new Date(System.currentTimeMillis() + expirationMillis))
                 .signWith(getSignInKey(), SignatureAlgorithm.HS256)
                 .compact();
+    }
+
+    public String generateAccessToken(UserDetails userDetails) {
+        return generateToken(userDetails, SESSION_EXPIRATION);
+    }
+
+    public String generateResetToken(UserDetails userDetails) {
+        return generateToken(userDetails, RESET_EXPIRATION);
     }
 
     public boolean isTokenValid(String token, UserDetails userDetails) {
