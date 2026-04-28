@@ -5,6 +5,7 @@ import com.syshub.modules.identity.dtos.AuthResponseDTO;
 import com.syshub.modules.identity.dtos.RegisterRequestDTO;
 import com.syshub.modules.identity.dtos.UserResponseDTO;
 import com.syshub.modules.identity.services.IAuthService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,12 +21,12 @@ public class AuthController {
     private final IAuthService authService;
 
     @PostMapping("/register")
-    public ResponseEntity<AuthResponseDTO> register(@RequestBody RegisterRequestDTO request) {
+    public ResponseEntity<AuthResponseDTO> register(@Valid @RequestBody RegisterRequestDTO request) {
         return ResponseEntity.ok(authService.register(request));
     }
 
     @PostMapping("/login")
-    public ResponseEntity<AuthResponseDTO> login(@RequestBody AuthRequestDTO request) {
+    public ResponseEntity<AuthResponseDTO> login(@Valid @RequestBody AuthRequestDTO request) {
         System.out.println(" login");
         return ResponseEntity.ok(authService.login(request));
     }
