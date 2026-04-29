@@ -818,207 +818,207 @@ VALUES (
     (SELECT id FROM cursos WHERE codigo = '2805' LIMIT 1)
 );
 
--- INSERT INTO cursos (codigo, nombre, id_semestre, id_area, obligatorio, creditos)
--- VALUES (
---     '685',
---     'INVESTIGACION DE OPERACIONES 1',
---     (SELECT id FROM semestres WHERE numero = 6 AND id_pensum = (SELECT id FROM pensums WHERE nombre = 'Pensum 2016' LIMIT 1) LIMIT 1),
---     (SELECT id FROM areas_tecnicas WHERE nombre = 'Ciencias Básicas y Mate' LIMIT 1),
---     true,
---     5
--- );
+INSERT INTO cursos (codigo, nombre, id_semestre, id_area, obligatorio, creditos)
+VALUES (
+    '685',
+    'INVESTIGACION DE OPERACIONES 1',
+    (SELECT id FROM semestres WHERE numero = 6 AND id_pensum = (SELECT id FROM pensums WHERE nombre = 'Pensum 2016' LIMIT 1) LIMIT 1),
+    (SELECT id FROM areas_tecnicas WHERE nombre = 'Ciencias Básicas y Mate' LIMIT 1),
+    true,
+    5
+);
 
--- INSERT INTO prerrequisitos (id_curso, tipo, id_curso_prereq)
--- VALUES (
---     (SELECT id FROM cursos WHERE codigo = '685' LIMIT 1),
---     'CURSO',
---     (SELECT id FROM cursos WHERE codigo = '949' LIMIT 1)
--- );
+INSERT INTO prerrequisitos (id_curso, tipo, id_curso_prereq)
+VALUES (
+    (SELECT id FROM cursos WHERE codigo = '685' LIMIT 1),
+    'CURSO',
+    (SELECT id FROM cursos WHERE codigo = '949' LIMIT 1)
+);
 
--- INSERT INTO prerrequisitos (id_curso, tipo, id_curso_prereq)
--- VALUES (
---     (SELECT id FROM cursos WHERE codigo = '685' LIMIT 1),
---     'CURSO',
---     (SELECT id FROM cursos WHERE codigo = '2800' LIMIT 1)
--- );
+INSERT INTO prerrequisitos (id_curso, tipo, id_curso_prereq)
+VALUES (
+    (SELECT id FROM cursos WHERE codigo = '685' LIMIT 1),
+    'CURSO',
+    (SELECT id FROM cursos WHERE codigo = '2800' LIMIT 1)
+);
 
--- INSERT INTO cursos (codigo, nombre, id_semestre, id_area, obligatorio, creditos)
--- VALUES (
---     '2809',
---     'ECONOMIA',
---     (SELECT id FROM semestres WHERE numero = 6 AND id_pensum = (SELECT id FROM pensums WHERE nombre = 'Pensum 2016' LIMIT 1) LIMIT 1),
---     (SELECT id FROM areas_tecnicas WHERE nombre = 'Gestión y Gerencia' LIMIT 1),
---     true,
---     4
--- );
+INSERT INTO cursos (codigo, nombre, id_semestre, id_area, obligatorio, creditos)
+VALUES (
+    '2809',
+    'ECONOMIA',
+    (SELECT id FROM semestres WHERE numero = 6 AND id_pensum = (SELECT id FROM pensums WHERE nombre = 'Pensum 2016' LIMIT 1) LIMIT 1),
+    (SELECT id FROM areas_tecnicas WHERE nombre = 'Gestión y Gerencia' LIMIT 1),
+    true,
+    4
+);
 
--- INSERT INTO prerrequisitos (id_curso, tipo, id_curso_prereq)
--- VALUES (
---     (SELECT id FROM cursos WHERE codigo = '2809' LIMIT 1),
---     'CURSO',
---     (SELECT id FROM cursos WHERE codigo = '949' LIMIT 1)
--- );
+INSERT INTO prerrequisitos (id_curso, tipo, id_curso_prereq)
+VALUES (
+    (SELECT id FROM cursos WHERE codigo = '2809' LIMIT 1),
+    'CURSO',
+    (SELECT id FROM cursos WHERE codigo = '949' LIMIT 1)
+);
 
--- INSERT INTO cursos (codigo, nombre, id_semestre, id_area, obligatorio, creditos)
--- VALUES (
---     '2810',
---     'ORG. LENGUAJES Y COMPILADORES 2',
---     (SELECT id FROM semestres WHERE numero = 6 AND id_pensum = (SELECT id FROM pensums WHERE nombre = 'Pensum 2016' LIMIT 1) LIMIT 1),
---     (SELECT id FROM areas_tecnicas WHERE nombre = 'Ciencias de la Computación' LIMIT 1),
---     true,
---     5
--- );
+INSERT INTO cursos (codigo, nombre, id_semestre, id_area, obligatorio, creditos)
+VALUES (
+    '2810',
+    'ORG. LENGUAJES Y COMPILADORES 2',
+    (SELECT id FROM semestres WHERE numero = 6 AND id_pensum = (SELECT id FROM pensums WHERE nombre = 'Pensum 2016' LIMIT 1) LIMIT 1),
+    (SELECT id FROM areas_tecnicas WHERE nombre = 'Ciencias de la Computación' LIMIT 1),
+    true,
+    5
+);
 
--- INSERT INTO prerrequisitos (id_curso, tipo, id_curso_prereq)
--- VALUES (
---     (SELECT id FROM cursos WHERE codigo = '2810' LIMIT 1),
---     'CURSO',
---     (SELECT id FROM cursos WHERE codigo = '2803' LIMIT 1)
--- );
+INSERT INTO prerrequisitos (id_curso, tipo, id_curso_prereq)
+VALUES (
+    (SELECT id FROM cursos WHERE codigo = '2810' LIMIT 1),
+    'CURSO',
+    (SELECT id FROM cursos WHERE codigo = '2803' LIMIT 1)
+);
 
--- INSERT INTO prerrequisitos (id_curso, tipo, id_curso_prereq)
--- VALUES (
---     (SELECT id FROM cursos WHERE codigo = '2810' LIMIT 1),
---     'CURSO',
---     (SELECT id FROM cursos WHERE codigo = '2805' LIMIT 1)
--- );
+INSERT INTO prerrequisitos (id_curso, tipo, id_curso_prereq)
+VALUES (
+    (SELECT id FROM cursos WHERE codigo = '2810' LIMIT 1),
+    'CURSO',
+    (SELECT id FROM cursos WHERE codigo = '2805' LIMIT 1)
+);
 
--- INSERT INTO cursos (codigo, nombre, id_semestre, id_area, obligatorio, creditos)
--- VALUES (
---     '2811',
---     'ARQ. COMPU Y ENSAMBLADORES 1',
---     (SELECT id FROM semestres WHERE numero = 6 AND id_pensum = (SELECT id FROM pensums WHERE nombre = 'Pensum 2016' LIMIT 1) LIMIT 1),
---     (SELECT id FROM areas_tecnicas WHERE nombre = 'Infraestructura y Redes' LIMIT 1),
---     true,
---     5
--- );
+INSERT INTO cursos (codigo, nombre, id_semestre, id_area, obligatorio, creditos)
+VALUES (
+    '2811',
+    'ARQ. COMPU Y ENSAMBLADORES 1',
+    (SELECT id FROM semestres WHERE numero = 6 AND id_pensum = (SELECT id FROM pensums WHERE nombre = 'Pensum 2016' LIMIT 1) LIMIT 1),
+    (SELECT id FROM areas_tecnicas WHERE nombre = 'Infraestructura y Redes' LIMIT 1),
+    true,
+    5
+);
 
--- INSERT INTO prerrequisitos (id_curso, tipo, id_curso_prereq)
--- VALUES (
---     (SELECT id FROM cursos WHERE codigo = '2811' LIMIT 1),
---     'CURSO',
---     (SELECT id FROM cursos WHERE codigo = '2803' LIMIT 1)
--- );
+INSERT INTO prerrequisitos (id_curso, tipo, id_curso_prereq)
+VALUES (
+    (SELECT id FROM cursos WHERE codigo = '2811' LIMIT 1),
+    'CURSO',
+    (SELECT id FROM cursos WHERE codigo = '2803' LIMIT 1)
+);
 
--- INSERT INTO prerrequisitos (id_curso, tipo, id_curso_prereq)
--- VALUES (
---     (SELECT id FROM cursos WHERE codigo = '2811' LIMIT 1),
---     'CURSO',
---     (SELECT id FROM cursos WHERE codigo = '2805' LIMIT 1)
--- );
+INSERT INTO prerrequisitos (id_curso, tipo, id_curso_prereq)
+VALUES (
+    (SELECT id FROM cursos WHERE codigo = '2811' LIMIT 1),
+    'CURSO',
+    (SELECT id FROM cursos WHERE codigo = '2805' LIMIT 1)
+);
 
--- INSERT INTO cursos (codigo, nombre, id_semestre, id_area, obligatorio, creditos)
--- VALUES (
---     '2812',
---     'MANEJO E IMPLEMENTACION DE ARCHIVOS',
---     (SELECT id FROM semestres WHERE numero = 6 AND id_pensum = (SELECT id FROM pensums WHERE nombre = 'Pensum 2016' LIMIT 1) LIMIT 1),
---     (SELECT id FROM areas_tecnicas WHERE nombre = 'Sistemas de Información' LIMIT 1),
---     true,
---     4
--- );
+INSERT INTO cursos (codigo, nombre, id_semestre, id_area, obligatorio, creditos)
+VALUES (
+    '2812',
+    'MANEJO E IMPLEMENTACION DE ARCHIVOS',
+    (SELECT id FROM semestres WHERE numero = 6 AND id_pensum = (SELECT id FROM pensums WHERE nombre = 'Pensum 2016' LIMIT 1) LIMIT 1),
+    (SELECT id FROM areas_tecnicas WHERE nombre = 'Sistemas de Información' LIMIT 1),
+    true,
+    4
+);
 
--- INSERT INTO prerrequisitos (id_curso, tipo, id_curso_prereq)
--- VALUES (
---     (SELECT id FROM cursos WHERE codigo = '2812' LIMIT 1),
---     'CURSO',
---     (SELECT id FROM cursos WHERE codigo = '2798' LIMIT 1)
--- );
+INSERT INTO prerrequisitos (id_curso, tipo, id_curso_prereq)
+VALUES (
+    (SELECT id FROM cursos WHERE codigo = '2812' LIMIT 1),
+    'CURSO',
+    (SELECT id FROM cursos WHERE codigo = '2798' LIMIT 1)
+);
 
--- INSERT INTO prerrequisitos (id_curso, tipo, id_curso_prereq)
--- VALUES (
---     (SELECT id FROM cursos WHERE codigo = '2812' LIMIT 1),
---     'CURSO',
---     (SELECT id FROM cursos WHERE codigo = '2803' LIMIT 1)
--- );
+INSERT INTO prerrequisitos (id_curso, tipo, id_curso_prereq)
+VALUES (
+    (SELECT id FROM cursos WHERE codigo = '2812' LIMIT 1),
+    'CURSO',
+    (SELECT id FROM cursos WHERE codigo = '2803' LIMIT 1)
+);
 
--- INSERT INTO cursos (codigo, nombre, id_semestre, id_area, obligatorio, creditos)
--- VALUES (
---     '905',
---     'MATEMATICA APLICADA 4',
---     (SELECT id FROM semestres WHERE numero = 6 AND id_pensum = (SELECT id FROM pensums WHERE nombre = 'Pensum 2016' LIMIT 1) LIMIT 1),
---     (SELECT id FROM areas_tecnicas WHERE nombre = 'Ciencias Básicas y Mate' LIMIT 1),
---     false,
---     4
--- );
+INSERT INTO cursos (codigo, nombre, id_semestre, id_area, obligatorio, creditos)
+VALUES (
+    '905',
+    'MATEMATICA APLICADA 4',
+    (SELECT id FROM semestres WHERE numero = 6 AND id_pensum = (SELECT id FROM pensums WHERE nombre = 'Pensum 2016' LIMIT 1) LIMIT 1),
+    (SELECT id FROM areas_tecnicas WHERE nombre = 'Ciencias Básicas y Mate' LIMIT 1),
+    false,
+    4
+);
 
--- INSERT INTO prerrequisitos (id_curso, tipo, id_curso_prereq)
--- VALUES (
---     (SELECT id FROM cursos WHERE codigo = '905' LIMIT 1),
---     'CURSO',
---     (SELECT id FROM cursos WHERE codigo = '673' LIMIT 1)
--- );
+INSERT INTO prerrequisitos (id_curso, tipo, id_curso_prereq)
+VALUES (
+    (SELECT id FROM cursos WHERE codigo = '905' LIMIT 1),
+    'CURSO',
+    (SELECT id FROM cursos WHERE codigo = '673' LIMIT 1)
+);
 
--- INSERT INTO cursos (codigo, nombre, id_semestre, id_area, obligatorio, creditos)
--- VALUES (
---     '904',
---     'MATEMATICA APLICADA 2',
---     (SELECT id FROM semestres WHERE numero = 6 AND id_pensum = (SELECT id FROM pensums WHERE nombre = 'Pensum 2016' LIMIT 1) LIMIT 1),
---     (SELECT id FROM areas_tecnicas WHERE nombre = 'Ciencias Básicas y Mate' LIMIT 1),
---     false,
---     6
--- );
+INSERT INTO cursos (codigo, nombre, id_semestre, id_area, obligatorio, creditos)
+VALUES (
+    '904',
+    'MATEMATICA APLICADA 2',
+    (SELECT id FROM semestres WHERE numero = 6 AND id_pensum = (SELECT id FROM pensums WHERE nombre = 'Pensum 2016' LIMIT 1) LIMIT 1),
+    (SELECT id FROM areas_tecnicas WHERE nombre = 'Ciencias Básicas y Mate' LIMIT 1),
+    false,
+    6
+);
 
--- INSERT INTO prerrequisitos (id_curso, tipo, id_curso_prereq)
--- VALUES (
---     (SELECT id FROM cursos WHERE codigo = '904' LIMIT 1),
---     'CURSO',
---     (SELECT id FROM cursos WHERE codigo = '673' LIMIT 1)
--- );
+INSERT INTO prerrequisitos (id_curso, tipo, id_curso_prereq)
+VALUES (
+    (SELECT id FROM cursos WHERE codigo = '904' LIMIT 1),
+    'CURSO',
+    (SELECT id FROM cursos WHERE codigo = '673' LIMIT 1)
+);
 
--- INSERT INTO cursos (codigo, nombre, id_semestre, id_area, obligatorio, creditos)
--- VALUES (
---     '670',
---     'ING. ELECTRICA 1',
---     (SELECT id FROM semestres WHERE numero = 6 AND id_pensum = (SELECT id FROM pensums WHERE nombre = 'Pensum 2016' LIMIT 1) LIMIT 1),
---     (SELECT id FROM areas_tecnicas WHERE nombre = 'Ciencias Básicas y Mate' LIMIT 1),
---     false,
---     5
--- );
+INSERT INTO cursos (codigo, nombre, id_semestre, id_area, obligatorio, creditos)
+VALUES (
+    '670',
+    'ING. ELECTRICA 1',
+    (SELECT id FROM semestres WHERE numero = 6 AND id_pensum = (SELECT id FROM pensums WHERE nombre = 'Pensum 2016' LIMIT 1) LIMIT 1),
+    (SELECT id FROM areas_tecnicas WHERE nombre = 'Ciencias Básicas y Mate' LIMIT 1),
+    false,
+    5
+);
 
--- INSERT INTO prerrequisitos (id_curso, tipo, id_curso_prereq)
--- VALUES (
---     (SELECT id FROM cursos WHERE codigo = '670' LIMIT 1),
---     'CURSO',
---     (SELECT id FROM cursos WHERE codigo = '292' LIMIT 1)
--- );
+INSERT INTO prerrequisitos (id_curso, tipo, id_curso_prereq)
+VALUES (
+    (SELECT id FROM cursos WHERE codigo = '670' LIMIT 1),
+    'CURSO',
+    (SELECT id FROM cursos WHERE codigo = '292' LIMIT 1)
+);
 
--- INSERT INTO prerrequisitos (id_curso, tipo, id_curso_prereq)
--- VALUES (
---     (SELECT id FROM cursos WHERE codigo = '670' LIMIT 1),
---     'CURSO',
---     (SELECT id FROM cursos WHERE codigo = '147' LIMIT 1)
--- );
+INSERT INTO prerrequisitos (id_curso, tipo, id_curso_prereq)
+VALUES (
+    (SELECT id FROM cursos WHERE codigo = '670' LIMIT 1),
+    'CURSO',
+    (SELECT id FROM cursos WHERE codigo = '147' LIMIT 1)
+);
 
--- INSERT INTO cursos (codigo, nombre, id_semestre, id_area, obligatorio, creditos)
--- VALUES (
---     '779',
---     'CONTABILIDAD 2',
---     (SELECT id FROM semestres WHERE numero = 6 AND id_pensum = (SELECT id FROM pensums WHERE nombre = 'Pensum 2016' LIMIT 1) LIMIT 1),
---     (SELECT id FROM areas_tecnicas WHERE nombre = 'Gestión y Gerencia' LIMIT 1),
---     false,
---     3
--- );
+INSERT INTO cursos (codigo, nombre, id_semestre, id_area, obligatorio, creditos)
+VALUES (
+    '779',
+    'CONTABILIDAD 2',
+    (SELECT id FROM semestres WHERE numero = 6 AND id_pensum = (SELECT id FROM pensums WHERE nombre = 'Pensum 2016' LIMIT 1) LIMIT 1),
+    (SELECT id FROM areas_tecnicas WHERE nombre = 'Gestión y Gerencia' LIMIT 1),
+    false,
+    3
+);
 
--- INSERT INTO prerrequisitos (id_curso, tipo, id_curso_prereq)
--- VALUES (
---     (SELECT id FROM cursos WHERE codigo = '779' LIMIT 1),
---     'CURSO',
---     (SELECT id FROM cursos WHERE codigo = '694' LIMIT 1)
--- );
+INSERT INTO prerrequisitos (id_curso, tipo, id_curso_prereq)
+VALUES (
+    (SELECT id FROM cursos WHERE codigo = '779' LIMIT 1),
+    'CURSO',
+    (SELECT id FROM cursos WHERE codigo = '694' LIMIT 1)
+);
 
--- INSERT INTO cursos (codigo, nombre, id_semestre, id_area, obligatorio, creditos)
--- VALUES (
---     '2670',
---     'GESTION DE DESASTRES',
---     (SELECT id FROM semestres WHERE numero = 6 AND id_pensum = (SELECT id FROM pensums WHERE nombre = 'Pensum 2016' LIMIT 1) LIMIT 1),
---     (SELECT id FROM areas_tecnicas WHERE nombre = 'Gestión y Gerencia' LIMIT 1),
---     false,
---     3
--- );
+INSERT INTO cursos (codigo, nombre, id_semestre, id_area, obligatorio, creditos)
+VALUES (
+    '2670',
+    'GESTION DE DESASTRES',
+    (SELECT id FROM semestres WHERE numero = 6 AND id_pensum = (SELECT id FROM pensums WHERE nombre = 'Pensum 2016' LIMIT 1) LIMIT 1),
+    (SELECT id FROM areas_tecnicas WHERE nombre = 'Gestión y Gerencia' LIMIT 1),
+    false,
+    3
+);
 
--- INSERT INTO prerrequisitos (id_curso, tipo, id_curso_prereq)
--- VALUES (
---     (SELECT id FROM cursos WHERE codigo = '2670' LIMIT 1),
---     'CURSO',
---     (SELECT id FROM cursos WHERE codigo = '094' LIMIT 1)
--- );
+INSERT INTO prerrequisitos (id_curso, tipo, id_curso_prereq)
+VALUES (
+    (SELECT id FROM cursos WHERE codigo = '2670' LIMIT 1),
+    'CURSO',
+    (SELECT id FROM cursos WHERE codigo = '094' LIMIT 1)
+);

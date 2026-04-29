@@ -1,5 +1,11 @@
 
 -- Eliminar tablas si existen (en orden inverso por llaves foráneas)
+
+DROP TABLE IF EXISTS proyecto_tags;
+DROP TABLE IF EXISTS archivos_adjuntos;
+
+DROP TABLE IF EXISTS proyectos;
+
 DROP TABLE IF EXISTS prerrequisitos;
 DROP TABLE IF EXISTS usuarios;
 
@@ -99,3 +105,27 @@ CREATE TABLE usuarios (
     CONSTRAINT fk_usuario_carrera FOREIGN KEY (id_carrera) REFERENCES carreras(id)
 );
 
+CREATE TABLE proyectos (
+    id SERIAL PRIMARY KEY,
+    titulo VARCHAR(255) NOT NULL,
+    descripcion TEXT,
+    repo_url VARCHAR(255),
+    destacado BOOLEAN DEFAULT FALSE,
+    fecha_subida TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    user_id UUID REFERENCES usuarios(id),
+    course_id INTEGER REFERENCES cursos(id)
+);
+
+CREATE TABLE archivos_adjuntos (
+    id SERIAL PRIMARY KEY,
+    nombre_original VARCHAR(255) NOT NULL,
+    nombre_archivo VARCHAR(255) NOT NULL,
+    tipo_archivo VARCHAR(100),
+    proyecto_id INTEGER REFERENCES proyectos(id) ON DELETE CASCADE
+);
+
+CREATE TABLE proyecto_tags (
+    proyecto_id INTEGER REFERENCES proyectos(id) ON DELETE CASCADE,
+    tag_id INTEGER REFERENCES tags(id) ON DELETE CASCADE,
+    PRIMARY KEY (proyecto_id, tag_id)
+);

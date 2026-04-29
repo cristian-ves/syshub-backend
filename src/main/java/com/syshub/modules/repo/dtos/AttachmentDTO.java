@@ -7,4 +7,5 @@ public class AttachmentDTO {
     private Long id;
     private String nombreOriginal;
     private String tipoArchivo;
+    private String nombreArchivo;
 }
