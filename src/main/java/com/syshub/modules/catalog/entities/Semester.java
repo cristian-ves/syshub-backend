@@ -1,5 +1,6 @@
 package com.syshub.modules.catalog.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -18,5 +19,6 @@ public class Semester {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_pensum")
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Pensum pensum;
 }

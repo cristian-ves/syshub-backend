@@ -1,5 +1,6 @@
 package com.syshub.modules.catalog.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.syshub.modules.identity.entities.Carrera;
 import jakarta.persistence.*;
 import lombok.*;
@@ -18,5 +19,6 @@ public class Pensum {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_carrera")
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Carrera carrera;
 }
