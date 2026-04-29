@@ -47,6 +47,10 @@ public class JwtService {
                 .compact();
     }
 
+    public String generateToken(UserDetails userDetails) {
+        return generateAccessToken(userDetails);
+    }
+
     public String generateAccessToken(UserDetails userDetails) {
         return generateToken(userDetails, SESSION_EXPIRATION);
     }

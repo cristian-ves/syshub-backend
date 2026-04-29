@@ -9,5 +9,5 @@ public interface IAuthService {
     AuthResponseDTO register(RegisterRequestDTO registroRequest);
     void forgotPassword(String email);
     void resetPassword(String token, String newPassword);
-
+    AuthResponseDTO validateAndRefresh(String username);
 }

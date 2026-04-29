@@ -39,6 +39,18 @@ public class AuthServiceImpl implements IAuthService {
     private final EmailService emailService;
 
     @Override
+    public AuthResponseDTO validateAndRefresh(String username) {
+        var user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new AppException("Usuario no encontrado", HttpStatus.NOT_FOUND));
+
+        return AuthResponseDTO.builder()
+                .token(jwtService.generateAccessToken(user))
+                .username(user.getUsername())
+                .role(user.getRol().getNombre())
+                .build();
+    }
+
+    @Override
     public AuthResponseDTO login(AuthRequestDTO request) {
 
         try {

@@ -8,8 +8,10 @@ import com.syshub.modules.identity.services.IAuthService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.Map;
 
 @RestController
@@ -18,6 +20,12 @@ import java.util.Map;
 public class AuthController {
 
     private final IAuthService authService;
+
+    @GetMapping("/validate")
+    @PreAuthorize("isAuthenticated()")
+    public ResponseEntity<AuthResponseDTO> validateToken(Principal principal) {
+        return ResponseEntity.ok(authService.validateAndRefresh(principal.getName()));
+    }
 
     @PostMapping("/register")
     public ResponseEntity<AuthResponseDTO> register(@Valid @RequestBody RegisterRequestDTO request) {
