@@ -12,14 +12,14 @@ INSERT INTO carreras (nombre) VALUES
 ('Ingeniería Civil'), 
 ('Ingeniería Industrial');
 
-INSERT INTO areas_tecnicas (nombre, descripcion) VALUES 
-('Desarrollo de Software', 'Cursos enfocados en construcción de aplicaciones, patrones y lenguajes.'),
-('Ciencias de la Computación', 'Bases teóricas, algoritmos, estructuras de datos y lógica.'),
-('Sistemas de Información', 'Gestión de datos, análisis de sistemas y flujos de información.'),
-('Infraestructura y Redes', 'Hardware, sistemas operativos, redes y comunicaciones.'),
-('Inteligencia Artificial', 'Modelado de datos, machine learning y sistemas expertos.'),
-('Gestión y Gerencia', 'Administración de proyectos, ética y liderazgo en ingeniería.'),
-('Ciencias Básicas y Mate', 'Fundamentos de física y matemática aplicados a la ingeniería.');
+INSERT INTO areas_tecnicas (nombre, descripcion, color) VALUES 
+('Desarrollo de Software', 'Cursos enfocados en construcción de aplicaciones, patrones y lenguajes.', '#10b981'), -- Esmeralda
+('Ciencias de la Computación', 'Bases teóricas, algoritmos, estructuras de datos y lógica.', '#3b82f6'), -- Azul
+('Sistemas de Información', 'Gestión de datos, análisis de sistemas y flujos de información.', '#f59e0b'), -- Ambar
+('Infraestructura y Redes', 'Hardware, sistemas operativos, redes y comunicaciones.', '#6366f1'), -- Indigo
+('Inteligencia Artificial', 'Modelado de datos, machine learning y sistemas expertos.', '#8b5cf6'), -- Violeta
+('Gestión y Gerencia', 'Administración de proyectos, ética y liderazgo en ingeniería.', '#f43f5e'), -- Rosado
+('Ciencias Básicas y Mate', 'Fundamentos de física y matemática aplicados a la ingeniería.', '#64748b'); -- Gris Pizarra
 
 -- Insertar los Pensums para la carrera de Sistemas
 INSERT INTO pensums (nombre, id_carrera) 

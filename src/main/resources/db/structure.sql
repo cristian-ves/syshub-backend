@@ -43,7 +43,8 @@ CREATE TABLE semestres (
 CREATE TABLE areas_tecnicas (
     id SERIAL PRIMARY KEY,
     nombre VARCHAR(100) UNIQUE NOT NULL,
-    descripcion TEXT
+    descripcion TEXT,
+	color VARCHAR(7) DEFAULT '#64748b'
 );
 
 CREATE TABLE cursos (
