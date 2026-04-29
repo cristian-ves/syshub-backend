@@ -22,6 +22,7 @@ public class ProjectMapper {
         dto.setDestacado(project.isDestacado());
         dto.setAutorNombre(project.getAutor().getNombreCompleto());
         dto.setCursoNombre(project.getCurso().getNombre());
+        dto.setPensumNombre(project.getCurso().getSemester().getPensum().getNombre());
 
         dto.setTags(project.getTags().stream()
                 .map(Tag::getNombre)

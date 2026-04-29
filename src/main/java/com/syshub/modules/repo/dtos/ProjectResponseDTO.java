@@ -13,6 +13,7 @@ public class ProjectResponseDTO {
     private boolean destacado;
     private String autorNombre;
     private String cursoNombre;
+    private String pensumNombre;
     private Set<String> tags;
     private List<AttachmentDTO> archivos;
 }

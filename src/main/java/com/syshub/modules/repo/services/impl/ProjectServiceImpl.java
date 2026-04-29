@@ -14,9 +14,13 @@ import com.syshub.modules.repo.entities.Attachment;
 import com.syshub.modules.repo.entities.Project;
 import com.syshub.modules.repo.mappers.ProjectMapper;
 import com.syshub.modules.repo.repositories.ProjectRepository;
+import com.syshub.modules.repo.repositories.specifications.ProjectSpecifications;
 import com.syshub.modules.repo.services.IProjectService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.Resource;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -26,6 +30,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -103,10 +108,23 @@ public class ProjectServiceImpl implements IProjectService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<ProjectResponseDTO> getAllProjects() {
-        return projectRepository.findAll().stream()
-                .map(projectMapper::toDto)
-                .collect(Collectors.toList());
+    public Page<ProjectResponseDTO> getProjects(String tag, Boolean destacado, Long cursoId,
+                                                Integer semestreNum, UUID userId, Long pensumId, Pageable pageable) {
+
+        Specification<Project> spec = ProjectSpecifications.filterProjects(tag, destacado, cursoId, semestreNum, userId, pensumId);
+
+        return projectRepository.findAll(spec, pageable)
+                .map(projectMapper::toDto);
+    }
+
+    @Override
+    @Transactional
+    public ProjectResponseDTO toggleFeatured(Long id, boolean featured) {
+        Project project = projectRepository.findById(id)
+                .orElseThrow(() -> new AppException("Proyecto no encontrado", HttpStatus.NOT_FOUND));
+
+        project.setDestacado(featured);
+        return projectMapper.toDto(projectRepository.save(project));
     }
 
     @Override
