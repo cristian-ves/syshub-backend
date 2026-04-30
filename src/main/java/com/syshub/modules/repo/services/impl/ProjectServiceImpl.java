@@ -49,34 +49,21 @@ public class ProjectServiceImpl implements IProjectService {
     public ProjectResponseDTO createProject(ProjectRequestDTO request, List<MultipartFile> files) {
         // Get authenticated user
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        User author = userRepository.findByUsername(username)
-                .orElseThrow(() -> new AppException("Usuario no encontrado", HttpStatus.NOT_FOUND));
+        User author = userRepository.findByUsername(username).orElseThrow(() -> new AppException("Usuario no encontrado", HttpStatus.NOT_FOUND));
 
         // Get course
-        Course course = courseRepository.findById(request.getCourseId())
-                .orElseThrow(() -> new AppException("Curso no encontrado", HttpStatus.NOT_FOUND));
+        Course course = courseRepository.findById(request.getCourseId()).orElseThrow(() -> new AppException("Curso no encontrado", HttpStatus.NOT_FOUND));
 
         // Tags handler
-        Set<Tag> projectTags = request.getTags().stream()
-                .map(tagInput -> tagRepository.findByNombreIgnoreCase(tagInput.getNombre())
-                        .orElseGet(() -> {
-                            Tag newTag = new Tag();
-                            newTag.setNombre(tagInput.getNombre());
-                            newTag.setColor(tagInput.getColor() != null ? tagInput.getColor() : "#64748b");
-                            return tagRepository.save(newTag);
-                        }))
-                .collect(Collectors.toSet());
+        Set<Tag> projectTags = request.getTags().stream().map(tagInput -> tagRepository.findByNombreIgnoreCase(tagInput.getNombre()).orElseGet(() -> {
+            Tag newTag = new Tag();
+            newTag.setNombre(tagInput.getNombre());
+            newTag.setColor(tagInput.getColor() != null ? tagInput.getColor() : "#64748b");
+            return tagRepository.save(newTag);
+        })).collect(Collectors.toSet());
 
         // Create project
-        Project project = Project.builder()
-                .titulo(request.getTitulo())
-                .descripcion(request.getDescripcion())
-                .repoUrl(request.getRepoUrl())
-                .autor(author)
-                .curso(course)
-                .tags(projectTags)
-                .archivos(new ArrayList<>())
-                .build();
+        Project project = Project.builder().titulo(request.getTitulo()).descripcion(request.getDescripcion()).repoUrl(request.getRepoUrl()).autor(author).curso(course).tags(projectTags).archivos(new ArrayList<>()).build();
 
         // File processing
         if (files != null && !files.isEmpty()) {
@@ -93,12 +80,7 @@ public class ProjectServiceImpl implements IProjectService {
                     contentType = "application/octet-stream";
                 }
 
-                Attachment attachment = Attachment.builder()
-                        .nombreOriginal(file.getOriginalFilename())
-                        .nombreArchivo(storedName)
-                        .tipoArchivo(contentType)
-                        .proyecto(project)
-                        .build();
+                Attachment attachment = Attachment.builder().nombreOriginal(file.getOriginalFilename()).nombreArchivo(storedName).tipoArchivo(contentType).proyecto(project).build();
                 project.getArchivos().add(attachment);
             }
         }
@@ -109,20 +91,17 @@ public class ProjectServiceImpl implements IProjectService {
 
     @Override
     @Transactional(readOnly = true)
-    public Page<ProjectResponseDTO> getProjects(String tag, Boolean destacado, Long cursoId,
-                                                Integer semestreNum, UUID userId, Long pensumId, Pageable pageable) {
+    public Page<ProjectResponseDTO> getProjects(String tag, Boolean destacado, String cursoNombre, Integer semestreNum, UUID userId, Long pensumId, Long areaId, String search, Pageable pageable) {
 
-        Specification<Project> spec = ProjectSpecifications.filterProjects(tag, destacado, cursoId, semestreNum, userId, pensumId);
+        Specification<Project> spec = ProjectSpecifications.filterProjects(tag, destacado, cursoNombre, semestreNum, userId, pensumId, areaId, search);
 
-        return projectRepository.findAll(spec, pageable)
-                .map(projectMapper::toDto);
+        return projectRepository.findAll(spec, pageable).map(projectMapper::toDto);
     }
 
     @Override
     @Transactional
     public ProjectResponseDTO toggleFeatured(Long id, boolean featured) {
-        Project project = projectRepository.findById(id)
-                .orElseThrow(() -> new AppException("Proyecto no encontrado", HttpStatus.NOT_FOUND));
+        Project project = projectRepository.findById(id).orElseThrow(() -> new AppException("Proyecto no encontrado", HttpStatus.NOT_FOUND));
 
         project.setDestacado(featured);
         return projectMapper.toDto(projectRepository.save(project));
@@ -131,16 +110,13 @@ public class ProjectServiceImpl implements IProjectService {
     @Override
     @Transactional(readOnly = true)
     public List<ProjectResponseDTO> getProjectsByCourse(Long courseId) {
-        return projectRepository.findByCursoId(courseId).stream()
-                .map(projectMapper::toDto)
-                .collect(Collectors.toList());
+        return projectRepository.findByCursoId(courseId).stream().map(projectMapper::toDto).collect(Collectors.toList());
     }
 
     @Override
     @Transactional(readOnly = true)
     public ProjectResponseDTO getProjectById(Long id) {
-        Project project = projectRepository.findById(id)
-                .orElseThrow(() -> new AppException("Proyecto no encontrado", HttpStatus.NOT_FOUND));
+        Project project = projectRepository.findById(id).orElseThrow(() -> new AppException("Proyecto no encontrado", HttpStatus.NOT_FOUND));
         return projectMapper.toDto(project);
     }
 
@@ -149,4 +125,5 @@ public class ProjectServiceImpl implements IProjectService {
     public Resource downloadFile(String filename) {
         return storageService.loadAsResource(filename);
     }
+
 }

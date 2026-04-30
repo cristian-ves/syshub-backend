@@ -14,7 +14,7 @@ public interface ICatalogService {
     List<Semester> getSemestersByPensum(Long pensumId);
     List<TechnicalArea> getAllAreas();
     List<TagResponseDTO> getAllTags();
-    List<CourseResponseDTO> getCoursesBySemester(Long semesterId);
+    List<CourseResponseDTO> getCoursesBySemester(Long semesterNum);
     List<CourseResponseDTO> searchCourses(String query);
     TagResponseDTO saveTag(Tag tagId);
 }

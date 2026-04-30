@@ -40,13 +40,15 @@ public class ProjectController {
     public ResponseEntity<Page<ProjectResponseDTO>> getProjects(
             @RequestParam(required = false) String tag,
             @RequestParam(required = false) Boolean destacado,
-            @RequestParam(required = false) Long cursoId,
+            @RequestParam(required = false) String cursoNombre,
             @RequestParam(required = false) Integer semestreNum,
             @RequestParam(required = false) UUID userId,
             @RequestParam(required = false) Long pensumId,
+            @RequestParam(required = false) Long areaId,
+            @RequestParam(required = false) String search,
             @PageableDefault(size = 10, sort = "fechaSubida", direction = Sort.Direction.DESC) Pageable pageable
     ) {
-        return ResponseEntity.ok(projectService.getProjects(tag, destacado, cursoId, semestreNum, userId, pensumId, pageable));
+        return ResponseEntity.ok(projectService.getProjects(tag, destacado, cursoNombre, semestreNum, userId, pensumId, areaId, search, pageable));
     }
 
     @PreAuthorize("hasAnyRole('ROLE_AUXILIAR', 'ROLE_ADMIN')")

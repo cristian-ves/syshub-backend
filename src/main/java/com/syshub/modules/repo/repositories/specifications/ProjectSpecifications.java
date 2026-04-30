@@ -14,37 +14,38 @@ public class ProjectSpecifications {
     public static Specification<Project> filterProjects(
             String tag,
             Boolean destacado,
-            Long cursoId,
+            String cursoNombre,
             Integer semestreNum,
             UUID userId,
-            Long pensumId) {
-
+            Long pensumId,
+            Long areaId,
+            String search
+    ) {
         return (root, query, cb) -> {
             List<Predicate> predicates = new ArrayList<>();
 
-            if (tag != null) {
+            if (search != null && !search.isEmpty()) {
+                String pattern = "%" + search.toLowerCase() + "%";
+                Predicate titleP = cb.like(cb.lower(root.get("titulo")), pattern);
+                Predicate descP = cb.like(cb.lower(root.get("descripcion")), pattern);
+                predicates.add(cb.or(titleP, descP));
+            }
+
+            if (tag != null && !tag.isEmpty()) {
                 Join<Object, Object> tagsJoin = root.join("tags");
-                predicates.add(cb.equal(tagsJoin.get("nombre"), tag));
+                predicates.add(cb.like(cb.lower(tagsJoin.get("nombre")), "%" + tag.toLowerCase() + "%"));
             }
 
-            if (destacado != null) {
-                predicates.add(cb.equal(root.get("destacado"), destacado));
+            if (cursoNombre != null && !cursoNombre.isEmpty()) {
+                predicates.add(cb.like(cb.lower(root.get("curso").get("nombre")), "%" + cursoNombre.toLowerCase() + "%"));
             }
 
-            if (cursoId != null) {
-                predicates.add(cb.equal(root.get("curso").get("id"), cursoId));
-            }
-
-            if (semestreNum != null) {
-                predicates.add(cb.equal(root.get("curso").get("semester").get("numero"), semestreNum));
-            }
-
-            if (userId != null) {
-                predicates.add(cb.equal(root.get("autor").get("id"), userId));
-            }
+            if (destacado != null) predicates.add(cb.equal(root.get("destacado"), destacado));
+            if (semestreNum != null) predicates.add(cb.equal(root.get("curso").get("semester").get("numero"), semestreNum));
+            if (userId != null) predicates.add(cb.equal(root.get("autor").get("id"), userId));
+            if (areaId != null) predicates.add(cb.equal(root.get("curso").get("area").get("id"), areaId));
 
             if (pensumId != null) {
-                // Project -> Course -> Semester -> Pensum
                 predicates.add(cb.equal(root.get("curso").get("semester").get("pensum").get("id"), pensumId));
             }
 
