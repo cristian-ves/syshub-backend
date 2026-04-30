@@ -49,13 +49,12 @@ public class ProjectController {
         return ResponseEntity.ok(projectService.getProjects(tag, destacado, cursoId, semestreNum, userId, pensumId, pageable));
     }
 
-    @PreAuthorize("hasAnyRole('ADMIN', 'AUXILIAR')")
+    @PreAuthorize("hasAnyRole('ROLE_AUXILIAR', 'ROLE_ADMIN')")
     @PatchMapping("/{id}/featured")
     public ResponseEntity<ProjectResponseDTO> updateFeatured(
             @PathVariable Long id,
             @RequestParam Boolean featured
     ) {
-        // TODO: validate user role for permissions
         return ResponseEntity.ok(projectService.toggleFeatured(id, featured));
     }
 
