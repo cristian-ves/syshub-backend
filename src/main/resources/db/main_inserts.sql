@@ -3,6 +3,7 @@ INSERT INTO roles (nombre) VALUES
 ('ROLE_ADMIN'), 
 ('ROLE_AUXILIAR'), 
 ('ROLE_ESTUDIANTE');
+select * from roles;
 
 -- Inserts de carreras
 INSERT INTO carreras (nombre) VALUES 
@@ -42,4 +43,10 @@ FROM generate_series(1, 10) s
 JOIN pensums p ON p.nombre = 'Pensum 2025'
 WHERE p.id_carrera = (SELECT id FROM carreras WHERE nombre = 'Ingeniería en Ciencias y Sistemas' LIMIT 1);
 
+
+-- Insertar usuarios
+INSERT INTO usuarios (username, email, password, nombre_completo, registro_academico, id_rol, id_carrera)
+VALUES ('admin', 'alejandrovasquezesc@gmail.com', '$2a$10$0MQnbK1b.hliG9iFESB47eMJTdKUjrjj.kDu1D0KNV3Rjd5yjs1BC', 'Thom Yorke', '202131936', 1, 1),
+('auxi', 'cristianvasquez202131936', '$2a$10$0MQnbK1b.hliG9iFESB47eMJTdKUjrjj.kDu1D0KNV3Rjd5yjs1BC', 'Chris Cornell', '202012345a', 2, 1),
+('student', 'syshubapp@gmail.com', '$2a$10$0MQnbK1b.hliG9iFESB47eMJTdKUjrjj.kDu1D0KNV3Rjd5yjs1BC', 'Chino Moreno', '202054321', 3, 1);
 

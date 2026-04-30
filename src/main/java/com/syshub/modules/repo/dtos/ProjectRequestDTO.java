@@ -9,5 +9,5 @@ public class ProjectRequestDTO {
     private String descripcion;
     private String repoUrl;
     private Long courseId;
-    private List<String> tags;
+    private List<RepositoryTagDTO> tags;
 }

@@ -1,7 +1,8 @@
 package com.syshub.modules.repo.mappers;
 
-import com.syshub.modules.repo.dtos.AttachmentDTO; // Asegúrate de tener este DTO
+import com.syshub.modules.repo.dtos.AttachmentDTO;
 import com.syshub.modules.repo.dtos.ProjectResponseDTO;
+import com.syshub.modules.repo.dtos.RepositoryTagDTO;
 import com.syshub.modules.repo.entities.Project;
 import com.syshub.modules.catalog.entities.Tag;
 import org.springframework.stereotype.Component;
@@ -23,9 +24,17 @@ public class ProjectMapper {
         dto.setAutorNombre(project.getAutor().getNombreCompleto());
         dto.setCursoNombre(project.getCurso().getNombre());
         dto.setPensumNombre(project.getCurso().getSemester().getPensum().getNombre());
+        dto.setFechaSubida(project.getFechaSubida());
+        dto.setAreaColor(project.getCurso().getArea().getColor());
+        dto.setAreaNombre(project.getCurso().getArea().getNombre());
 
         dto.setTags(project.getTags().stream()
-                .map(Tag::getNombre)
+                .map(tag->{
+                    RepositoryTagDTO tagDTO = new RepositoryTagDTO();
+                    tagDTO.setNombre(tag.getNombre());
+                    tagDTO.setColor(tag.getColor());
+                    return tagDTO;
+                })
                 .collect(Collectors.toSet()));
 
         if (project.getArchivos() != null) {

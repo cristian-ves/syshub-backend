@@ -1,0 +1,107 @@
+[
+  {
+    "titulo": "Calculadora de Matrices Esparsas",
+    "descripcion": "Optimización de memoria para álgebra lineal avanzada.",
+    "courseId": 5,
+    "tags": [{"nombre": "C++", "color": "#00599C"}, {"nombre": "Algoritmos"}],
+    "repoUrl": "https://github.com/user/matrices-cpp"
+  },
+  {
+    "titulo": "Analizador Sintáctico LALR",
+    "descripcion": "Proyecto de Compiladores 1 con manejo de errores sintácticos.",
+    "courseId": 45,
+    "tags": [{"nombre": "Java", "color": "#ED8B00"}, {"nombre": "Compiladores"}],
+    "repoUrl": "https://github.com/user/compiler-lab"
+  },
+  {
+    "titulo": "Sistema de Control de Inventarios",
+    "descripcion": "Hallazgo técnico sobre el uso de Triggers en PostgreSQL.",
+    "courseId": 30,
+    "tags": [{"nombre": "SQL", "color": "#336791"}, {"nombre": "Database"}],
+    "repoUrl": "https://github.com/user/db-inventory"
+  },
+  {
+    "titulo": "App de Delivery Rural",
+    "descripcion": "Propuesta para el área social usando React Native.",
+    "courseId": 92,
+    "tags": [{"nombre": "React", "color": "#61DAFB"}, {"nombre": "Mobile"}],
+    "repoUrl": "https://github.com/user/rural-app"
+  },
+  {
+    "titulo": "Clasificador de Imágenes Médicas",
+    "descripcion": "Uso de Redes Neuronales Convolucionales (CNN) para Rayos X.",
+    "courseId": 120,
+    "tags": [{"nombre": "Python", "color": "#3776AB"}, {"nombre": "IA", "color": "#40419C"}],
+    "repoUrl": "https://github.com/user/med-ai"
+  },
+  {
+    "titulo": "Simulador de Planificación de CPU",
+    "descripcion": "Visualización de algoritmos Round Robin y SRTF.",
+    "courseId": 55,
+    "tags": [{"nombre": "Java"}, {"nombre": "Sistemas Operativos"}],
+    "repoUrl": "https://github.com/user/os-sim"
+  },
+  {
+    "titulo": "Dashboard de Métricas Académicas",
+    "descripcion": "Visualización de datos con D3.js para control de notas.",
+    "courseId": 95,
+    "tags": [{"nombre": "JavaScript", "color": "#F7DF1E"}, {"nombre": "Web"}],
+    "repoUrl": "https://github.com/user/stats-dash"
+  },
+  {
+    "titulo": "Chat Encriptado End-to-End",
+    "descripcion": "Implementación de sockets con cifrado AES-256.",
+    "courseId": 70,
+    "tags": [{"nombre": "Python"}, {"nombre": "Seguridad", "color": "#E2517B"}],
+    "repoUrl": "https://github.com/user/secure-chat"
+  },
+  {
+    "titulo": "Microservicios para Gestión de Tareas",
+    "descripcion": "Arquitectura escalable usando Spring Cloud y Eureka.",
+    "courseId": 135,
+    "tags": [{"nombre": "Java"}, {"nombre": "Microservicios"}],
+    "repoUrl": "https://github.com/user/tasks-micro"
+  },
+  {
+    "titulo": "Juego de Estrategia 2D",
+    "descripcion": "Desarrollo de lógica de pathfinding A* en Unity.",
+    "courseId": 10,
+    "tags": [{"nombre": "C#", "color": "#178600"}, {"nombre": "Games"}],
+    "repoUrl": "https://github.com/user/strategy-game"
+  },
+  {
+    "titulo": "API de Gestión de Bibliotecas",
+    "descripcion": "CRUD completo con autenticación JWT y documentación Swagger.",
+    "courseId": 105,
+    "tags": [{"nombre": "NodeJS", "color": "#339933"}, {"nombre": "Backend"}],
+    "repoUrl": "https://github.com/user/library-api"
+  },
+  {
+    "titulo": "Analizador de Sentimientos en Twitter",
+    "descripcion": "Tarea de minería de datos procesando streams en tiempo real.",
+    "courseId": 80,
+    "tags": [{"nombre": "Python"}, {"nombre": "IA"}],
+    "repoUrl": "https://github.com/user/twitter-sense"
+  },
+  {
+    "titulo": "Estructuras de Datos No Lineales",
+    "descripcion": "Visualizador de Árboles AVL y Grafos Dirigidos.",
+    "courseId": 15,
+    "tags": [{"nombre": "C++"}, {"nombre": "Algoritmos"}],
+    "repoUrl": "https://github.com/user/data-structures"
+  },
+  {
+    "titulo": "Portal de Empleos para Estudiantes",
+    "descripcion": "Integración de filtros avanzados para búsqueda laboral.",
+    "courseId": 140,
+    "tags": [{"nombre": "React"}, {"nombre": "Fullstack"}],
+    "repoUrl": "https://github.com/user/job-portal"
+  },
+  {
+    "titulo": "Intérprete de Lenguaje Funcional",
+    "descripcion": "Implementación de un intérprete para un subconjunto de Haskell.",
+    "courseId": 60,
+    "tags": [{"nombre": "Haskell", "color": "#5E5086"}, {"nombre": "Compiladores"}],
+    "repoUrl": "https://github.com/user/haskell-interp"
+  }
+]

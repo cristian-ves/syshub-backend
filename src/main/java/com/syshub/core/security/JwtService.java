@@ -19,7 +19,7 @@ import java.util.function.Function;
 @Service
 public class JwtService {
 
-    private static final long SESSION_EXPIRATION = 1000L * 60 * 60 * 24 * 14; // 14 days
+    private static final long SESSION_EXPIRATION = 1000L * 60 * 60 * 24 * 7; // 7 days
     private static final long RESET_EXPIRATION = 1000L * 60 * 15; // 15 minutes
 
     @Value("${jwt.secret.key}")

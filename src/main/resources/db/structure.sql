@@ -1,4 +1,3 @@
-
 -- Eliminar tablas si existen (en orden inverso por llaves foráneas)
 
 DROP TABLE IF EXISTS proyecto_tags;
@@ -38,6 +37,7 @@ CREATE TABLE pensums (
     id_carrera INTEGER NOT NULL,
     CONSTRAINT fk_pensum_carrera FOREIGN KEY (id_carrera) REFERENCES carreras(id)
 );
+
 
 CREATE TABLE semestres (
     id SERIAL PRIMARY KEY,

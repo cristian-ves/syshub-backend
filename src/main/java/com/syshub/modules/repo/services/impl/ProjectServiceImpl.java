@@ -58,10 +58,11 @@ public class ProjectServiceImpl implements IProjectService {
 
         // Tags handler
         Set<Tag> projectTags = request.getTags().stream()
-                .map(tagName -> tagRepository.findByNombreIgnoreCase(tagName)
+                .map(tagInput -> tagRepository.findByNombreIgnoreCase(tagInput.getNombre())
                         .orElseGet(() -> {
                             Tag newTag = new Tag();
-                            newTag.setNombre(tagName);
+                            newTag.setNombre(tagInput.getNombre());
+                            newTag.setColor(tagInput.getColor() != null ? tagInput.getColor() : "#64748b");
                             return tagRepository.save(newTag);
                         }))
                 .collect(Collectors.toSet());
