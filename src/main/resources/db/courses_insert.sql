@@ -2361,7 +2361,7 @@ VALUES (
     (SELECT id FROM semestres WHERE numero = 4 AND id_pensum = (SELECT id FROM pensums WHERE nombre = 'Pensum 2025' LIMIT 1) LIMIT 1),
     (SELECT id FROM areas_tecnicas WHERE nombre = 'Gestión y Gerencia' LIMIT 1),
     true,
-    5
+    0
 );
 
 INSERT INTO prerrequisitos (id_curso, tipo, id_curso_prereq)
@@ -2922,7 +2922,7 @@ VALUES (
     (SELECT id FROM semestres WHERE numero = 7 AND id_pensum = (SELECT id FROM pensums WHERE nombre = 'Pensum 2025' LIMIT 1) LIMIT 1),
     (SELECT id FROM areas_tecnicas WHERE nombre = 'Gestión y Gerencia' LIMIT 1),
     false,
-    6
+    0
 );
 
 INSERT INTO prerrequisitos (id_curso, tipo, id_curso_prereq)
@@ -2953,9 +2953,552 @@ VALUES (
     (SELECT id FROM cursos WHERE codigo = '3238' LIMIT 1)
 );
 
-select count(*) as total_cursos
-from cursos c
-join semestres s on c.id_semestre = s.id
-join pensums p on s.id_pensum = p.id
-where p.id = 1;
+-- SEMESTRE 8 - PENSUM 2025
 
+INSERT INTO cursos (codigo, nombre, id_semestre, id_area, obligatorio, creditos)
+VALUES (
+    '3255',
+    'Sistemas Operativos 2',
+    (SELECT id FROM semestres WHERE numero = 8 AND id_pensum = (SELECT id FROM pensums WHERE nombre = 'Pensum 2025' LIMIT 1) LIMIT 1),
+    (SELECT id FROM areas_tecnicas WHERE nombre = 'Infraestructura y Redes' LIMIT 1),
+    true,
+    4
+);
+
+INSERT INTO prerrequisitos (id_curso, tipo, id_curso_prereq)
+VALUES (
+    (SELECT id FROM cursos WHERE codigo = '3255' LIMIT 1),
+    'CURSO',
+    (SELECT id FROM cursos WHERE codigo = '3250' LIMIT 1)
+);
+
+INSERT INTO cursos (codigo, nombre, id_semestre, id_area, obligatorio, creditos)
+VALUES (
+    '3256',
+    'Redes de Computadoras 2',
+    (SELECT id FROM semestres WHERE numero = 8 AND id_pensum = (SELECT id FROM pensums WHERE nombre = 'Pensum 2025' LIMIT 1) LIMIT 1),
+    (SELECT id FROM areas_tecnicas WHERE nombre = 'Infraestructura y Redes' LIMIT 1),
+    true,
+    6
+);
+
+INSERT INTO prerrequisitos (id_curso, tipo, id_curso_prereq)
+VALUES (
+    (SELECT id FROM cursos WHERE codigo = '3256' LIMIT 1),
+    'CURSO',
+    (SELECT id FROM cursos WHERE codigo = '3252' LIMIT 1)
+);
+
+INSERT INTO cursos (codigo, nombre, id_semestre, id_area, obligatorio, creditos)
+VALUES (
+    '3257',
+    'Sistemas de Bases de Datos 2',
+    (SELECT id FROM semestres WHERE numero = 8 AND id_pensum = (SELECT id FROM pensums WHERE nombre = 'Pensum 2025' LIMIT 1) LIMIT 1),
+    (SELECT id FROM areas_tecnicas WHERE nombre = 'Sistemas de Información' LIMIT 1),
+    true,
+    7
+);
+
+INSERT INTO prerrequisitos (id_curso, tipo, id_curso_prereq)
+VALUES (
+    (SELECT id FROM cursos WHERE codigo = '3257' LIMIT 1),
+    'CURSO',
+    (SELECT id FROM cursos WHERE codigo = '3250' LIMIT 1)
+);
+
+INSERT INTO prerrequisitos (id_curso, tipo, id_curso_prereq)
+VALUES (
+    (SELECT id FROM cursos WHERE codigo = '3257' LIMIT 1),
+    'CURSO',
+    (SELECT id FROM cursos WHERE codigo = '3253' LIMIT 1)
+);
+
+INSERT INTO cursos (codigo, nombre, id_semestre, id_area, obligatorio, creditos)
+VALUES (
+    '3258',
+    'Análisis y Diseño de Sistemas 1',
+    (SELECT id FROM semestres WHERE numero = 8 AND id_pensum = (SELECT id FROM pensums WHERE nombre = 'Pensum 2025' LIMIT 1) LIMIT 1),
+    (SELECT id FROM areas_tecnicas WHERE nombre = 'Desarrollo de Software' LIMIT 1),
+    true,
+    6
+);
+
+INSERT INTO prerrequisitos (id_curso, tipo, id_curso_prereq)
+VALUES (
+    (SELECT id FROM cursos WHERE codigo = '3258' LIMIT 1),
+    'CURSO',
+    (SELECT id FROM cursos WHERE codigo = '3253' LIMIT 1)
+);
+
+INSERT INTO cursos (codigo, nombre, id_semestre, id_area, obligatorio, creditos)
+VALUES (
+    '3259',
+    'Seminario de Sistemas 1',
+    (SELECT id FROM semestres WHERE numero = 8 AND id_pensum = (SELECT id FROM pensums WHERE nombre = 'Pensum 2025' LIMIT 1) LIMIT 1),
+    (SELECT id FROM areas_tecnicas WHERE nombre = 'Sistemas de Información' LIMIT 1),
+    true,
+    5
+);
+
+INSERT INTO prerrequisitos (id_curso, tipo, id_curso_prereq)
+VALUES (
+    (SELECT id FROM cursos WHERE codigo = '3259' LIMIT 1),
+    'CURSO',
+    (SELECT id FROM cursos WHERE codigo = '3250' LIMIT 1)
+);
+
+INSERT INTO prerrequisitos (id_curso, tipo, id_curso_prereq)
+VALUES (
+    (SELECT id FROM cursos WHERE codigo = '3259' LIMIT 1),
+    'CURSO',
+    (SELECT id FROM cursos WHERE codigo = '3248' LIMIT 1)
+);
+
+INSERT INTO prerrequisitos (id_curso, tipo, id_curso_prereq)
+VALUES (
+    (SELECT id FROM cursos WHERE codigo = '3259' LIMIT 1),
+    'CURSO',
+    (SELECT id FROM cursos WHERE codigo = '3253' LIMIT 1)
+);
+
+INSERT INTO cursos (codigo, nombre, id_semestre, id_area, obligatorio, creditos)
+VALUES (
+    '3110',
+    'Ingeniería Económica 1',
+    (SELECT id FROM semestres WHERE numero = 8 AND id_pensum = (SELECT id FROM pensums WHERE nombre = 'Pensum 2025' LIMIT 1) LIMIT 1),
+    (SELECT id FROM areas_tecnicas WHERE nombre = 'Gestión y Gerencia' LIMIT 1),
+    false,
+    4
+);
+
+INSERT INTO prerrequisitos (id_curso, tipo, id_curso_prereq)
+VALUES (
+    (SELECT id FROM cursos WHERE codigo = '3110' LIMIT 1),
+    'CURSO',
+    (SELECT id FROM cursos WHERE codigo = '3090' LIMIT 1)
+);
+
+-- SEMESTRE 9 - PENSUM 2025
+
+INSERT INTO cursos (codigo, nombre, id_semestre, id_area, obligatorio, creditos)
+VALUES (
+    '3260',
+    'Modelación y Simulación 1',
+    (SELECT id FROM semestres WHERE numero = 9 AND id_pensum = (SELECT id FROM pensums WHERE nombre = 'Pensum 2025' LIMIT 1) LIMIT 1),
+    (SELECT id FROM areas_tecnicas WHERE nombre = 'Inteligencia Artificial' LIMIT 1),
+    true,
+    5
+);
+
+INSERT INTO prerrequisitos (id_curso, tipo, id_curso_prereq)
+VALUES (
+    (SELECT id FROM cursos WHERE codigo = '3260' LIMIT 1),
+    'CURSO',
+    (SELECT id FROM cursos WHERE codigo = '3249' LIMIT 1)
+);
+
+INSERT INTO prerrequisitos (id_curso, tipo, id_curso_prereq)
+VALUES (
+    (SELECT id FROM cursos WHERE codigo = '3260' LIMIT 1),
+    'CURSO',
+    (SELECT id FROM cursos WHERE codigo = '3248' LIMIT 1)
+);
+
+INSERT INTO cursos (codigo, nombre, id_semestre, id_area, obligatorio, creditos)
+VALUES (
+    '3261',
+    'Sistemas Organizacionales y Gerenciales 1',
+    (SELECT id FROM semestres WHERE numero = 9 AND id_pensum = (SELECT id FROM pensums WHERE nombre = 'Pensum 2025' LIMIT 1) LIMIT 1),
+    (SELECT id FROM areas_tecnicas WHERE nombre = 'Sistemas de Información' LIMIT 1),
+    true,
+    5
+);
+
+INSERT INTO prerrequisitos (id_curso, tipo, id_curso_prereq)
+VALUES (
+    (SELECT id FROM cursos WHERE codigo = '3261' LIMIT 1),
+    'CURSO',
+    (SELECT id FROM cursos WHERE codigo = '3258' LIMIT 1)
+);
+
+INSERT INTO prerrequisitos (id_curso, tipo, id_curso_prereq)
+VALUES (
+    (SELECT id FROM cursos WHERE codigo = '3261' LIMIT 1),
+    'CURSO',
+    (SELECT id FROM cursos WHERE codigo = '3244' LIMIT 1)
+);
+
+INSERT INTO cursos (codigo, nombre, id_semestre, id_area, obligatorio, creditos)
+VALUES (
+    '3262',
+    'Inteligencia Artificial 1',
+    (SELECT id FROM semestres WHERE numero = 9 AND id_pensum = (SELECT id FROM pensums WHERE nombre = 'Pensum 2025' LIMIT 1) LIMIT 1),
+    (SELECT id FROM areas_tecnicas WHERE nombre = 'Inteligencia Artificial' LIMIT 1),
+    true,
+    7
+);
+
+INSERT INTO prerrequisitos (id_curso, tipo, id_curso_prereq)
+VALUES (
+    (SELECT id FROM cursos WHERE codigo = '3262' LIMIT 1),
+    'CURSO',
+    (SELECT id FROM cursos WHERE codigo = '3248' LIMIT 1)
+);
+
+INSERT INTO prerrequisitos (id_curso, tipo, id_curso_prereq)
+VALUES (
+    (SELECT id FROM cursos WHERE codigo = '3262' LIMIT 1),
+    'CURSO',
+    (SELECT id FROM cursos WHERE codigo = '3257' LIMIT 1)
+);
+
+INSERT INTO prerrequisitos (id_curso, tipo, id_curso_prereq)
+VALUES (
+    (SELECT id FROM cursos WHERE codigo = '3262' LIMIT 1),
+    'CURSO',
+    (SELECT id FROM cursos WHERE codigo = '3245' LIMIT 1)
+);
+
+INSERT INTO cursos (codigo, nombre, id_semestre, id_area, obligatorio, creditos)
+VALUES (
+    '3263',
+    'Seguridad y Auditoría de Redes de Computadoras',
+    (SELECT id FROM semestres WHERE numero = 9 AND id_pensum = (SELECT id FROM pensums WHERE nombre = 'Pensum 2025' LIMIT 1) LIMIT 1),
+    (SELECT id FROM areas_tecnicas WHERE nombre = 'Infraestructura y Redes' LIMIT 1),
+    false,
+    3
+);
+
+INSERT INTO prerrequisitos (id_curso, tipo, id_curso_prereq)
+VALUES (
+    (SELECT id FROM cursos WHERE codigo = '3263' LIMIT 1),
+    'CURSO',
+    (SELECT id FROM cursos WHERE codigo = '3256' LIMIT 1)
+);
+
+INSERT INTO cursos (codigo, nombre, id_semestre, id_area, obligatorio, creditos)
+VALUES (
+    '3264',
+    'Análisis y Diseño de Sistemas 2',
+    (SELECT id FROM semestres WHERE numero = 9 AND id_pensum = (SELECT id FROM pensums WHERE nombre = 'Pensum 2025' LIMIT 1) LIMIT 1),
+    (SELECT id FROM areas_tecnicas WHERE nombre = 'Desarrollo de Software' LIMIT 1),
+    true,
+    7
+);
+
+INSERT INTO prerrequisitos (id_curso, tipo, id_curso_prereq)
+VALUES (
+    (SELECT id FROM cursos WHERE codigo = '3264' LIMIT 1),
+    'CURSO',
+    (SELECT id FROM cursos WHERE codigo = '3258' LIMIT 1)
+);
+
+INSERT INTO cursos (codigo, nombre, id_semestre, id_area, obligatorio, creditos)
+VALUES (
+    '3265',
+    'Seminario de Sistemas 2',
+    (SELECT id FROM semestres WHERE numero = 9 AND id_pensum = (SELECT id FROM pensums WHERE nombre = 'Pensum 2025' LIMIT 1) LIMIT 1),
+    (SELECT id FROM areas_tecnicas WHERE nombre = 'Sistemas de Información' LIMIT 1),
+    true,
+    5
+);
+
+INSERT INTO prerrequisitos (id_curso, tipo, id_curso_prereq)
+VALUES (
+    (SELECT id FROM cursos WHERE codigo = '3265' LIMIT 1),
+    'CURSO',
+    (SELECT id FROM cursos WHERE codigo = '3255' LIMIT 1)
+);
+
+INSERT INTO prerrequisitos (id_curso, tipo, id_curso_prereq)
+VALUES (
+    (SELECT id FROM cursos WHERE codigo = '3265' LIMIT 1),
+    'CURSO',
+    (SELECT id FROM cursos WHERE codigo = '3257' LIMIT 1)
+);
+
+INSERT INTO prerrequisitos (id_curso, tipo, id_curso_prereq)
+VALUES (
+    (SELECT id FROM cursos WHERE codigo = '3265' LIMIT 1),
+    'CURSO',
+    (SELECT id FROM cursos WHERE codigo = '3259' LIMIT 1)
+);
+
+INSERT INTO cursos (codigo, nombre, id_semestre, id_area, obligatorio, creditos)
+VALUES (
+    '3266',
+    'Sistemas Aplicados 1',
+    (SELECT id FROM semestres WHERE numero = 9 AND id_pensum = (SELECT id FROM pensums WHERE nombre = 'Pensum 2025' LIMIT 1) LIMIT 1),
+    (SELECT id FROM areas_tecnicas WHERE nombre = 'Sistemas de Información' LIMIT 1),
+    false,
+    5
+);
+
+INSERT INTO prerrequisitos (id_curso, tipo, id_curso_prereq)
+VALUES (
+    (SELECT id FROM cursos WHERE codigo = '3266' LIMIT 1),
+    'CURSO',
+    (SELECT id FROM cursos WHERE codigo = '3258' LIMIT 1)
+);
+
+INSERT INTO cursos (codigo, nombre, id_semestre, id_area, obligatorio, creditos)
+VALUES (
+    '3267',
+    'Bases de Datos Avanzadas',
+    (SELECT id FROM semestres WHERE numero = 9 AND id_pensum = (SELECT id FROM pensums WHERE nombre = 'Pensum 2025' LIMIT 1) LIMIT 1),
+    (SELECT id FROM areas_tecnicas WHERE nombre = 'Sistemas de Información' LIMIT 1),
+    false,
+    5
+);
+
+INSERT INTO prerrequisitos (id_curso, tipo, id_curso_prereq)
+VALUES (
+    (SELECT id FROM cursos WHERE codigo = '3267' LIMIT 1),
+    'CURSO',
+    (SELECT id FROM cursos WHERE codigo = '3257' LIMIT 1)
+);
+
+INSERT INTO cursos (codigo, nombre, id_semestre, id_area, obligatorio, creditos)
+VALUES (
+    '3268',
+    'Prácticas Finales Ingeniería Ciencias y Sistemas',
+    (SELECT id FROM semestres WHERE numero = 9 AND id_pensum = (SELECT id FROM pensums WHERE nombre = 'Pensum 2025' LIMIT 1) LIMIT 1),
+    (SELECT id FROM areas_tecnicas WHERE nombre = 'Gestión y Gerencia' LIMIT 1),
+    true,
+    0
+);
+
+INSERT INTO prerrequisitos (id_curso, tipo, id_curso_prereq)
+VALUES (
+    (SELECT id FROM cursos WHERE codigo = '3268' LIMIT 1),
+    'CURSO',
+    (SELECT id FROM cursos WHERE codigo = '3258' LIMIT 1)
+);
+
+INSERT INTO prerrequisitos (id_curso, tipo, id_curso_prereq)
+VALUES (
+    (SELECT id FROM cursos WHERE codigo = '3268' LIMIT 1),
+    'CURSO',
+    (SELECT id FROM cursos WHERE codigo = '3255' LIMIT 1)
+);
+
+INSERT INTO prerrequisitos (id_curso, tipo, id_curso_prereq)
+VALUES (
+    (SELECT id FROM cursos WHERE codigo = '3268' LIMIT 1),
+    'CURSO',
+    (SELECT id FROM cursos WHERE codigo = '3256' LIMIT 1)
+);
+
+INSERT INTO prerrequisitos (id_curso, tipo, id_curso_prereq)
+VALUES (
+    (SELECT id FROM cursos WHERE codigo = '3268' LIMIT 1),
+    'CURSO',
+    (SELECT id FROM cursos WHERE codigo = '3254' LIMIT 1)
+);
+
+-- SEMESTRE 10 - PENSUM 2025
+
+INSERT INTO cursos (codigo, nombre, id_semestre, id_area, obligatorio, creditos)
+VALUES (
+    '3269',
+    'Modelación y Simulación 2',
+    (SELECT id FROM semestres WHERE numero = 10 AND id_pensum = (SELECT id FROM pensums WHERE nombre = 'Pensum 2025' LIMIT 1) LIMIT 1),
+    (SELECT id FROM areas_tecnicas WHERE nombre = 'Inteligencia Artificial' LIMIT 1),
+    true,
+    6
+);
+
+INSERT INTO prerrequisitos (id_curso, tipo, id_curso_prereq)
+VALUES (
+    (SELECT id FROM cursos WHERE codigo = '3269' LIMIT 1),
+    'CURSO',
+    (SELECT id FROM cursos WHERE codigo = '3260' LIMIT 1)
+);
+
+INSERT INTO cursos (codigo, nombre, id_semestre, id_area, obligatorio, creditos)
+VALUES (
+    '3270',
+    'Sistemas Organizacionales y Gerenciales 2',
+    (SELECT id FROM semestres WHERE numero = 10 AND id_pensum = (SELECT id FROM pensums WHERE nombre = 'Pensum 2025' LIMIT 1) LIMIT 1),
+    (SELECT id FROM areas_tecnicas WHERE nombre = 'Sistemas de Información' LIMIT 1),
+    true,
+    6
+);
+
+INSERT INTO prerrequisitos (id_curso, tipo, id_curso_prereq)
+VALUES (
+    (SELECT id FROM cursos WHERE codigo = '3270' LIMIT 1),
+    'CURSO',
+    (SELECT id FROM cursos WHERE codigo = '3261' LIMIT 1)
+);
+
+INSERT INTO cursos (codigo, nombre, id_semestre, id_area, obligatorio, creditos)
+VALUES (
+    '3271',
+    'Emprendedores de Negocios Informáticos',
+    (SELECT id FROM semestres WHERE numero = 10 AND id_pensum = (SELECT id FROM pensums WHERE nombre = 'Pensum 2025' LIMIT 1) LIMIT 1),
+    (SELECT id FROM areas_tecnicas WHERE nombre = 'Gestión y Gerencia' LIMIT 1),
+    false,
+    6
+);
+
+INSERT INTO prerrequisitos (id_curso, tipo, id_curso_prereq)
+VALUES (
+    (SELECT id FROM cursos WHERE codigo = '3271' LIMIT 1),
+    'CURSO',
+    (SELECT id FROM cursos WHERE codigo = '3261' LIMIT 1)
+);
+
+INSERT INTO cursos (codigo, nombre, id_semestre, id_area, obligatorio, creditos)
+VALUES (
+    '3272',
+    'Inteligencia Artificial 2',
+    (SELECT id FROM semestres WHERE numero = 10 AND id_pensum = (SELECT id FROM pensums WHERE nombre = 'Pensum 2025' LIMIT 1) LIMIT 1),
+    (SELECT id FROM areas_tecnicas WHERE nombre = 'Inteligencia Artificial' LIMIT 1),
+    false,
+    5
+);
+
+INSERT INTO prerrequisitos (id_curso, tipo, id_curso_prereq)
+VALUES (
+    (SELECT id FROM cursos WHERE codigo = '3272' LIMIT 1),
+    'CURSO',
+    (SELECT id FROM cursos WHERE codigo = '3262' LIMIT 1)
+);
+
+INSERT INTO cursos (codigo, nombre, id_semestre, id_area, obligatorio, creditos)
+VALUES (
+    '3273',
+    'Redes de Nueva Generación',
+    (SELECT id FROM semestres WHERE numero = 10 AND id_pensum = (SELECT id FROM pensums WHERE nombre = 'Pensum 2025' LIMIT 1) LIMIT 1),
+    (SELECT id FROM areas_tecnicas WHERE nombre = 'Infraestructura y Redes' LIMIT 1),
+    false,
+    3
+);
+
+INSERT INTO prerrequisitos (id_curso, tipo, id_curso_prereq)
+VALUES (
+    (SELECT id FROM cursos WHERE codigo = '3273' LIMIT 1),
+    'CURSO',
+    (SELECT id FROM cursos WHERE codigo = '3256' LIMIT 1)
+);
+
+INSERT INTO cursos (codigo, nombre, id_semestre, id_area, obligatorio, creditos)
+VALUES (
+    '3274',
+    'Software Avanzado',
+    (SELECT id FROM semestres WHERE numero = 10 AND id_pensum = (SELECT id FROM pensums WHERE nombre = 'Pensum 2025' LIMIT 1) LIMIT 1),
+    (SELECT id FROM areas_tecnicas WHERE nombre = 'Desarrollo de Software' LIMIT 1),
+    true,
+    8
+);
+
+INSERT INTO prerrequisitos (id_curso, tipo, id_curso_prereq)
+VALUES (
+    (SELECT id FROM cursos WHERE codigo = '3274' LIMIT 1),
+    'CURSO',
+    (SELECT id FROM cursos WHERE codigo = '3264' LIMIT 1)
+);
+
+INSERT INTO cursos (codigo, nombre, id_semestre, id_area, obligatorio, creditos)
+VALUES (
+    '3275',
+    'Sistemas Aplicados 2',
+    (SELECT id FROM semestres WHERE numero = 10 AND id_pensum = (SELECT id FROM pensums WHERE nombre = 'Pensum 2025' LIMIT 1) LIMIT 1),
+    (SELECT id FROM areas_tecnicas WHERE nombre = 'Sistemas de Información' LIMIT 1),
+    false,
+    5
+);
+
+INSERT INTO prerrequisitos (id_curso, tipo, id_curso_prereq)
+VALUES (
+    (SELECT id FROM cursos WHERE codigo = '3275' LIMIT 1),
+    'CURSO',
+    (SELECT id FROM cursos WHERE codigo = '3264' LIMIT 1)
+);
+
+INSERT INTO prerrequisitos (id_curso, tipo, id_curso_prereq)
+VALUES (
+    (SELECT id FROM cursos WHERE codigo = '3275' LIMIT 1),
+    'CURSO',
+    (SELECT id FROM cursos WHERE codigo = '3266' LIMIT 1)
+);
+
+INSERT INTO cursos (codigo, nombre, id_semestre, id_area, obligatorio, creditos)
+VALUES (
+    '3276',
+    'Auditoría de Proyectos de Software',
+    (SELECT id FROM semestres WHERE numero = 10 AND id_pensum = (SELECT id FROM pensums WHERE nombre = 'Pensum 2025' LIMIT 1) LIMIT 1),
+    (SELECT id FROM areas_tecnicas WHERE nombre = 'Desarrollo de Software' LIMIT 1),
+    false,
+    6
+);
+
+INSERT INTO prerrequisitos (id_curso, tipo, id_curso_prereq)
+VALUES (
+    (SELECT id FROM cursos WHERE codigo = '3276' LIMIT 1),
+    'CURSO',
+    (SELECT id FROM cursos WHERE codigo = '3264' LIMIT 1)
+);
+
+INSERT INTO cursos (codigo, nombre, id_semestre, id_area, obligatorio, creditos)
+VALUES (
+    '3277',
+    'Seminario de Investigación EPS Sistemas',
+    (SELECT id FROM semestres WHERE numero = 10 AND id_pensum = (SELECT id FROM pensums WHERE nombre = 'Pensum 2025' LIMIT 1) LIMIT 1),
+    (SELECT id FROM areas_tecnicas WHERE nombre = 'Gestión y Gerencia' LIMIT 1),
+    false,
+    3
+);
+
+INSERT INTO prerrequisitos (id_curso, tipo, id_curso_prereq)
+VALUES (
+    (SELECT id FROM cursos WHERE codigo = '3277' LIMIT 1),
+    'CURSO',
+    (SELECT id FROM cursos WHERE codigo = '3261' LIMIT 1)
+);
+
+INSERT INTO prerrequisitos (id_curso, tipo, id_curso_prereq)
+VALUES (
+    (SELECT id FROM cursos WHERE codigo = '3277' LIMIT 1),
+    'CURSO',
+    (SELECT id FROM cursos WHERE codigo = '3264' LIMIT 1)
+);
+
+INSERT INTO prerrequisitos (id_curso, tipo, id_curso_prereq)
+VALUES (
+    (SELECT id FROM cursos WHERE codigo = '3277' LIMIT 1),
+    'CURSO',
+    (SELECT id FROM cursos WHERE codigo = '3265' LIMIT 1)
+);
+
+INSERT INTO cursos (codigo, nombre, id_semestre, id_area, obligatorio, creditos)
+VALUES (
+    '3278',
+    'Seminario de Investigación',
+    (SELECT id FROM semestres WHERE numero = 10 AND id_pensum = (SELECT id FROM pensums WHERE nombre = 'Pensum 2025' LIMIT 1) LIMIT 1),
+    (SELECT id FROM areas_tecnicas WHERE nombre = 'Gestión y Gerencia' LIMIT 1),
+    true,
+    3
+);
+
+INSERT INTO prerrequisitos (id_curso, tipo, id_curso_prereq)
+VALUES (
+    (SELECT id FROM cursos WHERE codigo = '3278' LIMIT 1),
+    'CURSO',
+    (SELECT id FROM cursos WHERE codigo = '3264' LIMIT 1)
+);
+
+INSERT INTO prerrequisitos (id_curso, tipo, id_curso_prereq)
+VALUES (
+    (SELECT id FROM cursos WHERE codigo = '3278' LIMIT 1),
+    'CURSO',
+    (SELECT id FROM cursos WHERE codigo = '3261' LIMIT 1)
+);
+
+INSERT INTO prerrequisitos (id_curso, tipo, id_curso_prereq)
+VALUES (
+    (SELECT id FROM cursos WHERE codigo = '3278' LIMIT 1),
+    'CURSO',
+    (SELECT id FROM cursos WHERE codigo = '3265' LIMIT 1)
+);
