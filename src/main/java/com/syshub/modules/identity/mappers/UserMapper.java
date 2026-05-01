@@ -24,8 +24,18 @@ public class UserMapper {
 
         return AuthResponseDTO.builder()
                 .token(token)
+                .id(user.getId())
                 .username(user.getUsername())
+                .email(user.getEmail())
+                .nombreCompleto(user.getNombreCompleto())
+                .registroAcademico(user.getRegistroAcademico())
                 .role(user.getRol() != null ? user.getRol().getNombre() : null)
+                .carreraId(user.getCarrera() != null ? user.getCarrera().getId() : null)
+                .carreraNombre(user.getCarrera() != null ? user.getCarrera().getNombre() : null)
                 .build();
+    }
+
+    public AuthResponseDTO toAuthResponseDTO(User user) {
+        return toAuthResponseDTO(user, null);
     }
 }

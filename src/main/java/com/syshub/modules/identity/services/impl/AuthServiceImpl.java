@@ -43,11 +43,9 @@ public class AuthServiceImpl implements IAuthService {
         var user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new AppException("Usuario no encontrado", HttpStatus.NOT_FOUND));
 
-        return AuthResponseDTO.builder()
-                .token(jwtService.generateAccessToken(user))
-                .username(user.getUsername())
-                .role(user.getRol().getNombre())
-                .build();
+        String token = jwtService.generateAccessToken(user);
+
+        return userMapper.toAuthResponseDTO(user, token);
     }
 
     @Override
