@@ -30,8 +30,8 @@ public class CatalogController {
     }
 
     @GetMapping("/courses")
-    public ResponseEntity<List<CourseResponseDTO>> getCoursesBySemester(@RequestParam Long semesterId) {
-        return ResponseEntity.ok(catalogService.getCoursesBySemester(semesterId));
+    public ResponseEntity<List<CourseResponseDTO>> getCoursesBySemester(@RequestParam Long semesterNum) {
+        return ResponseEntity.ok(catalogService.getCoursesBySemester(semesterNum));
     }
 
     @GetMapping("/tags")

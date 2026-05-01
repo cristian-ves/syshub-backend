@@ -46,8 +46,8 @@ public class CatalogServiceImpl implements ICatalogService {
     }
 
     @Override
-    public List<CourseResponseDTO> getCoursesBySemester(Long semesterId) {
-        return courseRepository.findBySemesterId(semesterId).stream()
+    public List<CourseResponseDTO> getCoursesBySemester(Long semesterNum) {
+        return courseRepository.findBySemesterNumero(semesterNum).stream()
                 .map(catalogMapper::toCourseDTO)
                 .collect(Collectors.toList());
     }
