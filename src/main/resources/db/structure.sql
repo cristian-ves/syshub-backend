@@ -1,6 +1,12 @@
 
 -- Eliminar tablas si existen (en orden inverso por llaves foráneas)
 
+DROP TABLE IF EXISTS articulo_tags;
+DROP TABLE IF EXISTS articulos_favoritos;
+DROP TABLE IF EXISTS votos;
+DROP TABLE IF EXISTS comentarios;
+DROP TABLE IF EXISTS articulos;
+
 DROP TABLE IF EXISTS proyecto_tags;
 DROP TABLE IF EXISTS archivos_adjuntos;
 
@@ -137,4 +143,60 @@ CREATE TABLE proyecto_tags (
 
 	CONSTRAINT fk_tags_proyecto FOREIGN KEY (proyecto_id) REFERENCES proyectos(id) ON DELETE CASCADE,
 	CONSTRAINT fk_tags_tag FOREIGN KEY (tag_id) REFERENCES tags(id) ON DELETE CASCADE
+);
+
+CREATE TABLE articulos (
+    id SERIAL PRIMARY KEY,
+    titulo VARCHAR(255) NOT NULL,
+    slug VARCHAR(255) UNIQUE NOT NULL,
+    extracto TEXT,
+    contenido TEXT NOT NULL,
+    user_id UUID NOT NULL,
+    id_curso INTEGER NOT NULL,
+    status VARCHAR(20) DEFAULT 'PUBLISHED' CHECK (status IN ('DRAFT', 'PUBLISHED')),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT fk_articulos_usuario FOREIGN KEY (user_id) REFERENCES usuarios(id) ON DELETE CASCADE,
+    CONSTRAINT fk_articulos_curso FOREIGN KEY (id_curso) REFERENCES cursos(id)
+);
+
+CREATE TABLE comentarios (
+    id SERIAL PRIMARY KEY,
+    contenido TEXT NOT NULL,
+    user_id UUID NOT NULL,
+    target_id INTEGER NOT NULL,
+    target_type VARCHAR(20) NOT NULL CHECK (target_type IN ('ARTICULO', 'FORO')),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    
+    CONSTRAINT fk_comentarios_usuario FOREIGN KEY (user_id) REFERENCES usuarios(id) ON DELETE CASCADE
+);
+
+CREATE TABLE votos (
+    id SERIAL PRIMARY KEY,
+    user_id UUID NOT NULL,
+    target_id INTEGER NOT NULL,
+    target_type VARCHAR(20) NOT NULL CHECK (target_type IN ('ARTICULO', 'FORO')),
+    valor INTEGER NOT NULL CHECK (valor IN (1, -1)),
+    
+    CONSTRAINT fk_votos_usuario FOREIGN KEY (user_id) REFERENCES usuarios(id) ON DELETE CASCADE,
+    CONSTRAINT unq_usuario_voto UNIQUE (user_id, target_id, target_type)
+);
+
+CREATE TABLE articulos_favoritos (
+    user_id UUID NOT NULL,
+    articulo_id INTEGER NOT NULL,
+    saved_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (user_id, articulo_id),
+    
+    CONSTRAINT fk_fav_usuario FOREIGN KEY (user_id) REFERENCES usuarios(id) ON DELETE CASCADE,
+    CONSTRAINT fk_fav_articulo FOREIGN KEY (articulo_id) REFERENCES articulos(id) ON DELETE CASCADE
+);
+
+CREATE TABLE articulo_tags (
+    articulo_id INTEGER NOT NULL,
+    tag_id INTEGER NOT NULL,
+    PRIMARY KEY (articulo_id, tag_id),
+    CONSTRAINT fk_tags_articulo FOREIGN KEY (articulo_id) REFERENCES articulos(id) ON DELETE CASCADE,
+    CONSTRAINT fk_tags_tag_art FOREIGN KEY (tag_id) REFERENCES tags(id) ON DELETE CASCADE
 );
