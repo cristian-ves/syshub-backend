@@ -1,11 +1,14 @@
 package com.syshub.modules.identity.services.impl;
 
+import com.syshub.core.exceptions.AppException;
+import com.syshub.core.security.JwtService;
 import com.syshub.modules.identity.dtos.*;
 import com.syshub.modules.identity.entities.*;
 import com.syshub.modules.identity.repositories.*;
 import com.syshub.modules.identity.services.IUserService;
 import com.syshub.modules.identity.mappers.UserMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,11 +24,12 @@ public class UserServiceImpl implements IUserService {
     private final CarreraRepository carreraRepository;
     private final UserMapper userMapper;
     private final PasswordEncoder passwordEncoder;
+    private final JwtService jwtService;
 
     @Override
     @Transactional
     public AuthResponseDTO updateOwnProfile(UUID id, UserProfileUpdateDTO dto) {
-        User user = userRepository.findById(id).orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+        User user = userRepository.findById(id).orElseThrow(() -> new AppException("El usuario no existe", HttpStatus.NOT_FOUND));
 
         validateUniqueness(user, dto.getEmail(), dto.getUsername());
 
@@ -43,7 +47,11 @@ public class UserServiceImpl implements IUserService {
             user.setPassword(passwordEncoder.encode(dto.getPassword()));
         }
 
-        return userMapper.toAuthResponseDTO(userRepository.save(user), null);
+        User userResult = userRepository.save(user);
+
+        String jwtToken = jwtService.generateAccessToken(userResult);
+
+        return userMapper.toAuthResponseDTO(userResult, jwtToken);
     }
 
     @Override
