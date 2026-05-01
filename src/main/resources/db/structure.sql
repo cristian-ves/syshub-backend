@@ -1,3 +1,4 @@
+
 -- Eliminar tablas si existen (en orden inverso por llaves foráneas)
 
 DROP TABLE IF EXISTS proyecto_tags;
@@ -112,8 +113,11 @@ CREATE TABLE proyectos (
     repo_url VARCHAR(255),
     destacado BOOLEAN DEFAULT FALSE,
     fecha_subida TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    user_id UUID REFERENCES usuarios(id),
-    course_id INTEGER REFERENCES cursos(id)
+    user_id UUID NOT NULL,
+    course_id INTEGER NOT NULL,
+
+	CONSTRAINT fk_proyectos_usuario FOREIGN KEY (user_id) REFERENCES usuarios(id) ON DELETE CASCADE,
+    CONSTRAINT fk_proyectos_curso FOREIGN KEY (course_id) REFERENCES cursos(id)
 );
 
 CREATE TABLE archivos_adjuntos (
@@ -121,11 +125,16 @@ CREATE TABLE archivos_adjuntos (
     nombre_original VARCHAR(255) NOT NULL,
     nombre_archivo VARCHAR(255) NOT NULL,
     tipo_archivo VARCHAR(100),
-    proyecto_id INTEGER REFERENCES proyectos(id) ON DELETE CASCADE
+    proyecto_id INTEGER NOT NULL,
+
+	CONSTRAINT fk_archivos_proyecto FOREIGN KEY (proyecto_id) REFERENCES proyectos(id) ON DELETE CASCADE
 );
 
 CREATE TABLE proyecto_tags (
-    proyecto_id INTEGER REFERENCES proyectos(id) ON DELETE CASCADE,
-    tag_id INTEGER REFERENCES tags(id) ON DELETE CASCADE,
-    PRIMARY KEY (proyecto_id, tag_id)
+    proyecto_id INTEGER NOT NULL,
+    tag_id INTEGER NOT NULL,
+    PRIMARY KEY (proyecto_id, tag_id),
+
+	CONSTRAINT fk_tags_proyecto FOREIGN KEY (proyecto_id) REFERENCES proyectos(id) ON DELETE CASCADE,
+	CONSTRAINT fk_tags_tag FOREIGN KEY (tag_id) REFERENCES tags(id) ON DELETE CASCADE
 );
