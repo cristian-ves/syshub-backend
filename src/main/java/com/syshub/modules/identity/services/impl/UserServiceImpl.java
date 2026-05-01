@@ -2,7 +2,7 @@ package com.syshub.modules.identity.services.impl;
 
 import com.syshub.core.exceptions.AppException;
 import com.syshub.core.security.JwtService;
-import com.syshub.modules.identity.controllers.UserAdminCreateDTO;
+import com.syshub.modules.identity.dtos.UserAdminCreateDTO;
 import com.syshub.modules.identity.dtos.*;
 import com.syshub.modules.identity.entities.*;
 import com.syshub.modules.identity.repositories.*;
@@ -39,15 +39,15 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    public Page<AuthResponseDTO> findAllUsers(Pageable pageable) {
+    public Page<UserResponseDTO> findAllUsers(Pageable pageable) {
         Page<User> userPage = userRepository.findAll(pageable);
 
-        return userPage.map(user -> userMapper.toAuthResponseDTO(user, null));
+        return userPage.map(user -> userMapper.toUserResponseDTO(user));
     }
 
     @Override
     @Transactional
-    public AuthResponseDTO createUserByAdmin(UserAdminCreateDTO dto) {
+    public UserResponseDTO createUserByAdmin(UserAdminCreateDTO dto) {
         if (userRepository.existsByEmail(dto.getEmail())) {
             throw new AppException("El email ya está registrado", HttpStatus.CONFLICT);
         }
@@ -73,7 +73,7 @@ public class UserServiceImpl implements IUserService {
             user.setCarrera(carrera);
         }
 
-        return userMapper.toAuthResponseDTO(userRepository.save(user), null);
+        return userMapper.toUserResponseDTO(userRepository.save(user));
     }
 
     @Override
@@ -106,7 +106,7 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     @Transactional
-    public AuthResponseDTO updateUserByAdmin(UUID id, UserAdminUpdateDTO dto) {
+    public UserResponseDTO updateUserByAdmin(UUID id, UserAdminUpdateDTO dto) {
         User user = userRepository.findById(id).orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
 
         validateUniqueness(user, dto.getEmail(), dto.getUsername());
@@ -126,7 +126,7 @@ public class UserServiceImpl implements IUserService {
                     .orElseThrow(() -> new RuntimeException("Carrera no encontrada")));
         }
 
-        return userMapper.toAuthResponseDTO(userRepository.save(user), null);
+        return userMapper.toUserResponseDTO(userRepository.save(user));
     }
 
     private void validateUniqueness(User current, String newEmail, String newUsername) {

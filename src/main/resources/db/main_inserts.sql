@@ -1,3 +1,4 @@
+
 -- Datos iniciales necesarios para que el sistema funcione
 INSERT INTO roles (nombre) VALUES 
 ('ROLE_ADMIN'), 

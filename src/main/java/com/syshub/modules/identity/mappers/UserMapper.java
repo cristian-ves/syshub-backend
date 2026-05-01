@@ -2,6 +2,7 @@ package com.syshub.modules.identity.mappers;
 
 import com.syshub.modules.identity.dtos.AuthResponseDTO;
 import com.syshub.modules.identity.dtos.RegisterRequestDTO;
+import com.syshub.modules.identity.dtos.UserResponseDTO;
 import com.syshub.modules.identity.entities.User;
 import org.springframework.stereotype.Component;
 
@@ -37,5 +38,20 @@ public class UserMapper {
 
     public AuthResponseDTO toAuthResponseDTO(User user) {
         return toAuthResponseDTO(user, null);
+    }
+
+    public UserResponseDTO toUserResponseDTO(User user) {
+        if (user == null) return null;
+
+        return UserResponseDTO.builder()
+                .id(user.getId())
+                .username(user.getUsername())
+                .email(user.getEmail())
+                .nombreCompleto(user.getNombreCompleto())
+                .registroAcademico(user.getRegistroAcademico())
+                .roleId(user.getRol().getId())
+                .carreraId(user.getCarrera().getId())
+                .enabled(user.isEnabled())
+                .build();
     }
 }

@@ -31,7 +31,7 @@ public class UserController {
 
     @PutMapping("/admin/{id}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<AuthResponseDTO> updateAnyUser(
+    public ResponseEntity<UserResponseDTO> updateAnyUser(
             @PathVariable UUID id,
             @Valid @RequestBody UserAdminUpdateDTO dto) {
         return ResponseEntity.ok(userService.updateUserByAdmin(id, dto));
@@ -39,7 +39,7 @@ public class UserController {
 
     @PostMapping("/admin")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
-    public ResponseEntity<AuthResponseDTO> createUserByAdmin(
+    public ResponseEntity<UserResponseDTO> createUserByAdmin(
             @Valid @RequestBody UserAdminCreateDTO dto) {
         System.out.println("llega");
         return new ResponseEntity<>(userService.createUserByAdmin(dto), HttpStatus.CREATED);
@@ -54,7 +54,7 @@ public class UserController {
 
     @GetMapping("/admin")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<Page<AuthResponseDTO>> getAllUsers(
+    public ResponseEntity<Page<UserResponseDTO>> getAllUsers(
             @PageableDefault(size = 10, sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable) {
         return ResponseEntity.ok(userService.findAllUsers(pageable));
     }
