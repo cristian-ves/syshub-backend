@@ -9,7 +9,7 @@ import java.util.Set;
 
 @Data
 public class ArticleResponseDTO {
-    private Long id;
+    private Integer id;
     private String titulo;
     private String slug;
     private String extracto;
@@ -21,4 +21,5 @@ public class ArticleResponseDTO {
     private Set<TagResponseDTO> tags;
     private Integer puntos;
     private boolean isFavorite;
+    private Integer vote;
 }

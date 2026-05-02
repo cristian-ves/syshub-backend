@@ -1,0 +1,82 @@
+[
+  {
+    "titulo": "Docker y Contenedores 101",
+    "extracto": "Conceptos basicos para aislar entornos de desarrollo.",
+    "contenido": "# Docker\n\nUsa `docker-compose up` para levantar servicios.",
+    "courseId": 1,
+    "status": "PUBLISHED",
+    "tags": [{"nombre": "DevOps", "color": "#2496ed"}]
+  },
+  {
+    "titulo": "Programacion Funcional en JS",
+    "extracto": "Map, filter y reduce explicados con ejemplos claros.",
+    "contenido": "# Funcional\n\nEvita las mutaciones de estado.",
+    "courseId": 1,
+    "status": "PUBLISHED",
+    "tags": [{"nombre": "JS", "color": "#f7df1e"}]
+  },
+  {
+    "titulo": "Patrones de Diseno: Singleton",
+    "extracto": "Como asegurar que una clase tenga una unica instancia.",
+    "contenido": "# Singleton\n\nUtil en manejadores de bases de datos.",
+    "courseId": 2,
+    "status": "PUBLISHED",
+    "tags": [{"nombre": "Patterns", "color": "#000000"}]
+  },
+  {
+    "titulo": "Introduccion a Redis",
+    "extracto": "Cache de alto rendimiento para aplicaciones escalables.",
+    "contenido": "# Redis\n\nAlmacenamiento llave-valor en memoria.",
+    "courseId": 2,
+    "status": "PUBLISHED",
+    "tags": [{"nombre": "Backend", "color": "#d82c20"}]
+  },
+  {
+    "titulo": "Testing con Jest",
+    "extracto": "Aprende a escribir pruebas unitarias efectivas.",
+    "contenido": "# Jest\n\n`test('should add', () => { expect(1+1).toBe(2); });`",
+    "courseId": 3,
+    "status": "PUBLISHED",
+    "tags": [{"nombre": "Testing", "color": "#99424f"}]
+  },
+  {
+    "titulo": "Next.js y Server Side Rendering",
+    "extracto": "Mejora el SEO de tu aplicacion React.",
+    "contenido": "# Next.js\n\nUso de `getServerSideProps`.",
+    "courseId": 3,
+    "status": "PUBLISHED",
+    "tags": [{"nombre": "Frontend", "color": "#000000"}]
+  },
+  {
+    "titulo": "Linux para Desarrolladores",
+    "extracto": "Comandos esenciales de la terminal que debes conocer.",
+    "contenido": "# Bash\n\n`ls`, `cd`, `grep` y `chmod`.",
+    "courseId": 4,
+    "status": "PUBLISHED",
+    "tags": [{"nombre": "Linux", "color": "#fcc624"}]
+  },
+  {
+    "titulo": "WebSockets con Socket.io",
+    "extracto": "Comunicacion en tiempo real para chats y notificaciones.",
+    "contenido": "# WebSockets\n\nEventos `emit` y `on`.",
+    "courseId": 4,
+    "status": "PUBLISHED",
+    "tags": [{"nombre": "Realtime", "color": "#010101"}]
+  },
+  {
+    "titulo": "GraphQL vs REST",
+    "extracto": "Analisis de ventajas y desventajas de cada arquitectura.",
+    "contenido": "# API\n\nGraphQL evita el over-fetching.",
+    "courseId": 5,
+    "status": "PUBLISHED",
+    "tags": [{"nombre": "API", "color": "#e10098"}]
+  },
+  {
+    "titulo": "Manejo de Memoria en Java",
+    "extracto": "Entiende como funciona el Garbage Collector.",
+    "contenido": "# JVM\n\nHeap vs Stack memory.",
+    "courseId": 5,
+    "status": "PUBLISHED",
+    "tags": [{"nombre": "Java", "color": "#007396"}]
+  }
+]

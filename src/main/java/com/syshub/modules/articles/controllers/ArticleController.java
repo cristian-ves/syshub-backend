@@ -3,6 +3,7 @@ package com.syshub.modules.articles.controllers;
 import com.syshub.core.exceptions.AppException;
 import com.syshub.modules.articles.dtos.ArticleRequestDTO;
 import com.syshub.modules.articles.dtos.ArticleResponseDTO;
+import com.syshub.modules.articles.dtos.VoteResponseDTO;
 import com.syshub.modules.articles.services.IArticleService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -46,13 +47,12 @@ public class ArticleController {
 
     @PostMapping("/{id}/vote")
     @PreAuthorize("isAuthenticated()")
-    public ResponseEntity<Void> voteArticle(
+    public ResponseEntity<VoteResponseDTO> voteArticle(
             @PathVariable Long id,
             @RequestParam Integer value
     ) {
 
-        articleService.voteArticle(id, value);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(articleService.voteArticle(id, value));
     }
 
     @PostMapping("/{id}/favorite")

@@ -2,6 +2,7 @@ package com.syshub.modules.articles.mappers;
 
 import com.syshub.modules.articles.dtos.ArticleResponseDTO;
 import com.syshub.modules.articles.entities.Article;
+import com.syshub.modules.articles.entities.ArticleVote;
 import com.syshub.modules.catalog.dtos.CourseResponseDTO;
 import com.syshub.modules.catalog.dtos.TagResponseDTO;
 import com.syshub.modules.identity.dtos.UserResponseDTO;
@@ -61,6 +62,18 @@ public class ArticleMapper {
             dto.setFavorite(isFav);
         } else {
             dto.setFavorite(false);
+        }
+
+        if (currentUserId != null && article.getVotos() != null) {
+            Integer userVote = article.getVotos().stream()
+                    .filter(v -> v.getUsuario().getId().equals(currentUserId))
+                    .filter(v -> "ARTICULO".equals(v.getTargetType()))
+                    .map(ArticleVote::getValor)
+                    .findFirst()
+                    .orElse(0);
+            dto.setVote(userVote);
+        } else {
+            dto.setVote(0);
         }
 
         return dto;

@@ -25,9 +25,13 @@ public class ArticleSpecifications {
                 predicates.add(cb.equal(root.get("curso").get("id"), courseId));
             }
 
-            if (tag != null && !tag.isEmpty()) {
+            if (tag != null && !tag.trim().isEmpty()) {
+
                 Join<Object, Object> tagsJoin = root.join("tags");
-                predicates.add(cb.equal(cb.lower(tagsJoin.get("nombre")), tag.toLowerCase()));
+
+                String searchPattern = "%" + tag.toLowerCase().trim() + "%";
+
+                predicates.add(cb.like(cb.lower(tagsJoin.get("nombre")), searchPattern));
             }
 
             if (status != null) {

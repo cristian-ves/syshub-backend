@@ -20,7 +20,7 @@ public class Article {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
     @Column(nullable = false)
     private String titulo;
@@ -84,5 +84,10 @@ public class Article {
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     private Set<ArticleFavorite> favoritos;
+
+    @OneToMany(mappedBy = "articulo", cascade = CascadeType.ALL, orphanRemoval = true)
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    private Set<ArticleVote> votos;
 
 }

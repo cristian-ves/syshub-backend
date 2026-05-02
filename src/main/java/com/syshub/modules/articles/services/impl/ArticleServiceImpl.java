@@ -3,6 +3,7 @@ package com.syshub.modules.articles.services.impl;
 import com.syshub.core.exceptions.AppException;
 import com.syshub.modules.articles.dtos.ArticleRequestDTO;
 import com.syshub.modules.articles.dtos.ArticleResponseDTO;
+import com.syshub.modules.articles.dtos.VoteResponseDTO;
 import com.syshub.modules.articles.entities.Article;
 import com.syshub.modules.articles.entities.ArticleFavorite;
 import com.syshub.modules.articles.entities.Vote;
@@ -131,7 +132,7 @@ public class ArticleServiceImpl implements IArticleService {
 
     @Override
     @Transactional
-    public void voteArticle(Long articleId, Integer value) {
+    public VoteResponseDTO voteArticle(Long articleId, Integer value) {
         if (value != 1 && value != -1) {
             throw new AppException("El valor del voto debe ser 1 o -1", HttpStatus.BAD_REQUEST);
         }
@@ -175,6 +176,9 @@ public class ArticleServiceImpl implements IArticleService {
 
         article.setPuntos(article.getPuntos() + pointsAdjustment);
         articleRepository.save(article);
+
+        VoteResponseDTO dto = new VoteResponseDTO(article.getId(), article.getPuntos());
+        return dto;
     }
 
     @Override
