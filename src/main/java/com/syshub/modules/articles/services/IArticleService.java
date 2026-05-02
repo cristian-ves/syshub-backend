@@ -7,7 +7,7 @@ import org.springframework.data.domain.Pageable;
 public interface IArticleService {
     ArticleResponseDTO createArticle(ArticleRequestDTO request);
     Page<ArticleResponseDTO> getArticles(String search, Long courseId, String tag, String status, Pageable pageable);
-    ArticleResponseDTO getArticleBySlug(String slug);
+    ArticleDetailResponseDTO getArticleBySlug(String slug);
     VoteResponseDTO voteArticle(Long articleId, Integer value);
     void toggleFavorite(Long articleId);
     ArticleResponseDTO updateArticle(Long id, ArticleRequestDTO request);

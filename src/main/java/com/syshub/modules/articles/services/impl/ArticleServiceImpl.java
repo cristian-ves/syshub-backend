@@ -21,6 +21,7 @@ import com.syshub.modules.identity.dtos.UserResponseDTO;
 import com.syshub.modules.identity.entities.User;
 import com.syshub.modules.identity.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -32,10 +33,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.text.Normalizer;
-import java.util.Locale;
-import java.util.Optional;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
@@ -125,11 +123,38 @@ public class ArticleServiceImpl implements IArticleService {
 
     @Override
     @Transactional(readOnly = true)
-    public ArticleResponseDTO getArticleBySlug(String slug) {
+    public ArticleDetailResponseDTO getArticleBySlug(String slug) {
         UUID currentUserId = getCurrentUserId();
+
         Article article = articleRepository.findBySlug(slug)
                 .orElseThrow(() -> new AppException("Artículo no encontrado", HttpStatus.NOT_FOUND));
-        return articleMapper.toDto(article, currentUserId);
+
+        ArticleResponseDTO baseDto = articleMapper.toDto(article, currentUserId);
+
+        List<Comment> comments = commentRepository
+                .findByTargetIdAndTargetTypeOrderByCreatedAtDesc(article.getId(), "ARTICULO");
+
+        List<CommentResponseDTO> comentariosDto = comments.stream().map(comment -> {
+            CommentResponseDTO dto = new CommentResponseDTO();
+            dto.setId(comment.getId());
+            dto.setContenido(comment.getContenido());
+            dto.setCreatedAt(comment.getCreatedAt());
+
+            UserResponseDTO userDto = new UserResponseDTO();
+            userDto.setId(comment.getAutor().getId());
+            userDto.setUsername(comment.getAutor().getUsername());
+            userDto.setNombreCompleto(comment.getAutor().getNombreCompleto());
+            userDto.setRoleId(comment.getAutor().getRol().getId());
+            dto.setAutor(userDto);
+
+            return dto;
+        }).collect(Collectors.toList());
+
+        ArticleDetailResponseDTO detailDto = new ArticleDetailResponseDTO();
+        BeanUtils.copyProperties(baseDto, detailDto);
+        detailDto.setComentarios(comentariosDto);
+
+        return detailDto;
     }
 
     @Override

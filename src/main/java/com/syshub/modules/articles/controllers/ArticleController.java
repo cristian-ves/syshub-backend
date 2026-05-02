@@ -39,7 +39,7 @@ public class ArticleController {
     }
 
     @GetMapping("/{slug}")
-    public ResponseEntity<ArticleResponseDTO> getBySlug(@PathVariable String slug) {
+    public ResponseEntity<ArticleDetailResponseDTO> getBySlug(@PathVariable String slug) {
         return ResponseEntity.ok(articleService.getArticleBySlug(slug));
     }
 
