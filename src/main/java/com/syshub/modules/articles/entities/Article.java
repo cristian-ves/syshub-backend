@@ -79,4 +79,10 @@ public class Article {
 
     @Column(nullable = false)
     private Integer puntos = 0;
+
+    @OneToMany(mappedBy = "articulo", cascade = CascadeType.ALL, orphanRemoval = true)
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    private Set<ArticleFavorite> favoritos;
+
 }

@@ -20,4 +20,5 @@ public class ArticleResponseDTO {
     private CourseResponseDTO curso;
     private Set<TagResponseDTO> tags;
     private Integer puntos;
+    private boolean isFavorite;
 }

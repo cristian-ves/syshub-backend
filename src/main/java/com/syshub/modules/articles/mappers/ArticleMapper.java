@@ -6,12 +6,14 @@ import com.syshub.modules.catalog.dtos.CourseResponseDTO;
 import com.syshub.modules.catalog.dtos.TagResponseDTO;
 import com.syshub.modules.identity.dtos.UserResponseDTO;
 import org.springframework.stereotype.Component;
+
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Component
 public class ArticleMapper {
 
-    public ArticleResponseDTO toDto(Article article) {
+    public ArticleResponseDTO toDto(Article article, UUID currentUserId) {
         if (article == null) return null;
 
         ArticleResponseDTO dto = new ArticleResponseDTO();
@@ -52,6 +54,14 @@ public class ArticleMapper {
                 .collect(Collectors.toSet()));
 
         dto.setPuntos(article.getPuntos() != null ? article.getPuntos() : 0);
+
+        if (currentUserId != null && article.getFavoritos() != null) {
+            boolean isFav = article.getFavoritos().stream()
+                    .anyMatch(f -> f.getUsuario().getId().equals(currentUserId));
+            dto.setFavorite(isFav);
+        } else {
+            dto.setFavorite(false);
+        }
 
         return dto;
     }

@@ -54,4 +54,32 @@ public class ArticleController {
         articleService.voteArticle(id, value);
         return ResponseEntity.ok().build();
     }
+
+    @PostMapping("/{id}/favorite")
+    @PreAuthorize("isAuthenticated()")
+    public ResponseEntity<Void> toggleFavorite(@PathVariable Long id) {
+        articleService.toggleFavorite(id);
+        return ResponseEntity.ok().build();
+    }
+
+    @PutMapping("/{id}")
+    @PreAuthorize("hasAnyRole('ROLE_AUXILIAR', 'ROLE_ADMIN')")
+    public ResponseEntity<ArticleResponseDTO> update(@PathVariable Long id, @Valid @RequestBody ArticleRequestDTO request) {
+        return ResponseEntity.ok(articleService.updateArticle(id, request));
+    }
+
+    @DeleteMapping("/{id}")
+    @PreAuthorize("hasAnyRole('ROLE_AUXILIAR', 'ROLE_ADMIN')")
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        articleService.deleteArticle(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/favorites")
+    @PreAuthorize("isAuthenticated()")
+    public ResponseEntity<Page<ArticleResponseDTO>> getMyFavorites(
+            @PageableDefault(size = 10, sort = "savedAt", direction = Sort.Direction.DESC) Pageable pageable
+    ) {
+        return ResponseEntity.ok(articleService.getMyFavoriteArticles(pageable));
+    }
 }

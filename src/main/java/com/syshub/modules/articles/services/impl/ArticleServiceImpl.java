@@ -4,8 +4,10 @@ import com.syshub.core.exceptions.AppException;
 import com.syshub.modules.articles.dtos.ArticleRequestDTO;
 import com.syshub.modules.articles.dtos.ArticleResponseDTO;
 import com.syshub.modules.articles.entities.Article;
+import com.syshub.modules.articles.entities.ArticleFavorite;
 import com.syshub.modules.articles.entities.Vote;
 import com.syshub.modules.articles.mappers.ArticleMapper;
+import com.syshub.modules.articles.repositories.ArticleFavoriteRepository;
 import com.syshub.modules.articles.repositories.ArticleRepository;
 import com.syshub.modules.articles.repositories.VoteRepository;
 import com.syshub.modules.articles.repositories.specifications.ArticleSpecifications;
@@ -21,6 +23,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -30,6 +33,7 @@ import java.text.Normalizer;
 import java.util.Locale;
 import java.util.Optional;
 import java.util.Set;
+import java.util.UUID;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
@@ -43,6 +47,7 @@ public class ArticleServiceImpl implements IArticleService {
     private final UserRepository userRepository;
     private final VoteRepository voteRepository;
     private final ArticleMapper articleMapper;
+    private final ArticleFavoriteRepository articleFavoriteRepository;
 
     @Override
     @Transactional
@@ -81,7 +86,7 @@ public class ArticleServiceImpl implements IArticleService {
                 .tags(articleTags)
                 .build();
 
-        return articleMapper.toDto(articleRepository.save(article));
+        return articleMapper.toDto(articleRepository.save(article), author.getId());
     }
 
     private String generateSlug(String input) {
@@ -110,15 +115,18 @@ public class ArticleServiceImpl implements IArticleService {
         }
 
         Specification<Article> spec = ArticleSpecifications.filterArticles(search, courseId, tag, finalStatus);
-        return articleRepository.findAll(spec, pageable).map(articleMapper::toDto);
+        UUID currentUserId = getCurrentUserId();
+        return articleRepository.findAll(spec, pageable)
+                .map(article -> articleMapper.toDto(article, currentUserId));
     }
 
     @Override
     @Transactional(readOnly = true)
     public ArticleResponseDTO getArticleBySlug(String slug) {
+        UUID currentUserId = getCurrentUserId();
         Article article = articleRepository.findBySlug(slug)
                 .orElseThrow(() -> new AppException("Artículo no encontrado", HttpStatus.NOT_FOUND));
-        return articleMapper.toDto(article);
+        return articleMapper.toDto(article, currentUserId);
     }
 
     @Override
@@ -167,5 +175,95 @@ public class ArticleServiceImpl implements IArticleService {
 
         article.setPuntos(article.getPuntos() + pointsAdjustment);
         articleRepository.save(article);
+    }
+
+    @Override
+    @Transactional
+    public void toggleFavorite(Long articleId) {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new AppException("Usuario no encontrado", HttpStatus.NOT_FOUND));
+
+        Article article = articleRepository.findById(articleId)
+                .orElseThrow(() -> new AppException("Artículo no encontrado", HttpStatus.NOT_FOUND));
+
+        Optional<ArticleFavorite> favorite = articleFavoriteRepository
+                .findByUsuarioIdAndArticuloId(user.getId(), articleId);
+
+        if (favorite.isPresent()) {
+            articleFavoriteRepository.delete(favorite.get());
+        } else {
+            ArticleFavorite newFavorite = ArticleFavorite.builder()
+                    .usuario(user)
+                    .articulo(article)
+                    .build();
+            articleFavoriteRepository.save(newFavorite);
+        }
+    }
+
+    @Override
+    @Transactional
+    public ArticleResponseDTO updateArticle(Long id, ArticleRequestDTO request) {
+        Article article = articleRepository.findById(id)
+                .orElseThrow(() -> new AppException("Artículo no encontrado", HttpStatus.NOT_FOUND));
+
+        UUID currentUserId = getCurrentUserId();
+
+        boolean isAdmin = SecurityContextHolder.getContext().getAuthentication().getAuthorities()
+                .stream().anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
+
+        if (!article.getAutor().getId().equals(currentUserId) && !isAdmin) {
+            throw new AppException("No tienes permiso para editar este artículo", HttpStatus.FORBIDDEN);
+        }
+
+        article.setTitulo(request.getTitulo());
+        article.setContenido(request.getContenido());
+        article.setExtracto(request.getExtracto());
+        article.setStatus(Article.ArticleStatus.valueOf(request.getStatus()));
+
+        return articleMapper.toDto(articleRepository.save(article), currentUserId);
+    }
+
+    @Override
+    @Transactional
+    public void deleteArticle(Long id) {
+        Article article = articleRepository.findById(id)
+                .orElseThrow(() -> new AppException("Artículo no encontrado", HttpStatus.NOT_FOUND));
+
+        UUID currentUserId = getCurrentUserId();
+        boolean isAdmin = SecurityContextHolder.getContext().getAuthentication().getAuthorities()
+                .stream().anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
+
+        if (!article.getAutor().getId().equals(currentUserId) && !isAdmin) {
+            throw new AppException("No tienes permiso para eliminar este artículo", HttpStatus.FORBIDDEN);
+        }
+
+        articleRepository.delete(article);
+    }
+
+    private UUID getCurrentUserId() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth == null || !auth.isAuthenticated() || auth instanceof AnonymousAuthenticationToken) {
+            return null;
+        }
+        return userRepository.findByUsername(auth.getName())
+                .map(User::getId)
+                .orElse(null);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Page<ArticleResponseDTO> getMyFavoriteArticles(Pageable pageable) {
+        UUID currentUserId = getCurrentUserId();
+        if (currentUserId == null) {
+            throw new AppException("Debes estar autenticado para ver tus favoritos", HttpStatus.UNAUTHORIZED);
+        }
+
+        return articleFavoriteRepository.findByUsuarioId(currentUserId, pageable)
+                .map(favorite -> {
+                    ArticleResponseDTO dto = articleMapper.toDto(favorite.getArticulo(), currentUserId);
+                    dto.setFavorite(true);
+                    return dto;
+                });
     }
 }

@@ -13,4 +13,8 @@ public interface IArticleService {
     ArticleResponseDTO getArticleBySlug(String slug);
 
     void voteArticle(Long articleId, Integer value);
+    void toggleFavorite(Long articleId);
+    ArticleResponseDTO updateArticle(Long id, ArticleRequestDTO request);
+    void deleteArticle(Long id);
+    Page<ArticleResponseDTO> getMyFavoriteArticles(Pageable pageable);
 }

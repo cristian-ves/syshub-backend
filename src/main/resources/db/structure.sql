@@ -185,13 +185,13 @@ CREATE TABLE votos (
 );
 
 CREATE TABLE articulos_favoritos (
+    id SERIAL PRIMARY KEY,
     user_id UUID NOT NULL,
     articulo_id INTEGER NOT NULL,
     saved_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    PRIMARY KEY (user_id, articulo_id),
-    
-    CONSTRAINT fk_fav_usuario FOREIGN KEY (user_id) REFERENCES usuarios(id) ON DELETE CASCADE,
-    CONSTRAINT fk_fav_articulo FOREIGN KEY (articulo_id) REFERENCES articulos(id) ON DELETE CASCADE
+    CONSTRAINT fk_fav_user FOREIGN KEY (user_id) REFERENCES usuarios(id) ON DELETE CASCADE,
+    CONSTRAINT fk_fav_articulo FOREIGN KEY (articulo_id) REFERENCES articulos(id) ON DELETE CASCADE,
+    CONSTRAINT unique_user_articulo UNIQUE (user_id, articulo_id)
 );
 
 CREATE TABLE articulo_tags (
