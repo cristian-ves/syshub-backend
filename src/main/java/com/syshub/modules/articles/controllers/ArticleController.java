@@ -78,7 +78,7 @@ public class ArticleController {
     @GetMapping("/favorites")
     @PreAuthorize("isAuthenticated()")
     public ResponseEntity<Page<ArticleResponseDTO>> getMyFavorites(
-            @PageableDefault(size = 10, sort = "puntos", direction = Sort.Direction.DESC) Pageable pageable
+            @PageableDefault(size = 10, direction = Sort.Direction.DESC) Pageable pageable
     ) {
         return ResponseEntity.ok(articleService.getMyFavoriteArticles(pageable));
     }
