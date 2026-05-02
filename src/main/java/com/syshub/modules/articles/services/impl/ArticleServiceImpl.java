@@ -153,15 +153,19 @@ public class ArticleServiceImpl implements IArticleService {
 
         int pointsAdjustment = 0;
 
+        VoteResponseDTO dto = new VoteResponseDTO();
+
         if (existingVote.isPresent()) {
             Vote vote = existingVote.get();
             if (vote.getValor().equals(value)) {
                 voteRepository.delete(vote);
                 pointsAdjustment = -value;
+                dto.setVote(0);
             } else {
                 pointsAdjustment = value * 2;
                 vote.setValor(value);
                 voteRepository.save(vote);
+                dto.setVote(value);
             }
         } else {
             Vote newVote = Vote.builder()
@@ -172,12 +176,15 @@ public class ArticleServiceImpl implements IArticleService {
                     .build();
             voteRepository.save(newVote);
             pointsAdjustment = value;
+            dto.setVote(value);
         }
 
         article.setPuntos(article.getPuntos() + pointsAdjustment);
         articleRepository.save(article);
 
-        VoteResponseDTO dto = new VoteResponseDTO(article.getId(), article.getPuntos());
+        dto.setArticleId(article.getId());
+        dto.setNewPoints(article.getPuntos());
+
         return dto;
     }
 

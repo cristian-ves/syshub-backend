@@ -41,7 +41,7 @@ public class UserController {
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     public ResponseEntity<UserResponseDTO> createUserByAdmin(
             @Valid @RequestBody UserAdminCreateDTO dto) {
-        System.out.println("llega");
+
         return new ResponseEntity<>(userService.createUserByAdmin(dto), HttpStatus.CREATED);
     }
 
