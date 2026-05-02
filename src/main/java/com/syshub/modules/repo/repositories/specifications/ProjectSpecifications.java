@@ -17,8 +17,8 @@ public class ProjectSpecifications {
             String cursoNombre,
             Integer semestreNum,
             UUID userId,
-            Long pensumId,
-            Long areaId,
+            Integer pensumId,
+            Integer areaId,
             String search
     ) {
         return (root, query, cb) -> {

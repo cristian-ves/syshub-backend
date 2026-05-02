@@ -9,7 +9,7 @@ import jakarta.persistence.criteria.Predicate;
 
 public class ArticleSpecifications {
 
-    public static Specification<Article> filterArticles(String search, Long courseId, String tag, String status) {
+    public static Specification<Article> filterArticles(String search, Integer courseId, String tag, String status) {
         return (root, query, cb) -> {
             List<Predicate> predicates = new ArrayList<>();
 

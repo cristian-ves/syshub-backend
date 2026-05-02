@@ -4,6 +4,6 @@ import com.syshub.modules.catalog.entities.Semester;
 import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
-public interface SemesterRepository extends JpaRepository<Semester, Long> {
-    List<Semester> findByPensumIdOrderByNumeroAsc(Long pensumId);
+public interface SemesterRepository extends JpaRepository<Semester, Integer> {
+    List<Semester> findByPensumIdOrderByNumeroAsc(Integer pensumId);
 }

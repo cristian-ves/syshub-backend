@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class CourseResponseDTO {
-    private Long id;
+    private Integer id;
     private String codigo;
     private String nombre;
     private Integer creditos;

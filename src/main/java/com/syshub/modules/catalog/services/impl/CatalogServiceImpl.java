@@ -29,7 +29,7 @@ public class CatalogServiceImpl implements ICatalogService {
     }
 
     @Override
-    public List<Semester> getSemestersByPensum(Long pensumId) {
+    public List<Semester> getSemestersByPensum(Integer pensumId) {
         return semesterRepository.findByPensumIdOrderByNumeroAsc(pensumId);
     }
 
@@ -46,7 +46,7 @@ public class CatalogServiceImpl implements ICatalogService {
     }
 
     @Override
-    public List<CourseResponseDTO> getCoursesBySemester(Long semesterNum) {
+    public List<CourseResponseDTO> getCoursesBySemester(Integer semesterNum) {
         return courseRepository.findBySemesterNumero(semesterNum).stream()
                 .map(catalogMapper::toCourseDTO)
                 .collect(Collectors.toList());

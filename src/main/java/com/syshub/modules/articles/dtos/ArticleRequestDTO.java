@@ -17,7 +17,7 @@ public class ArticleRequestDTO {
     private String contenido;
 
     @NotNull(message = "Debe asignar el artículo a un curso")
-    private Long courseId;
+    private Integer courseId;
 
     private Set<RepositoryTagDTO> tags;
 

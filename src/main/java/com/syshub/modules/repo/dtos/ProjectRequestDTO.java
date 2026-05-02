@@ -8,6 +8,6 @@ public class ProjectRequestDTO {
     private String titulo;
     private String descripcion;
     private String repoUrl;
-    private Long courseId;
+    private Integer courseId;
     private List<RepositoryTagDTO> tags;
 }

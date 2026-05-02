@@ -11,10 +11,10 @@ import java.util.List;
 
 public interface ICatalogService {
     List<Pensum> getAllPensums();
-    List<Semester> getSemestersByPensum(Long pensumId);
+    List<Semester> getSemestersByPensum(Integer pensumId);
     List<TechnicalArea> getAllAreas();
     List<TagResponseDTO> getAllTags();
-    List<CourseResponseDTO> getCoursesBySemester(Long semesterNum);
+    List<CourseResponseDTO> getCoursesBySemester(Integer semesterNum);
     List<CourseResponseDTO> searchCourses(String query);
     TagResponseDTO saveTag(Tag tagId);
 }

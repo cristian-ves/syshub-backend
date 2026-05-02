@@ -5,6 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.Optional;
 import java.util.UUID;
 
-public interface VoteRepository extends JpaRepository<Vote, Long> {
-    Optional<Vote> findByUsuarioIdAndTargetIdAndTargetType(UUID usuarioId, Long targetId, String targetType);
+public interface VoteRepository extends JpaRepository<Vote, Integer> {
+    Optional<Vote> findByUsuarioIdAndTargetIdAndTargetType(UUID usuarioId, Integer targetId, String targetType);
 }

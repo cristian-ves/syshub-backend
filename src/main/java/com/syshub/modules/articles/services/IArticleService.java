@@ -6,13 +6,13 @@ import org.springframework.data.domain.Pageable;
 
 public interface IArticleService {
     ArticleResponseDTO createArticle(ArticleRequestDTO request);
-    Page<ArticleResponseDTO> getArticles(String search, Long courseId, String tag, String status, Pageable pageable);
+    Page<ArticleResponseDTO> getArticles(String search, Integer courseId, String tag, String status, Pageable pageable);
     ArticleDetailResponseDTO getArticleBySlug(String slug);
-    VoteResponseDTO voteArticle(Long articleId, Integer value);
-    void toggleFavorite(Long articleId);
-    ArticleResponseDTO updateArticle(Long id, ArticleRequestDTO request);
-    void deleteArticle(Long id);
+    VoteResponseDTO voteArticle(Integer articleId, Integer value);
+    void toggleFavorite(Integer articleId);
+    ArticleResponseDTO updateArticle(Integer id, ArticleRequestDTO request);
+    void deleteArticle(Integer id);
     Page<ArticleResponseDTO> getMyFavoriteArticles(Pageable pageable);
-    CommentResponseDTO addComment(Long articleId, CommentRequestDTO request);
+    CommentResponseDTO addComment(Integer articleId, CommentRequestDTO request);
     void deleteComment(Integer commentId);
 }

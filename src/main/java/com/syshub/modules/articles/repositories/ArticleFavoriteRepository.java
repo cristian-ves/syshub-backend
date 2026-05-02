@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.Optional;
 import java.util.UUID;
 
-public interface ArticleFavoriteRepository extends JpaRepository<ArticleFavorite, Long> {
-    Optional<ArticleFavorite> findByUsuarioIdAndArticuloId(UUID usuarioId, Long articuloId);
+public interface ArticleFavoriteRepository extends JpaRepository<ArticleFavorite, Integer> {
+    Optional<ArticleFavorite> findByUsuarioIdAndArticuloId(UUID usuarioId, Integer articuloId);
     Page<ArticleFavorite> findByUsuarioId(UUID usuarioId, Pageable pageable);
 }

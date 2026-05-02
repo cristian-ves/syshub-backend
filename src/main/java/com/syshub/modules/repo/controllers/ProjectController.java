@@ -43,8 +43,8 @@ public class ProjectController {
             @RequestParam(required = false) String cursoNombre,
             @RequestParam(required = false) Integer semestreNum,
             @RequestParam(required = false) UUID userId,
-            @RequestParam(required = false) Long pensumId,
-            @RequestParam(required = false) Long areaId,
+            @RequestParam(required = false) Integer pensumId,
+            @RequestParam(required = false) Integer areaId,
             @RequestParam(required = false) String search,
             @PageableDefault(size = 10, sort = "fechaSubida", direction = Sort.Direction.DESC) Pageable pageable
     ) {
@@ -54,20 +54,20 @@ public class ProjectController {
     @PreAuthorize("hasAnyRole('ROLE_AUXILIAR', 'ROLE_ADMIN')")
     @PatchMapping("/{id}/featured")
     public ResponseEntity<ProjectResponseDTO> updateFeatured(
-            @PathVariable Long id,
+            @PathVariable Integer id,
             @RequestParam Boolean featured
     ) {
         return ResponseEntity.ok(projectService.toggleFeatured(id, featured));
     }
 
     @GetMapping("/course/{courseId}")
-    public ResponseEntity<List<ProjectResponseDTO>> getByCourse(@PathVariable Long courseId) {
+    public ResponseEntity<List<ProjectResponseDTO>> getByCourse(@PathVariable Integer courseId) {
         // Method to filter projects by a specific course ID
         return ResponseEntity.ok(projectService.getProjectsByCourse(courseId));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ProjectResponseDTO> getById(@PathVariable Long id) {
+    public ResponseEntity<ProjectResponseDTO> getById(@PathVariable Integer id) {
         // Method to fetch a single project by its unique ID
         return ResponseEntity.ok(projectService.getProjectById(id));
     }

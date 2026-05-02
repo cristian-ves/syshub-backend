@@ -30,7 +30,7 @@ public class ArticleController {
     @GetMapping
     public ResponseEntity<Page<ArticleResponseDTO>> getArticles(
             @RequestParam(required = false) String search,
-            @RequestParam(required = false) Long courseId,
+            @RequestParam(required = false) Integer courseId,
             @RequestParam(required = false) String tag,
             @RequestParam(defaultValue = "PUBLISHED") String status,
             @PageableDefault(size = 10, sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable
@@ -46,7 +46,7 @@ public class ArticleController {
     @PostMapping("/{id}/vote")
     @PreAuthorize("isAuthenticated()")
     public ResponseEntity<VoteResponseDTO> voteArticle(
-            @PathVariable Long id,
+            @PathVariable Integer id,
             @RequestParam Integer value
     ) {
 
@@ -55,20 +55,20 @@ public class ArticleController {
 
     @PostMapping("/{id}/favorite")
     @PreAuthorize("isAuthenticated()")
-    public ResponseEntity<Void> toggleFavorite(@PathVariable Long id) {
+    public ResponseEntity<Void> toggleFavorite(@PathVariable Integer id) {
         articleService.toggleFavorite(id);
         return ResponseEntity.ok().build();
     }
 
     @PutMapping("/{id}")
     @PreAuthorize("hasAnyRole('ROLE_AUXILIAR', 'ROLE_ADMIN')")
-    public ResponseEntity<ArticleResponseDTO> update(@PathVariable Long id, @Valid @RequestBody ArticleRequestDTO request) {
+    public ResponseEntity<ArticleResponseDTO> update(@PathVariable Integer id, @Valid @RequestBody ArticleRequestDTO request) {
         return ResponseEntity.ok(articleService.updateArticle(id, request));
     }
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasAnyRole('ROLE_AUXILIAR', 'ROLE_ADMIN')")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable Integer id) {
         articleService.deleteArticle(id);
         return ResponseEntity.noContent().build();
     }
@@ -84,7 +84,7 @@ public class ArticleController {
     @PostMapping("/{id}/comments")
     @PreAuthorize("isAuthenticated()")
     public ResponseEntity<CommentResponseDTO> addComment(
-            @PathVariable Long id,
+            @PathVariable Integer id,
             @Valid @RequestBody CommentRequestDTO request
     ) {
         return new ResponseEntity<>(articleService.addComment(id, request), HttpStatus.CREATED);

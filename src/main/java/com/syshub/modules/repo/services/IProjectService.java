@@ -13,9 +13,9 @@ import java.util.UUID;
 public interface IProjectService {
     ProjectResponseDTO createProject(ProjectRequestDTO request, List<MultipartFile> files);
 
-    List<ProjectResponseDTO> getProjectsByCourse(Long courseId);
+    List<ProjectResponseDTO> getProjectsByCourse(Integer courseId);
 
-    ProjectResponseDTO getProjectById(Long id);
+    ProjectResponseDTO getProjectById(Integer id);
 
     Resource downloadFile(String filename);
 
@@ -25,10 +25,10 @@ public interface IProjectService {
             String cursoNombre,
             Integer semestreNum,
             UUID userId,
-            Long pensumId,
-            Long areaId,
+            Integer pensumId,
+            Integer areaId,
             String search,
             Pageable pageable);
 
-    ProjectResponseDTO toggleFeatured(Long id, boolean featured);
+    ProjectResponseDTO toggleFeatured(Integer id, boolean featured);
 }

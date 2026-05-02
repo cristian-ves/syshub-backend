@@ -25,12 +25,12 @@ public class CatalogController {
     }
 
     @GetMapping("/semesters")
-    public ResponseEntity<List<Semester>> getSemesters(@RequestParam Long pensumId) {
+    public ResponseEntity<List<Semester>> getSemesters(@RequestParam Integer pensumId) {
         return ResponseEntity.ok(catalogService.getSemestersByPensum(pensumId));
     }
 
     @GetMapping("/courses")
-    public ResponseEntity<List<CourseResponseDTO>> getCoursesBySemester(@RequestParam Long semesterNum) {
+    public ResponseEntity<List<CourseResponseDTO>> getCoursesBySemester(@RequestParam Integer semesterNum) {
         return ResponseEntity.ok(catalogService.getCoursesBySemester(semesterNum));
     }
 

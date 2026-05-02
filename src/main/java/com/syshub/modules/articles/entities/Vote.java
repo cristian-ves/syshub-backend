@@ -15,14 +15,14 @@ import lombok.*;
 public class Vote {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User usuario;
 
     @Column(name = "target_id")
-    private Long targetId;
+    private Integer targetId;
 
     @Column(name = "target_type")
     private String targetType;

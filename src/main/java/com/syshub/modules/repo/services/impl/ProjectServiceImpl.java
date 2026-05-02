@@ -91,7 +91,7 @@ public class ProjectServiceImpl implements IProjectService {
 
     @Override
     @Transactional(readOnly = true)
-    public Page<ProjectResponseDTO> getProjects(String tag, Boolean destacado, String cursoNombre, Integer semestreNum, UUID userId, Long pensumId, Long areaId, String search, Pageable pageable) {
+    public Page<ProjectResponseDTO> getProjects(String tag, Boolean destacado, String cursoNombre, Integer semestreNum, UUID userId, Integer pensumId, Integer areaId, String search, Pageable pageable) {
 
         Specification<Project> spec = ProjectSpecifications.filterProjects(tag, destacado, cursoNombre, semestreNum, userId, pensumId, areaId, search);
 
@@ -100,7 +100,7 @@ public class ProjectServiceImpl implements IProjectService {
 
     @Override
     @Transactional
-    public ProjectResponseDTO toggleFeatured(Long id, boolean featured) {
+    public ProjectResponseDTO toggleFeatured(Integer id, boolean featured) {
         Project project = projectRepository.findById(id).orElseThrow(() -> new AppException("Proyecto no encontrado", HttpStatus.NOT_FOUND));
 
         project.setDestacado(featured);
@@ -109,13 +109,13 @@ public class ProjectServiceImpl implements IProjectService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<ProjectResponseDTO> getProjectsByCourse(Long courseId) {
+    public List<ProjectResponseDTO> getProjectsByCourse(Integer courseId) {
         return projectRepository.findByCursoId(courseId).stream().map(projectMapper::toDto).collect(Collectors.toList());
     }
 
     @Override
     @Transactional(readOnly = true)
-    public ProjectResponseDTO getProjectById(Long id) {
+    public ProjectResponseDTO getProjectById(Integer id) {
         Project project = projectRepository.findById(id).orElseThrow(() -> new AppException("Proyecto no encontrado", HttpStatus.NOT_FOUND));
         return projectMapper.toDto(project);
     }

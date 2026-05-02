@@ -101,7 +101,7 @@ public class ArticleServiceImpl implements IArticleService {
 
     @Override
     @Transactional(readOnly = true)
-    public Page<ArticleResponseDTO> getArticles(String search, Long courseId, String tag, String status, Pageable pageable) {
+    public Page<ArticleResponseDTO> getArticles(String search, Integer courseId, String tag, String status, Pageable pageable) {
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         boolean isStaff = auth.getAuthorities().stream()
@@ -159,7 +159,7 @@ public class ArticleServiceImpl implements IArticleService {
 
     @Override
     @Transactional
-    public VoteResponseDTO voteArticle(Long articleId, Integer value) {
+    public VoteResponseDTO voteArticle(Integer articleId, Integer value) {
         if (value != 1 && value != -1) {
             throw new AppException("El valor del voto debe ser 1 o -1", HttpStatus.BAD_REQUEST);
         }
@@ -217,7 +217,7 @@ public class ArticleServiceImpl implements IArticleService {
 
     @Override
     @Transactional
-    public void toggleFavorite(Long articleId) {
+    public void toggleFavorite(Integer articleId) {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new AppException("Usuario no encontrado", HttpStatus.NOT_FOUND));
@@ -241,7 +241,7 @@ public class ArticleServiceImpl implements IArticleService {
 
     @Override
     @Transactional
-    public ArticleResponseDTO updateArticle(Long id, ArticleRequestDTO request) {
+    public ArticleResponseDTO updateArticle(Integer id, ArticleRequestDTO request) {
         Article article = articleRepository.findById(id)
                 .orElseThrow(() -> new AppException("Artículo no encontrado", HttpStatus.NOT_FOUND));
 
@@ -264,7 +264,7 @@ public class ArticleServiceImpl implements IArticleService {
 
     @Override
     @Transactional
-    public void deleteArticle(Long id) {
+    public void deleteArticle(Integer id) {
         Article article = articleRepository.findById(id)
                 .orElseThrow(() -> new AppException("Artículo no encontrado", HttpStatus.NOT_FOUND));
 
@@ -307,7 +307,7 @@ public class ArticleServiceImpl implements IArticleService {
 
     @Override
     @Transactional
-    public CommentResponseDTO addComment(Long articleId, CommentRequestDTO request) {
+    public CommentResponseDTO addComment(Integer articleId, CommentRequestDTO request) {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new AppException("Usuario no encontrado", HttpStatus.NOT_FOUND));

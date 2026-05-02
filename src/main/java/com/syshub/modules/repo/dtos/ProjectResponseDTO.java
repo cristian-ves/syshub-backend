@@ -9,7 +9,7 @@ import java.util.Set;
 
 @Data
 public class ProjectResponseDTO {
-    private Long id;
+    private Integer id;
     private String titulo;
     private String descripcion;
     private String repoUrl;

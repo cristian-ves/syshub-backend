@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class AttachmentDTO {
-    private Long id;
+    private Integer id;
     private String nombreOriginal;
     private String tipoArchivo;
     private String nombreArchivo;
