@@ -1,9 +1,7 @@
 package com.syshub.modules.articles.controllers;
 
 import com.syshub.core.exceptions.AppException;
-import com.syshub.modules.articles.dtos.ArticleRequestDTO;
-import com.syshub.modules.articles.dtos.ArticleResponseDTO;
-import com.syshub.modules.articles.dtos.VoteResponseDTO;
+import com.syshub.modules.articles.dtos.*;
 import com.syshub.modules.articles.services.IArticleService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -81,5 +79,21 @@ public class ArticleController {
             @PageableDefault(size = 10, direction = Sort.Direction.DESC) Pageable pageable
     ) {
         return ResponseEntity.ok(articleService.getMyFavoriteArticles(pageable));
+    }
+
+    @PostMapping("/{id}/comments")
+    @PreAuthorize("isAuthenticated()")
+    public ResponseEntity<CommentResponseDTO> addComment(
+            @PathVariable Long id,
+            @Valid @RequestBody CommentRequestDTO request
+    ) {
+        return new ResponseEntity<>(articleService.addComment(id, request), HttpStatus.CREATED);
+    }
+
+    @DeleteMapping("/comments/{commentId}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public ResponseEntity<Void> deleteComment(@PathVariable Integer commentId) {
+        articleService.deleteComment(commentId);
+        return ResponseEntity.noContent().build();
     }
 }

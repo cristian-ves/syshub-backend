@@ -1,15 +1,15 @@
 package com.syshub.modules.articles.services.impl;
 
 import com.syshub.core.exceptions.AppException;
-import com.syshub.modules.articles.dtos.ArticleRequestDTO;
-import com.syshub.modules.articles.dtos.ArticleResponseDTO;
-import com.syshub.modules.articles.dtos.VoteResponseDTO;
+import com.syshub.modules.articles.dtos.*;
 import com.syshub.modules.articles.entities.Article;
 import com.syshub.modules.articles.entities.ArticleFavorite;
+import com.syshub.modules.articles.entities.Comment;
 import com.syshub.modules.articles.entities.Vote;
 import com.syshub.modules.articles.mappers.ArticleMapper;
 import com.syshub.modules.articles.repositories.ArticleFavoriteRepository;
 import com.syshub.modules.articles.repositories.ArticleRepository;
+import com.syshub.modules.articles.repositories.CommentRepository;
 import com.syshub.modules.articles.repositories.VoteRepository;
 import com.syshub.modules.articles.repositories.specifications.ArticleSpecifications;
 import com.syshub.modules.articles.services.IArticleService;
@@ -17,6 +17,7 @@ import com.syshub.modules.catalog.entities.Course;
 import com.syshub.modules.catalog.entities.Tag;
 import com.syshub.modules.catalog.repositories.CourseRepository;
 import com.syshub.modules.catalog.repositories.TagRepository;
+import com.syshub.modules.identity.dtos.UserResponseDTO;
 import com.syshub.modules.identity.entities.User;
 import com.syshub.modules.identity.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -49,6 +50,7 @@ public class ArticleServiceImpl implements IArticleService {
     private final VoteRepository voteRepository;
     private final ArticleMapper articleMapper;
     private final ArticleFavoriteRepository articleFavoriteRepository;
+    private final CommentRepository commentRepository;
 
     @Override
     @Transactional
@@ -276,5 +278,49 @@ public class ArticleServiceImpl implements IArticleService {
                     dto.setFavorite(true);
                     return dto;
                 });
+    }
+
+    @Override
+    @Transactional
+    public CommentResponseDTO addComment(Long articleId, CommentRequestDTO request) {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new AppException("Usuario no encontrado", HttpStatus.NOT_FOUND));
+
+        Article article = articleRepository.findById(articleId)
+                .orElseThrow(() -> new AppException("Artículo no encontrado", HttpStatus.NOT_FOUND));
+
+        Comment comment = Comment.builder()
+                .contenido(request.getContenido())
+                .autor(user)
+                .targetId(article.getId())
+                .targetType("ARTICULO")
+                .build();
+
+        comment = commentRepository.save(comment);
+
+        CommentResponseDTO dto = new CommentResponseDTO();
+        dto.setId(comment.getId());
+        dto.setContenido(comment.getContenido());
+        dto.setCreatedAt(comment.getCreatedAt());
+
+        UserResponseDTO userDto = new UserResponseDTO();
+        userDto.setId(user.getId());
+        userDto.setUsername(user.getUsername());
+        userDto.setNombreCompleto(user.getNombreCompleto());
+        userDto.setRoleId(user.getRol().getId());
+
+        dto.setAutor(userDto);
+
+        return dto;
+    }
+
+    @Override
+    @Transactional
+    public void deleteComment(Integer commentId) {
+        Comment comment = commentRepository.findById(commentId)
+                .orElseThrow(() -> new AppException("Comentario no encontrado", HttpStatus.NOT_FOUND));
+
+        commentRepository.delete(comment);
     }
 }
