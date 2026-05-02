@@ -29,6 +29,7 @@ public class ArticleMapper {
             userDto.setUsername(article.getAutor().getUsername());
             userDto.setNombreCompleto(article.getAutor().getNombreCompleto());
             userDto.setRoleId(article.getAutor().getRol().getId());
+            userDto.setEnabled(article.getAutor().isEnabled());
             dto.setAutor(userDto);
         }
 
@@ -50,7 +51,7 @@ public class ArticleMapper {
                 })
                 .collect(Collectors.toSet()));
 
-        dto.setPuntos(0);
+        dto.setPuntos(article.getPuntos() != null ? article.getPuntos() : 0);
 
         return dto;
     }

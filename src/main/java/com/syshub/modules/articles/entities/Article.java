@@ -76,4 +76,7 @@ public class Article {
     public enum ArticleStatus {
         DRAFT, PUBLISHED
     }
+
+    @Column(nullable = false)
+    private Integer puntos = 0;
 }
