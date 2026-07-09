@@ -46,7 +46,7 @@ public class ProjectController {
             @RequestParam(required = false) Integer pensumId,
             @RequestParam(required = false) Integer areaId,
             @RequestParam(required = false) String search,
-            @PageableDefault(size = 10, sort = "fechaSubida", direction = Sort.Direction.DESC) Pageable pageable
+            @PageableDefault(size = 10, sort = {"destacado", "fechaSubida"}, direction = Sort.Direction.DESC) Pageable pageable
     ) {
 //        retrieve projects by filter
         return ResponseEntity.ok(projectService.getProjects(tag, destacado, cursoNombre, semestreNum, userId, pensumId, areaId, search, pageable));
