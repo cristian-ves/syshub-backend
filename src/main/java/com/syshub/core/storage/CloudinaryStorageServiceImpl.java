@@ -33,8 +33,11 @@ public class CloudinaryStorageServiceImpl implements IStorageService {
                 throw new RuntimeException("Fallo al guardar un archivo vacío.");
             }
 
+            String contentType = file.getContentType();
+            String resourceType = determineResourceType(contentType, file.getOriginalFilename());
+
             Map uploadResult = cloudinary.uploader().upload(file.getBytes(), ObjectUtils.asMap(
-                    "resource_type", "auto",
+                    "resource_type", resourceType,
                     "folder", "syshub_projects" // Organiza todo en una carpeta en tu Cloudinary
             ));
 
@@ -43,6 +46,20 @@ public class CloudinaryStorageServiceImpl implements IStorageService {
         } catch (IOException e) {
             throw new RuntimeException("Fallo al almacenar el archivo en Cloudinary.", e);
         }
+    }
+
+    private String determineResourceType(String contentType, String fileName) {
+        if (contentType != null) {
+            if(contentType.startsWith("image/")) return "image";
+            if(contentType.startsWith("video/")) return "video";
+        }
+
+        if(fileName != null) {
+            String lower = fileName.toLowerCase();
+            if(lower.endsWith(".jpg") || lower.endsWith(".jpeg") || lower.endsWith(".png") || lower.endsWith(".gif") || lower.endsWith(".webp") || lower.endsWith(".svg")) return "image";
+            if(lower.endsWith(".mp4") || lower.endsWith("move")) return "video";
+        }
+        return "raw";
     }
 
     @Override
@@ -76,13 +93,11 @@ public class CloudinaryStorageServiceImpl implements IStorageService {
     }
 
     private String extractPublicId(String url) {
+        // e.g. https://res.cloudinary.com/cloud/image/upload/v123/syshub_projects/file.pdf
         String[] parts = url.split("/");
         String lastPart = parts[parts.length - 1];
         String folder = parts[parts.length - 2];
-
-        int dotIndex = lastPart.lastIndexOf('.');
-        String nameWithoutExtension = (dotIndex == -1) ? lastPart : lastPart.substring(0, dotIndex);
-
-        return folder + "/" + nameWithoutExtension;
+        // for raw files keep the extension in the public_id
+        return folder + "/" + lastPart;
     }
 }

@@ -48,6 +48,7 @@ public class ProjectController {
             @RequestParam(required = false) String search,
             @PageableDefault(size = 10, sort = "fechaSubida", direction = Sort.Direction.DESC) Pageable pageable
     ) {
+//        retrieve projects by filter
         return ResponseEntity.ok(projectService.getProjects(tag, destacado, cursoNombre, semestreNum, userId, pensumId, areaId, search, pageable));
     }
 
@@ -57,6 +58,7 @@ public class ProjectController {
             @PathVariable Integer id,
             @RequestParam Boolean featured
     ) {
+        // Project to toggle the feature property of a project
         return ResponseEntity.ok(projectService.toggleFeatured(id, featured));
     }
 
