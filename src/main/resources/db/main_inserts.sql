@@ -1,53 +1,67 @@
+-- Initial data required for the system to work
+INSERT INTO roles (name)
+VALUES ('ROLE_ADMIN'),
+       ('ROLE_ASSISTANT'),
+       ('ROLE_STUDENT');
+select *
+from roles;
 
--- Datos iniciales necesarios para que el sistema funcione
-INSERT INTO roles (nombre) VALUES 
-('ROLE_ADMIN'), 
-('ROLE_AUXILIAR'), 
-('ROLE_ESTUDIANTE');
-select * from roles;
+-- Major inserts
+INSERT INTO majors (name)
+VALUES ('Computer Science and Systems Engineering'),
+       ('Mechanical Engineering'),
+       ('Industrial Mechanical Engineering'),
+       ('Civil Engineering'),
+       ('Industrial Engineering');
 
--- Inserts de carreras
-INSERT INTO carreras (nombre) VALUES 
-('Ingeniería en Ciencias y Sistemas'), 
-('Ingeniería Mecánica'), 
-('Ingeniería Mecánica Industrial'), 
-('Ingeniería Civil'), 
-('Ingeniería Industrial');
+INSERT INTO technical_areas (name, description, color)
+VALUES ('Software Development', 'Courses focused on application development, patterns, and languages.',
+        '#10b981'),                                                                                            -- Emerald
+       ('Computer Science', 'Theoretical foundations, algorithms, data structures, and logic.', '#3b82f6'),    -- Blue
+       ('Information Systems', 'Data management, systems analysis, and information flows.', '#f59e0b'),        -- Amber
+       ('Infrastructure and Networks', 'Hardware, operating systems, networks, and communications.',
+        '#6366f1'),                                                                                            -- Indigo
+       ('Artificial Intelligence', 'Data modeling, machine learning, and expert systems.', '#8b5cf6'),         -- Violet
+       ('Management and Leadership', 'Project management, ethics, and leadership in engineering.', '#f43f5e'), -- Pink
+       ('Basic Sciences and Math', 'Fundamentals of physics and math applied to engineering.', '#64748b');     -- Slate Gray
 
-INSERT INTO areas_tecnicas (nombre, descripcion, color) VALUES 
-('Desarrollo de Software', 'Cursos enfocados en construcción de aplicaciones, patrones y lenguajes.', '#10b981'), -- Esmeralda
-('Ciencias de la Computación', 'Bases teóricas, algoritmos, estructuras de datos y lógica.', '#3b82f6'), -- Azul
-('Sistemas de Información', 'Gestión de datos, análisis de sistemas y flujos de información.', '#f59e0b'), -- Ambar
-('Infraestructura y Redes', 'Hardware, sistemas operativos, redes y comunicaciones.', '#6366f1'), -- Indigo
-('Inteligencia Artificial', 'Modelado de datos, machine learning y sistemas expertos.', '#8b5cf6'), -- Violeta
-('Gestión y Gerencia', 'Administración de proyectos, ética y liderazgo en ingeniería.', '#f43f5e'), -- Rosado
-('Ciencias Básicas y Mate', 'Fundamentos de física y matemática aplicados a la ingeniería.', '#64748b'); -- Gris Pizarra
+-- Insert Study Plans for the Systems major
+INSERT INTO study_plans (name, major_id)
+VALUES ('Study Plan 2016', (SELECT id FROM majors WHERE name = 'Computer Science and Systems Engineering' LIMIT 1) );
 
--- Insertar los Pensums para la carrera de Sistemas
-INSERT INTO pensums (nombre, id_carrera) 
-VALUES ('Pensum 2016', (SELECT id FROM carreras WHERE nombre = 'Ingeniería en Ciencias y Sistemas' LIMIT 1));
+INSERT INTO study_plans (name, major_id)
+VALUES ('Study Plan 2025', (SELECT id FROM majors WHERE name = 'Computer Science and Systems Engineering' LIMIT 1) );
 
-INSERT INTO pensums (nombre, id_carrera) 
-VALUES ('Pensum 2025', (SELECT id FROM carreras WHERE nombre = 'Ingeniería en Ciencias y Sistemas' LIMIT 1));
-
--- Insertar los 10 semestres para el Pensum 2016
-INSERT INTO semestres (numero, id_pensum)
-SELECT s, p.id 
+-- Insert the 10 semesters for Study Plan 2016
+INSERT INTO semesters (number, study_plan_id)
+SELECT s, p.id
 FROM generate_series(1, 10) s
-JOIN pensums p ON p.nombre = 'Pensum 2016'
-WHERE p.id_carrera = (SELECT id FROM carreras WHERE nombre = 'Ingeniería en Ciencias y Sistemas' LIMIT 1);
+         JOIN study_plans p ON p.name = 'Study Plan 2016'
+WHERE p.major_id = (SELECT id FROM majors WHERE name = 'Computer Science and Systems Engineering' LIMIT 1);
 
--- Insertar los 10 semestres para el Pensum 2025
-INSERT INTO semestres (numero, id_pensum)
-SELECT s, p.id 
+-- Insert the 10 semesters for Study Plan 2025
+INSERT INTO semesters (number, study_plan_id)
+SELECT s, p.id
 FROM generate_series(1, 10) s
-JOIN pensums p ON p.nombre = 'Pensum 2025'
-WHERE p.id_carrera = (SELECT id FROM carreras WHERE nombre = 'Ingeniería en Ciencias y Sistemas' LIMIT 1);
+         JOIN study_plans p ON p.name = 'Study Plan 2025'
+WHERE p.major_id = (SELECT id FROM majors WHERE name = 'Computer Science and Systems Engineering' LIMIT 1);
 
 
--- Insertar usuarios
-INSERT INTO usuarios (username, email, password, nombre_completo, registro_academico, id_rol, id_carrera)
-VALUES ('admin', 'alejandrovasquezesc@gmail.com', '$2a$10$0MQnbK1b.hliG9iFESB47eMJTdKUjrjj.kDu1D0KNV3Rjd5yjs1BC', 'Thom Yorke', '202131936', 1, 1),
-('auxi', 'cristianvasquez202131936', '$2a$10$0MQnbK1b.hliG9iFESB47eMJTdKUjrjj.kDu1D0KNV3Rjd5yjs1BC', 'Chris Cornell', '202012345a', 2, 1),
-('student', 'syshubapp@gmail.com', '$2a$10$0MQnbK1b.hliG9iFESB47eMJTdKUjrjj.kDu1D0KNV3Rjd5yjs1BC', 'Chino Moreno', '202054321', 3, 1);
+-- Insert users
+INSERT INTO users (username, email, password, full_name, academic_record, role_id, major_id)
+VALUES ('admin', 'alejandrovasquezesc@gmail.com', '$2a$10$0MQnbK1b.hliG9iFESB47eMJTdKUjrjj.kDu1D0KNV3Rjd5yjs1BC',
+        'Thom Yorke', '202131936', 1, 1),
+       ('auxi', 'cristianvasquez202131936', '$2a$10$0MQnbK1b.hliG9iFESB47eMJTdKUjrjj.kDu1D0KNV3Rjd5yjs1BC',
+        'Chris Cornell', '202012345a', 2, 1),
+       ('student', 'syshubapp@gmail.com', '$2a$10$0MQnbK1b.hliG9iFESB47eMJTdKUjrjj.kDu1D0KNV3Rjd5yjs1BC',
+        'Chino Moreno', '202054321', 3, 1);-- Demo users (one per role, for the deployed demo)
 
+INSERT INTO users (username, email, password, full_name, academic_record, role_id, major_id)
+VALUES
+    ('demo_admin', 'admin@demo.com', '$2a$10$6fQT1zdofnNiW5Gvqk86OuerWRmq/KJ7rykH20jOp65APTpm4EN7e', 'Demo Admin', '202100001',
+     (SELECT id FROM roles WHERE name = 'ROLE_ADMIN'), 1),
+    ('demo_assistant', 'assistant@demo.com', '$2a$10$6fQT1zdofnNiW5Gvqk86OuerWRmq/KJ7rykH20jOp65APTpm4EN7e', 'Demo Assistant', '202100002',
+     (SELECT id FROM roles WHERE name = 'ROLE_AUXILIAR'), 1),
+    ('demo_student', 'student@demo.com', '$2a$10$6fQT1zdofnNiW5Gvqk86OuerWRmq/KJ7rykH20jOp65APTpm4EN7e', 'Demo Student', '202100003',
+     (SELECT id FROM roles WHERE name = 'ROLE_ESTUDIANTE'), 1)
+    ON CONFLICT (username) DO NOTHING;
