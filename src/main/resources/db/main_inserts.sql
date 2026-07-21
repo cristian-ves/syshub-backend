@@ -61,7 +61,7 @@ VALUES
     ('demo_admin', 'admin@demo.com', '$2a$10$6fQT1zdofnNiW5Gvqk86OuerWRmq/KJ7rykH20jOp65APTpm4EN7e', 'Demo Admin', '202100001',
      (SELECT id FROM roles WHERE name = 'ROLE_ADMIN'), 1),
     ('demo_assistant', 'assistant@demo.com', '$2a$10$6fQT1zdofnNiW5Gvqk86OuerWRmq/KJ7rykH20jOp65APTpm4EN7e', 'Demo Assistant', '202100002',
-     (SELECT id FROM roles WHERE name = 'ROLE_AUXILIAR'), 1),
+     (SELECT id FROM roles WHERE name = 'ROLE_ASSISTANT'), 1),
     ('demo_student', 'student@demo.com', '$2a$10$6fQT1zdofnNiW5Gvqk86OuerWRmq/KJ7rykH20jOp65APTpm4EN7e', 'Demo Student', '202100003',
-     (SELECT id FROM roles WHERE name = 'ROLE_ESTUDIANTE'), 1)
+     (SELECT id FROM roles WHERE name = 'ROLE_STUDENT'), 1)
     ON CONFLICT (username) DO NOTHING;
