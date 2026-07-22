@@ -8,5 +8,5 @@ import java.util.List;
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class ArticleDetailResponseDTO extends ArticleResponseDTO {
-    private List<CommentResponseDTO> comentarios;
+    private List<CommentResponseDTO> comments;
 }

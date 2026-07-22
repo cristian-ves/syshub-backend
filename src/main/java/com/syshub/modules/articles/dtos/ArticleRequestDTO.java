@@ -8,15 +8,15 @@ import java.util.Set;
 
 @Data
 public class ArticleRequestDTO {
-    @NotBlank(message = "El título es obligatorio")
+    @NotBlank(message = "The title is required")
     private String title;
 
     private String excerpt;
 
-    @NotBlank(message = "El contenido no puede estar vacío")
+    @NotBlank(message = "The content cannot be empty")
     private String content;
 
-    @NotNull(message = "Debe asignar el artículo a un curso")
+    @NotNull(message = "The article must be asigned to a course")
     private Integer courseId;
 
     private Set<RepositoryTagDTO> tags;

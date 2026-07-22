@@ -31,7 +31,7 @@ public class ArticleSpecifications {
 
                 String searchPattern = "%" + tag.toLowerCase().trim() + "%";
 
-                predicates.add(cb.like(cb.lower(tagsJoin.get("nombre")), searchPattern));
+                predicates.add(cb.like(cb.lower(tagsJoin.get("nombre")), searchPattern));// TODO: change tag name to english
             }
 
             if (status != null) {

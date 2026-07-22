@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 @Data
 public class CommentResponseDTO {
     private Integer id;
-    private String contenido;
-    private UserResponseDTO autor;
+    private String content;
+    private UserResponseDTO author;
     private LocalDateTime createdAt;
 }

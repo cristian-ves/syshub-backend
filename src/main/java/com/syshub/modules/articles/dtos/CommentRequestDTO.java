@@ -5,6 +5,6 @@ import lombok.Data;
 
 @Data
 public class CommentRequestDTO {
-    @NotBlank(message = "El comentario no puede estar vacío")
+    @NotBlank(message = "The comment cannot be empty")
     private String contenido;
 }

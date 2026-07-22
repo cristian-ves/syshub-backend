@@ -10,16 +10,16 @@ import java.util.Set;
 @Data
 public class ArticleResponseDTO {
     private Integer id;
-    private String titulo;
+    private String title;
     private String slug;
-    private String extracto;
-    private String contenido;
+    private String excerpt;
+    private String content;
     private String status;
     private LocalDateTime createdAt;
-    private UserResponseDTO autor;
-    private CourseResponseDTO curso;
+    private UserResponseDTO author;
+    private CourseResponseDTO course;
     private Set<TagResponseDTO> tags;
-    private Integer puntos;
+    private Integer points;
     private boolean isFavorite;
-    private Integer vote;
+    private Integer votes;
 }

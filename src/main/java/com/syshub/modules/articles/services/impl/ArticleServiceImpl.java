@@ -55,10 +55,10 @@ public class ArticleServiceImpl implements IArticleService {
     public ArticleResponseDTO createArticle(ArticleRequestDTO request) {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         User author = userRepository.findByUsername(username)
-                .orElseThrow(() -> new AppException("Usuario no encontrado", HttpStatus.NOT_FOUND));
+                .orElseThrow(() -> new AppException("The user was not found", HttpStatus.NOT_FOUND));
 
         Course course = courseRepository.findById(request.getCourseId())
-                .orElseThrow(() -> new AppException("Curso no encontrado", HttpStatus.NOT_FOUND));
+                .orElseThrow(() -> new AppException("The course was not found", HttpStatus.NOT_FOUND));
 
         String slug = generateSlug(request.getTitle());
         if (articleRepository.existsBySlug(slug)) {
@@ -105,7 +105,7 @@ public class ArticleServiceImpl implements IArticleService {
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         boolean isStaff = auth.getAuthorities().stream()
-                .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN") || a.getAuthority().equals("ROLE_AUXILIAR"));
+                .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN") || a.getAuthority().equals("ROLE_ASSISTANT"));
 
         String finalStatus = status;
 
@@ -127,17 +127,17 @@ public class ArticleServiceImpl implements IArticleService {
         UUID currentUserId = getCurrentUserId();
 
         Article article = articleRepository.findBySlug(slug)
-                .orElseThrow(() -> new AppException("Artículo no encontrado", HttpStatus.NOT_FOUND));
+                .orElseThrow(() -> new AppException("The article was not found", HttpStatus.NOT_FOUND));
 
         ArticleResponseDTO baseDto = articleMapper.toDto(article, currentUserId);
 
         List<Comment> comments = commentRepository
-                .findByTargetIdAndTargetTypeOrderByCreatedAtDesc(article.getId(), "ARTICULO");
+                .findByTargetIdAndTargetTypeOrderByCreatedAtDesc(article.getId(), "ARTICLE");
 
-        List<CommentResponseDTO> comentariosDto = comments.stream().map(comment -> {
+        List<CommentResponseDTO> commentsDTO = comments.stream().map(comment -> {
             CommentResponseDTO dto = new CommentResponseDTO();
             dto.setId(comment.getId());
-            dto.setContenido(comment.getContent());
+            dto.setContent(comment.getContent());
             dto.setCreatedAt(comment.getCreatedAt());
 
             UserResponseDTO userDto = new UserResponseDTO();
@@ -145,14 +145,14 @@ public class ArticleServiceImpl implements IArticleService {
             userDto.setUsername(comment.getAuthor().getUsername());
             userDto.setFullName(comment.getAuthor().getFullName());
             userDto.setRoleId(comment.getAuthor().getRole().getId());
-            dto.setAutor(userDto);
+            dto.setAuthor(userDto);
 
             return dto;
         }).collect(Collectors.toList());
 
         ArticleDetailResponseDTO detailDto = new ArticleDetailResponseDTO();
         BeanUtils.copyProperties(baseDto, detailDto);
-        detailDto.setComentarios(comentariosDto);
+        detailDto.setComments(commentsDTO);
 
         return detailDto;
     }
@@ -161,15 +161,15 @@ public class ArticleServiceImpl implements IArticleService {
     @Transactional
     public VoteResponseDTO voteArticle(Integer articleId, Integer value) {
         if (value != 1 && value != -1) {
-            throw new AppException("El valor del voto debe ser 1 o -1", HttpStatus.BAD_REQUEST);
+            throw new AppException("The vote value must be 1 or -1", HttpStatus.BAD_REQUEST);
         }
 
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         User user = userRepository.findByUsername(username)
-                .orElseThrow(() -> new AppException("Usuario no encontrado", HttpStatus.NOT_FOUND));
+                .orElseThrow(() -> new AppException("The user was not found", HttpStatus.NOT_FOUND));
 
         Article article = articleRepository.findById(articleId)
-                .orElseThrow(() -> new AppException("Artículo no encontrado", HttpStatus.NOT_FOUND));
+                .orElseThrow(() -> new AppException("The article was not found", HttpStatus.NOT_FOUND));
 
         if (article.getPoints() == null) {
             article.setPoints(0);
@@ -220,10 +220,10 @@ public class ArticleServiceImpl implements IArticleService {
     public void toggleFavorite(Integer articleId) {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         User user = userRepository.findByUsername(username)
-                .orElseThrow(() -> new AppException("Usuario no encontrado", HttpStatus.NOT_FOUND));
+                .orElseThrow(() -> new AppException("The user was not found", HttpStatus.NOT_FOUND));
 
         Article article = articleRepository.findById(articleId)
-                .orElseThrow(() -> new AppException("Artículo no encontrado", HttpStatus.NOT_FOUND));
+                .orElseThrow(() -> new AppException("The article was not found", HttpStatus.NOT_FOUND));
 
         Optional<ArticleFavorite> favorite = articleFavoriteRepository
                 .findByUserIdAndArticleId(user.getId(), articleId);
@@ -243,7 +243,7 @@ public class ArticleServiceImpl implements IArticleService {
     @Transactional
     public ArticleResponseDTO updateArticle(Integer id, ArticleRequestDTO request) {
         Article article = articleRepository.findById(id)
-                .orElseThrow(() -> new AppException("Artículo no encontrado", HttpStatus.NOT_FOUND));
+                .orElseThrow(() -> new AppException("The article was not found", HttpStatus.NOT_FOUND));
 
         UUID currentUserId = getCurrentUserId();
 
@@ -251,7 +251,7 @@ public class ArticleServiceImpl implements IArticleService {
                 .stream().anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
 
         if (!article.getAuthor().getId().equals(currentUserId) && !isAdmin) {
-            throw new AppException("No tienes permiso para editar este artículo", HttpStatus.FORBIDDEN);
+            throw new AppException("You don't have the permit to edit this article", HttpStatus.FORBIDDEN);
         }
 
         article.setTitle(request.getTitle());
@@ -266,14 +266,14 @@ public class ArticleServiceImpl implements IArticleService {
     @Transactional
     public void deleteArticle(Integer id) {
         Article article = articleRepository.findById(id)
-                .orElseThrow(() -> new AppException("Artículo no encontrado", HttpStatus.NOT_FOUND));
+                .orElseThrow(() -> new AppException("The article was not found", HttpStatus.NOT_FOUND));
 
         UUID currentUserId = getCurrentUserId();
         boolean isAdmin = SecurityContextHolder.getContext().getAuthentication().getAuthorities()
                 .stream().anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
 
         if (!article.getAuthor().getId().equals(currentUserId) && !isAdmin) {
-            throw new AppException("No tienes permiso para eliminar este artículo", HttpStatus.FORBIDDEN);
+            throw new AppException("You don't have the permit to delete this article", HttpStatus.FORBIDDEN);
         }
 
         articleRepository.delete(article);
@@ -294,7 +294,7 @@ public class ArticleServiceImpl implements IArticleService {
     public Page<ArticleResponseDTO> getMyFavoriteArticles(Pageable pageable) {
         UUID currentUserId = getCurrentUserId();
         if (currentUserId == null) {
-            throw new AppException("Debes estar autenticado para ver tus favoritos", HttpStatus.UNAUTHORIZED);
+            throw new AppException("You must be authenticated to see your favorite articles", HttpStatus.UNAUTHORIZED);
         }
 
         return articleFavoriteRepository.findByUserId(currentUserId, pageable)
@@ -310,10 +310,10 @@ public class ArticleServiceImpl implements IArticleService {
     public CommentResponseDTO addComment(Integer articleId, CommentRequestDTO request) {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         User user = userRepository.findByUsername(username)
-                .orElseThrow(() -> new AppException("Usuario no encontrado", HttpStatus.NOT_FOUND));
+                .orElseThrow(() -> new AppException("The user was not found", HttpStatus.NOT_FOUND));
 
         Article article = articleRepository.findById(articleId)
-                .orElseThrow(() -> new AppException("Artículo no encontrado", HttpStatus.NOT_FOUND));
+                .orElseThrow(() -> new AppException("The user was nopt found", HttpStatus.NOT_FOUND));
 
         Comment comment = Comment.builder()
                 .content(request.getContenido())
@@ -326,7 +326,7 @@ public class ArticleServiceImpl implements IArticleService {
 
         CommentResponseDTO dto = new CommentResponseDTO();
         dto.setId(comment.getId());
-        dto.setContenido(comment.getContent());
+        dto.setContent(comment.getContent());
         dto.setCreatedAt(comment.getCreatedAt());
 
         UserResponseDTO userDto = new UserResponseDTO();
@@ -335,7 +335,7 @@ public class ArticleServiceImpl implements IArticleService {
         userDto.setFullName(user.getFullName());
         userDto.setRoleId(user.getRole().getId());
 
-        dto.setAutor(userDto);
+        dto.setAuthor(userDto);
 
         return dto;
     }
@@ -344,7 +344,7 @@ public class ArticleServiceImpl implements IArticleService {
     @Transactional
     public void deleteComment(Integer commentId) {
         Comment comment = commentRepository.findById(commentId)
-                .orElseThrow(() -> new AppException("Comentario no encontrado", HttpStatus.NOT_FOUND));
+                .orElseThrow(() -> new AppException("The comment was not found", HttpStatus.NOT_FOUND));
 
         commentRepository.delete(comment);
     }

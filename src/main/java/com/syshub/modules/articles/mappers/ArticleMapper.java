@@ -19,10 +19,10 @@ public class ArticleMapper {
 
         ArticleResponseDTO dto = new ArticleResponseDTO();
         dto.setId(article.getId());
-        dto.setTitulo(article.getTitle());
+        dto.setTitle(article.getTitle());
         dto.setSlug(article.getSlug());
-        dto.setExtracto(article.getSlug());
-        dto.setContenido(article.getContent());
+        dto.setExcerpt(article.getSlug());
+        dto.setContent(article.getContent());
         dto.setStatus(article.getStatus().name());
         dto.setCreatedAt(article.getCreatedAt());
 
@@ -33,7 +33,7 @@ public class ArticleMapper {
             userDto.setFullName(article.getAuthor().getFullName());
             userDto.setRoleId(article.getAuthor().getRole().getId());
             userDto.setEnabled(article.getAuthor().isEnabled());
-            dto.setAutor(userDto);
+            dto.setAuthor(userDto);
         }
 
         if (article.getCourse() != null) {
@@ -41,7 +41,7 @@ public class ArticleMapper {
             courseDto.setId(article.getCourse().getId());
             courseDto.setNombre(article.getCourse().getNombre());
             courseDto.setCodigo(article.getCourse().getCodigo());
-            dto.setCurso(courseDto);
+            dto.setCourse(courseDto);
         }
 
         dto.setTags(article.getTags().stream()
@@ -54,7 +54,7 @@ public class ArticleMapper {
                 })
                 .collect(Collectors.toSet()));
 
-        dto.setPuntos(article.getPoints() != null ? article.getPoints() : 0);
+        dto.setPoints(article.getPoints() != null ? article.getPoints() : 0);
 
         if (currentUserId != null && article.getFavorites() != null) {
             boolean isFav = article.getFavorites().stream()
@@ -67,13 +67,13 @@ public class ArticleMapper {
         if (currentUserId != null && article.getVotes() != null) {
             Integer userVote = article.getVotes().stream()
                     .filter(v -> v.getUser().getId().equals(currentUserId))
-                    .filter(v -> "ARTICULO".equals(v.getTargetType()))
+                    .filter(v -> "ARTICLE".equals(v.getTargetType()))
                     .map(ArticleVote::getValue)
                     .findFirst()
                     .orElse(0);
-            dto.setVote(userVote);
+            dto.setVotes(userVote);
         } else {
-            dto.setVote(0);
+            dto.setVotes(0);
         }
 
         return dto;
