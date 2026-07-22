@@ -31,9 +31,9 @@ public class StorageServiceImpl implements IStorageService {
     public void init() {
         try {
             Files.createDirectories(rootLocation);
-            System.out.println("Almacenamiento inicializado en: " + rootLocation.toAbsolutePath());
+            System.out.println("Storage initialized in: " + rootLocation.toAbsolutePath());
         } catch (IOException e) {
-            throw new RuntimeException("No se pudo inicializar el directorio de carga", e);
+            throw new RuntimeException("Couldn't initialize upload directory", e);
         }
     }
 
@@ -41,7 +41,7 @@ public class StorageServiceImpl implements IStorageService {
     public String store(MultipartFile file) {
         try {
             if (file.isEmpty()) {
-                throw new RuntimeException("Fallo al guardar un archivo vacío.");
+                throw new RuntimeException("Failed to save empty file.");
             }
 
             String extension = getFileExtension(file.getOriginalFilename());
@@ -56,7 +56,7 @@ public class StorageServiceImpl implements IStorageService {
                 return fileName;
             }
         } catch (IOException e) {
-            throw new RuntimeException("Fallo al almacenar el archivo.", e);
+            throw new RuntimeException("Failed to save file.", e);
         }
     }
 
@@ -73,10 +73,10 @@ public class StorageServiceImpl implements IStorageService {
             if (resource.exists() || resource.isReadable()) {
                 return resource;
             } else {
-                throw new RuntimeException("No se pudo leer el archivo: " + filename);
+                throw new RuntimeException("Couldn't read file: " + filename);
             }
         } catch (MalformedURLException e) {
-            throw new RuntimeException("Error en URL del archivo: " + filename, e);
+            throw new RuntimeException("Error in file URL: " + filename, e);
         }
     }
 
@@ -86,7 +86,7 @@ public class StorageServiceImpl implements IStorageService {
             Path file = load(filename);
             Files.deleteIfExists(file);
         } catch (IOException e) {
-            throw new RuntimeException("Error al borrar el archivo", e);
+            throw new RuntimeException("Error deleting file", e);
         }
     }
 

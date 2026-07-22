@@ -19,28 +19,28 @@ public class ArticleMapper {
 
         ArticleResponseDTO dto = new ArticleResponseDTO();
         dto.setId(article.getId());
-        dto.setTitulo(article.getTitulo());
+        dto.setTitulo(article.getTitle());
         dto.setSlug(article.getSlug());
-        dto.setExtracto(article.getExtracto());
-        dto.setContenido(article.getContenido());
+        dto.setExtracto(article.getSlug());
+        dto.setContenido(article.getContent());
         dto.setStatus(article.getStatus().name());
         dto.setCreatedAt(article.getCreatedAt());
 
-        if (article.getAutor() != null) {
+        if (article.getAuthor() != null) {
             UserResponseDTO userDto = new UserResponseDTO();
-            userDto.setId(article.getAutor().getId());
-            userDto.setUsername(article.getAutor().getUsername());
-            userDto.setNombreCompleto(article.getAutor().getNombreCompleto());
-            userDto.setRoleId(article.getAutor().getRol().getId());
-            userDto.setEnabled(article.getAutor().isEnabled());
+            userDto.setId(article.getAuthor().getId());
+            userDto.setUsername(article.getAuthor().getUsername());
+            userDto.setFullName(article.getAuthor().getFullName());
+            userDto.setRoleId(article.getAuthor().getRole().getId());
+            userDto.setEnabled(article.getAuthor().isEnabled());
             dto.setAutor(userDto);
         }
 
-        if (article.getCurso() != null) {
+        if (article.getCourse() != null) {
             CourseResponseDTO courseDto = new CourseResponseDTO();
-            courseDto.setId(article.getCurso().getId());
-            courseDto.setNombre(article.getCurso().getNombre());
-            courseDto.setCodigo(article.getCurso().getCodigo());
+            courseDto.setId(article.getCourse().getId());
+            courseDto.setNombre(article.getCourse().getNombre());
+            courseDto.setCodigo(article.getCourse().getCodigo());
             dto.setCurso(courseDto);
         }
 
@@ -54,21 +54,21 @@ public class ArticleMapper {
                 })
                 .collect(Collectors.toSet()));
 
-        dto.setPuntos(article.getPuntos() != null ? article.getPuntos() : 0);
+        dto.setPuntos(article.getPoints() != null ? article.getPoints() : 0);
 
-        if (currentUserId != null && article.getFavoritos() != null) {
-            boolean isFav = article.getFavoritos().stream()
-                    .anyMatch(f -> f.getUsuario().getId().equals(currentUserId));
+        if (currentUserId != null && article.getFavorites() != null) {
+            boolean isFav = article.getFavorites().stream()
+                    .anyMatch(f -> f.getUser().getId().equals(currentUserId));
             dto.setFavorite(isFav);
         } else {
             dto.setFavorite(false);
         }
 
-        if (currentUserId != null && article.getVotos() != null) {
-            Integer userVote = article.getVotos().stream()
-                    .filter(v -> v.getUsuario().getId().equals(currentUserId))
+        if (currentUserId != null && article.getVotes() != null) {
+            Integer userVote = article.getVotes().stream()
+                    .filter(v -> v.getUser().getId().equals(currentUserId))
                     .filter(v -> "ARTICULO".equals(v.getTargetType()))
-                    .map(ArticleVote::getValor)
+                    .map(ArticleVote::getValue)
                     .findFirst()
                     .orElse(0);
             dto.setVote(userVote);

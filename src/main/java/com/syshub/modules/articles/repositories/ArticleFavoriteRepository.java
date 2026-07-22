@@ -8,6 +8,6 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface ArticleFavoriteRepository extends JpaRepository<ArticleFavorite, Integer> {
-    Optional<ArticleFavorite> findByUsuarioIdAndArticuloId(UUID usuarioId, Integer articuloId);
-    Page<ArticleFavorite> findByUsuarioId(UUID usuarioId, Pageable pageable);
+    Optional<ArticleFavorite> findByUserIdAndArticleId(UUID userId, Integer articleId);
+    Page<ArticleFavorite> findByUserId(UUID userId, Pageable pageable);
 }

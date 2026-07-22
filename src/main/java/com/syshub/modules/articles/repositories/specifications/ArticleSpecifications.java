@@ -16,13 +16,13 @@ public class ArticleSpecifications {
             if (search != null && !search.isEmpty()) {
                 String likeSearch = "%" + search.toLowerCase() + "%";
                 predicates.add(cb.or(
-                        cb.like(cb.lower(root.get("titulo")), likeSearch),
-                        cb.like(cb.lower(root.get("extracto")), likeSearch)
+                        cb.like(cb.lower(root.get("title")), likeSearch),
+                        cb.like(cb.lower(root.get("excerpt")), likeSearch)
                 ));
             }
 
             if (courseId != null) {
-                predicates.add(cb.equal(root.get("curso").get("id"), courseId));
+                predicates.add(cb.equal(root.get("course").get("id"), courseId));
             }
 
             if (tag != null && !tag.trim().isEmpty()) {

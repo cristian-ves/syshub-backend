@@ -24,7 +24,7 @@ public class UserServiceImpl implements IUserService {
 
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
-    private final CarreraRepository carreraRepository;
+    private final MajorRepository majorRepository;
     private final UserMapper userMapper;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
@@ -33,7 +33,7 @@ public class UserServiceImpl implements IUserService {
     @Transactional
     public void deleteUser(UUID id) {
         User user = userRepository.findById(id)
-                .orElseThrow(() -> new AppException("Usuario no encontrado", HttpStatus.NOT_FOUND));
+                .orElseThrow(() -> new AppException("User not found", HttpStatus.NOT_FOUND));
 
         userRepository.delete(user);
     }
@@ -49,28 +49,28 @@ public class UserServiceImpl implements IUserService {
     @Transactional
     public UserResponseDTO createUserByAdmin(UserAdminCreateDTO dto) {
         if (userRepository.existsByEmail(dto.getEmail())) {
-            throw new AppException("El email ya está registrado", HttpStatus.CONFLICT);
+            throw new AppException("The email is already taken", HttpStatus.CONFLICT);
         }
         if (userRepository.existsByUsername(dto.getUsername())) {
-            throw new AppException("El nombre de usuario ya está en uso", HttpStatus.CONFLICT);
+            throw new AppException("The username is already taken", HttpStatus.CONFLICT);
         }
 
         User user = new User();
         user.setEmail(dto.getEmail());
         user.setUsername(dto.getUsername());
-        user.setNombreCompleto(dto.getNombreCompleto());
-        user.setRegistroAcademico(dto.getRegistroAcademico());
+        user.setFullName(dto.getFullName());
+        user.setAcademicRecord(dto.getAcademicRecord());
         user.setEnabled(dto.isEnabled());
         user.setPassword(passwordEncoder.encode(dto.getPassword()));
 
-        Role role = roleRepository.findById(dto.getRolId())
-                .orElseThrow(() -> new AppException("Rol no encontrado", HttpStatus.NOT_FOUND));
-        user.setRol(role);
+        Role role = roleRepository.findById(dto.getRoleId())
+                .orElseThrow(() -> new AppException("Role not found", HttpStatus.NOT_FOUND));
+        user.setRole(role);
 
-        if (dto.getCarreraId() != null) {
-            Carrera carrera = carreraRepository.findById(dto.getCarreraId())
-                    .orElseThrow(() -> new AppException("Carrera no encontrada", HttpStatus.NOT_FOUND));
-            user.setCarrera(carrera);
+        if (dto.getMajorId() != null) {
+            Major major = majorRepository.findById(dto.getMajorId())
+                    .orElseThrow(() -> new AppException("Major not found", HttpStatus.NOT_FOUND));
+            user.setMajor(major);
         }
 
         return userMapper.toUserResponseDTO(userRepository.save(user));
@@ -79,18 +79,18 @@ public class UserServiceImpl implements IUserService {
     @Override
     @Transactional
     public AuthResponseDTO updateOwnProfile(UUID id, UserProfileUpdateDTO dto) {
-        User user = userRepository.findById(id).orElseThrow(() -> new AppException("El usuario no existe", HttpStatus.NOT_FOUND));
+        User user = userRepository.findById(id).orElseThrow(() -> new AppException("The user doesn't exist", HttpStatus.NOT_FOUND));
 
         validateUniqueness(user, dto.getEmail(), dto.getUsername());
 
         user.setEmail(dto.getEmail());
         user.setUsername(dto.getUsername());
-        user.setNombreCompleto(dto.getNombreCompleto());
-        user.setRegistroAcademico(dto.getRegistroAcademico());
+        user.setFullName(dto.getFullName());
+        user.setAcademicRecord(dto.getAcademicRecord());
 
-        if (dto.getCarreraId() != null) {
-            user.setCarrera(carreraRepository.findById(dto.getCarreraId())
-                    .orElseThrow(() -> new RuntimeException("Carrera no encontrada")));
+        if (dto.getMajorId() != null) {
+            user.setMajor(majorRepository.findById(dto.getMajorId())
+                    .orElseThrow(() -> new RuntimeException("Major not found")));
         }
 
         if (dto.getPassword() != null && !dto.getPassword().isBlank()) {
@@ -107,23 +107,23 @@ public class UserServiceImpl implements IUserService {
     @Override
     @Transactional
     public UserResponseDTO updateUserByAdmin(UUID id, UserAdminUpdateDTO dto) {
-        User user = userRepository.findById(id).orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+        User user = userRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
 
         validateUniqueness(user, dto.getEmail(), dto.getUsername());
 
         user.setEmail(dto.getEmail());
         user.setUsername(dto.getUsername());
-        user.setNombreCompleto(dto.getNombreCompleto());
-        user.setRegistroAcademico(dto.getRegistroAcademico());
+        user.setFullName(dto.getFullName());
+        user.setAcademicRecord(dto.getAcademicRecord());
         user.setEnabled(dto.isEnabled());
 
-        Role newRole = roleRepository.findById(dto.getRolId())
-                .orElseThrow(() -> new RuntimeException("Rol no encontrado"));
-        user.setRol(newRole);
+        Role newRole = roleRepository.findById(dto.getRoleId())
+                .orElseThrow(() -> new RuntimeException("Role not found"));
+        user.setRole(newRole);
 
-        if (dto.getCarreraId() != null) {
-            user.setCarrera(carreraRepository.findById(dto.getCarreraId())
-                    .orElseThrow(() -> new RuntimeException("Carrera no encontrada")));
+        if (dto.getMajorId() != null) {
+            user.setMajor(majorRepository.findById(dto.getMajorId())
+                    .orElseThrow(() -> new RuntimeException("Major not found")));
         }
 
         return userMapper.toUserResponseDTO(userRepository.save(user));
@@ -131,10 +131,10 @@ public class UserServiceImpl implements IUserService {
 
     private void validateUniqueness(User current, String newEmail, String newUsername) {
         if (!current.getEmail().equals(newEmail) && userRepository.existsByEmail(newEmail)) {
-            throw new RuntimeException("Email ya está en uso");
+            throw new RuntimeException("The email is already taken");
         }
         if (!current.getUsername().equals(newUsername) && userRepository.existsByUsername(newUsername)) {
-            throw new RuntimeException("Username ya está en uso");
+            throw new RuntimeException("The username is already taken");
         }
     }
 }

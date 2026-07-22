@@ -11,10 +11,10 @@ public class UserAdminUpdateDTO {
     @Email
     private String email;
     @NotBlank private String username;
-    @NotBlank private String nombreCompleto;
-    private String registroAcademico;
-    private Integer carreraId;
+    @NotBlank private String fullName;
+    private String academicRecord;
+    private Integer majorId;
     @NotNull
-    private Integer rolId;
+    private Integer roleId;
     @NotNull private boolean enabled;
 }

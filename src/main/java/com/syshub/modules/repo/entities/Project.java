@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Set;
 
 @Entity
-@Table(name = "proyectos")
+@Table(name = "projects")
 @Data
 @Builder
 @NoArgsConstructor
@@ -24,18 +24,19 @@ public class Project {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(nullable = false)
+    @Column(name = "title", nullable = false)
     private String titulo;
 
-    @Column(columnDefinition = "TEXT")
+    @Column(name = "description", columnDefinition = "TEXT")
     private String descripcion;
 
     @Column(name = "repo_url")
     private String repoUrl;
 
+    @Column(name = "featured")
     private boolean destacado = false;
 
-    @Column(name = "fecha_subida")
+    @Column(name = "upload_date")
     private LocalDateTime fechaSubida;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -50,8 +51,8 @@ public class Project {
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
-            name = "proyecto_tags",
-            joinColumns = @JoinColumn(name = "proyecto_id"),
+            name = "project_tags",
+            joinColumns = @JoinColumn(name = "project_id"),
             inverseJoinColumns = @JoinColumn(name = "tag_id")
     )
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})

@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 import java.util.Set;
 
 @Entity
-@Table(name = "articulos")
+@Table(name = "articles")
 @Data
 @Builder
 @NoArgsConstructor
@@ -23,16 +23,16 @@ public class Article {
     private Integer id;
 
     @Column(nullable = false)
-    private String titulo;
+    private String title;
 
     @Column(unique = true, nullable = false)
     private String slug;
 
     @Column(columnDefinition = "TEXT")
-    private String extracto;
+    private String excerpt;
 
     @Column(nullable = false, columnDefinition = "TEXT")
-    private String contenido;
+    private String content;
 
     @Enumerated(EnumType.STRING)
     private ArticleStatus status = ArticleStatus.PUBLISHED;
@@ -46,17 +46,17 @@ public class Article {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-    private User autor;
+    private User author;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_curso")
+    @JoinColumn(name = "course_id")
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-    private Course curso;
+    private Course course;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
-            name = "articulo_tags",
-            joinColumns = @JoinColumn(name = "articulo_id"),
+            name = "article_tags",
+            joinColumns = @JoinColumn(name = "article_id"),
             inverseJoinColumns = @JoinColumn(name = "tag_id")
     )
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
@@ -78,16 +78,16 @@ public class Article {
     }
 
     @Column(nullable = false)
-    private Integer puntos = 0;
+    private Integer points = 0;
 
-    @OneToMany(mappedBy = "articulo", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "article", cascade = CascadeType.ALL, orphanRemoval = true)
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
-    private Set<ArticleFavorite> favoritos;
+    private Set<ArticleFavorite> favorites;
 
-    @OneToMany(mappedBy = "articulo", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "article", cascade = CascadeType.ALL, orphanRemoval = true)
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
-    private Set<ArticleVote> votos;
+    private Set<ArticleVote> votes;
 
 }

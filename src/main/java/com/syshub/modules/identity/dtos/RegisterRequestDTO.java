@@ -9,26 +9,26 @@ import lombok.*;
 @AllArgsConstructor
 public class RegisterRequestDTO {
 
-    @NotBlank(message = "El nombre de usuario es obligatorio")
-    @Size(min = 4, max = 50, message = "El usuario debe tener entre 4 y 50 caracteres")
+    @NotBlank(message = "The username is required")
+    @Size(min = 4, max = 50, message = "Username must contain between 4 and 50 characters")
     private String username;
 
-    @NotBlank(message = "El correo electrónico es obligatorio")
-    @Email(message = "El formato del correo es inválido")
-    @Size(max = 100, message = "El correo no puede exceder los 100 caracteres")
+    @NotBlank(message = "The email is required")
+    @Email(message = "The email is invalid")
+    @Size(max = 100, message = "The email must contain less than 100 characters")
     private String email;
 
-    @NotBlank(message = "La contraseña es obligatoria")
-    @Size(min = 8, message = "La contraseña debe tener al menos 8 caracteres")
+    @NotBlank(message = "The password is required")
+    @Size(min = 8, message = "Password must contain at least 8 characters")
     private String password;
 
-    @NotBlank(message = "El nombre completo es obligatorio")
-    @Size(max = 100, message = "El nombre no puede exceder los 100 caracteres")
-    private String nombreCompleto;
+    @NotBlank(message = "The full name is required")
+    @Size(max = 100, message = "The full name must not exceed 100 characters")
+    private String fullName;
 
-    @Size(max = 20, message = "El registro académico no puede exceder los 20 caracteres")
-    private String registroAcademico;
+    @Size(max = 20, message = "The academic record can not exceed 20 characters")
+    private String academicRecord;
 
-    @NotNull(message = "La carrera es obligatoria")
-    private Integer idCarrera;
+    @NotNull(message = "The major is required")
+    private Integer majorId;
 }

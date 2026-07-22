@@ -6,7 +6,7 @@ import lombok.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "articulos_favoritos")
+@Table(name = "article_favorites")
 @Data
 @Builder
 @NoArgsConstructor
@@ -18,11 +18,11 @@ public class ArticleFavorite {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
-    private User usuario;
+    private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "articulo_id")
-    private Article articulo;
+    @JoinColumn(name = "article_id")
+    private Article article;
 
     @Column(name = "saved_at")
     private LocalDateTime savedAt;

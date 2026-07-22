@@ -8,14 +8,13 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "usuarios")
+@Table(name = "users")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -33,11 +32,11 @@ public class User implements UserDetails{
     @Column(nullable = false)
     private String password;
 
-    @Column(name = "nombre_completo", nullable = false)
-    private String nombreCompleto;
+    @Column(name = "full_name", nullable = false)
+    private String fullName;
 
-    @Column(name = "registro_academico", unique = true)
-    private String registroAcademico;
+    @Column(name = "academic_record", unique = true)
+    private String academicRecord;
 
     private boolean enabled = true;
 
@@ -45,16 +44,16 @@ public class User implements UserDetails{
     private LocalDateTime createdAt;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "id_rol", nullable = false)
-    private Role rol;
+    @JoinColumn(name = "role_id", nullable = false)
+    private Role role;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "id_carrera")
-    private Carrera carrera;
+    @JoinColumn(name = "major_id")
+    private Major major;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority(rol.getNombre()));
+        return List.of(new SimpleGrantedAuthority(role.getName()));
     }
 
     @Override

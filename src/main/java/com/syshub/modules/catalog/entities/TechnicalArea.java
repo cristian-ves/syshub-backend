@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
-@Table(name = "areas_tecnicas")
+@Table(name = "technical_areas")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -14,10 +14,10 @@ public class TechnicalArea {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(unique = true, nullable = false)
+    @Column(name = "name", unique = true, nullable = false)
     private String nombre;
 
-    @Column(columnDefinition = "TEXT")
+    @Column(name = "description", columnDefinition = "TEXT")
     private String descripcion;
 
     @Column(length = 7)

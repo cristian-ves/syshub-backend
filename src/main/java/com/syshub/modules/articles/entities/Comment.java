@@ -8,7 +8,7 @@ import lombok.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "comentarios")
+@Table(name = "comments")
 @Data
 @Builder
 @NoArgsConstructor
@@ -20,12 +20,12 @@ public class Comment {
     private Integer id;
 
     @Column(nullable = false, columnDefinition = "TEXT")
-    private String contenido;
+    private String content;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-    private User autor;
+    private User author;
 
     @Column(name = "target_id", nullable = false)
     private Integer targetId;

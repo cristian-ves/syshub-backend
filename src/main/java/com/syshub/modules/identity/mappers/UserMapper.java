@@ -15,8 +15,8 @@ public class UserMapper {
         User user = new User();
         user.setUsername(dto.getUsername());
         user.setEmail(dto.getEmail());
-        user.setNombreCompleto(dto.getNombreCompleto());
-        user.setRegistroAcademico(dto.getRegistroAcademico());
+        user.setFullName(dto.getFullName());
+        user.setAcademicRecord(dto.getAcademicRecord());
         return user;
     }
 
@@ -28,11 +28,11 @@ public class UserMapper {
                 .id(user.getId())
                 .username(user.getUsername())
                 .email(user.getEmail())
-                .nombreCompleto(user.getNombreCompleto())
-                .registroAcademico(user.getRegistroAcademico())
-                .role(user.getRol() != null ? user.getRol().getNombre() : null)
-                .carreraId(user.getCarrera() != null ? user.getCarrera().getId() : null)
-                .carreraNombre(user.getCarrera() != null ? user.getCarrera().getNombre() : null)
+                .fullName(user.getFullName())
+                .academicRecord(user.getAcademicRecord())
+                .role(user.getRole() != null ? user.getRole().getName() : null)
+                .majorId(user.getMajor() != null ? user.getMajor().getId() : null)
+                .majorName(user.getMajor() != null ? user.getMajor().getName() : null)
                 .build();
     }
 
@@ -47,10 +47,10 @@ public class UserMapper {
                 .id(user.getId())
                 .username(user.getUsername())
                 .email(user.getEmail())
-                .nombreCompleto(user.getNombreCompleto())
-                .registroAcademico(user.getRegistroAcademico())
-                .roleId(user.getRol().getId())
-                .carreraId(user.getCarrera().getId())
+                .fullName(user.getFullName())
+                .academicRecord(user.getAcademicRecord())
+                .roleId(user.getRole().getId())
+                .majorId(user.getMajor().getId())
                 .enabled(user.isEnabled())
                 .build();
     }

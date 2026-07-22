@@ -26,7 +26,7 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ErrorResponseDTO> handleBadCredentials(BadCredentialsException ex) {
         ErrorResponseDTO error = new ErrorResponseDTO(
                 HttpStatus.UNAUTHORIZED.value(),
-                "Usuario o contraseña incorrectos",
+                "Username or password is incorrect",
                 System.currentTimeMillis()
         );
         return new ResponseEntity<>(error, HttpStatus.UNAUTHORIZED);
@@ -49,7 +49,7 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ErrorResponseDTO> handleExpiredJwt(io.jsonwebtoken.ExpiredJwtException ex) {
         ErrorResponseDTO error = ErrorResponseDTO.builder()
                 .status(HttpStatus.UNAUTHORIZED.value())
-                .message("El enlace de recuperación ha expirado. Por favor, solicita uno nuevo.")
+                .message("The recovery link has expired. Please, request a new one.")
                 .timestamp(System.currentTimeMillis())
                 .build();
 
@@ -60,7 +60,7 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ErrorResponseDTO> handleInvalidSignature(io.jsonwebtoken.security.SignatureException ex) {
         ErrorResponseDTO error = ErrorResponseDTO.builder()
                 .status(HttpStatus.UNAUTHORIZED.value())
-                .message("La firma del token no es válida o fue manipulada.")
+                .message("The token signature is invalid or has been tampered with.")
                 .timestamp(System.currentTimeMillis())
                 .build();
 
@@ -71,7 +71,7 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ErrorResponseDTO> handleMalformedJwt(io.jsonwebtoken.MalformedJwtException ex) {
         ErrorResponseDTO error = ErrorResponseDTO.builder()
                 .status(HttpStatus.BAD_REQUEST.value())
-                .message("El formato del token es incorrecto.")
+                .message("The token format is invalid.")
                 .timestamp(System.currentTimeMillis())
                 .build();
 

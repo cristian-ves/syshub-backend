@@ -13,8 +13,8 @@ public class AuthResponseDTO {
     private String username;
     private String email;
     private String role;
-    private String nombreCompleto;
-    private String registroAcademico;
-    private Integer carreraId;
-    private String carreraNombre;
+    private String fullName;
+    private String academicRecord;
+    private Integer majorId;
+    private String majorName;
 }

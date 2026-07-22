@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
-@Table(name = "votos", uniqueConstraints = {
+@Table(name = "votes", uniqueConstraints = {
         @UniqueConstraint(columnNames = {"user_id", "target_id", "target_type"})
 })
 @Data
@@ -19,7 +19,7 @@ public class Vote {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
-    private User usuario;
+    private User user;
 
     @Column(name = "target_id")
     private Integer targetId;
@@ -27,5 +27,5 @@ public class Vote {
     @Column(name = "target_type")
     private String targetType;
 
-    private Integer valor;
+    private Integer value;
 }

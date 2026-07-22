@@ -22,7 +22,7 @@ public class ArticleController {
     private final IArticleService articleService;
 
     @PostMapping
-    @PreAuthorize("hasAnyRole('ROLE_AUXILIAR', 'ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole('ROLE_ASSISTANT', 'ROLE_ADMIN')")
     public ResponseEntity<ArticleResponseDTO> createArticle(@Valid @RequestBody ArticleRequestDTO request) {
         return new ResponseEntity<>(articleService.createArticle(request), HttpStatus.CREATED);
     }

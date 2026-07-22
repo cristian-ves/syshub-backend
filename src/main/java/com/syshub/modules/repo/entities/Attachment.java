@@ -6,7 +6,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
-@Table(name = "archivos_adjuntos")
+@Table(name = "attachments")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -17,17 +17,17 @@ public class Attachment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "nombre_original")
+    @Column(name = "original_name")
     private String nombreOriginal;
 
-    @Column(name = "nombre_archivo")
+    @Column(name = "file_name")
     private String nombreArchivo;
 
-    @Column(name = "tipo_archivo")
+    @Column(name = "file_type")
     private String tipoArchivo;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "proyecto_id")
+    @JoinColumn(name = "project_id")
     @JsonIgnore
     private Project proyecto;
 }

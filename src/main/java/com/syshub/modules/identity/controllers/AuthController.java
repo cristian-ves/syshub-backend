@@ -41,12 +41,12 @@ public class AuthController {
     public ResponseEntity<?> forgotPassword(@RequestBody Map<String, String> request) {
         String email = request.get("email");
         authService.forgotPassword(email);
-        return ResponseEntity.ok(Map.of("message", "Si el correo existe, se ha enviado un enlace de recuperación."));
+        return ResponseEntity.ok(Map.of("message", "If the email exists, you will receive a recovery link."));
     }
 
     @PostMapping("/reset-password")
     public ResponseEntity<?> resetPassword(@Valid @RequestBody ResetPasswordRequestDTO request) {
         authService.resetPassword(request.getToken(), request.getPassword());
-        return ResponseEntity.ok(Map.of("message", "Tu contraseña ha sido actualizada. Ya puedes iniciar sesión."));
+        return ResponseEntity.ok(Map.of("message", "Your password has been updated. You can now login."));
     }
 }

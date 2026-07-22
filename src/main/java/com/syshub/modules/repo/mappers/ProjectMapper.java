@@ -21,7 +21,7 @@ public class ProjectMapper {
         dto.setDescripcion(project.getDescripcion());
         dto.setRepoUrl(project.getRepoUrl());
         dto.setDestacado(project.isDestacado());
-        dto.setAutorNombre(project.getAutor().getNombreCompleto());
+        dto.setAutorNombre(project.getAutor().getFullName());
         dto.setCursoNombre(project.getCurso().getNombre());
         dto.setPensumNombre(project.getCurso().getSemester().getPensum().getNombre());
         dto.setFechaSubida(project.getFechaSubida());

@@ -23,14 +23,14 @@ public class CloudinaryStorageServiceImpl implements IStorageService {
 
     @Override
     public void init() {
-        System.out.println("Almacenamiento en Cloudinary inicializado.");
+        System.out.println("Cloudinary storage initialized.");
     }
 
     @Override
     public String store(MultipartFile file) {
         try {
             if (file.isEmpty()) {
-                throw new RuntimeException("Fallo al guardar un archivo vacío.");
+                throw new RuntimeException("Failed to save an empty file.");
             }
 
             String contentType = file.getContentType();
@@ -38,13 +38,13 @@ public class CloudinaryStorageServiceImpl implements IStorageService {
 
             Map uploadResult = cloudinary.uploader().upload(file.getBytes(), ObjectUtils.asMap(
                     "resource_type", resourceType,
-                    "folder", "syshub_projects" // Organiza todo en una carpeta en tu Cloudinary
+                    "folder", "syshub_projects"
             ));
 
             return uploadResult.get("secure_url").toString();
 
         } catch (IOException e) {
-            throw new RuntimeException("Fallo al almacenar el archivo en Cloudinary.", e);
+            throw new RuntimeException("Failed to save the file in Cloudinary.", e);
         }
     }
 
@@ -64,7 +64,7 @@ public class CloudinaryStorageServiceImpl implements IStorageService {
 
     @Override
     public Path load(String filename) {
-        throw new UnsupportedOperationException("Carga por Path no está soportada en Cloudinary.");
+        throw new UnsupportedOperationException("Path not supported in Cloudinary.");
     }
 
     @Override
@@ -74,10 +74,10 @@ public class CloudinaryStorageServiceImpl implements IStorageService {
             if (resource.exists() || resource.isReadable()) {
                 return resource;
             } else {
-                throw new RuntimeException("No se pudo leer el archivo de la URL: " + filename);
+                throw new RuntimeException("Can't read file with URL: " + filename);
             }
         } catch (MalformedURLException e) {
-            throw new RuntimeException("Error en URL del archivo: " + filename, e);
+            throw new RuntimeException("Error in file URL: " + filename, e);
         }
     }
 
@@ -93,11 +93,9 @@ public class CloudinaryStorageServiceImpl implements IStorageService {
     }
 
     private String extractPublicId(String url) {
-        // e.g. https://res.cloudinary.com/cloud/image/upload/v123/syshub_projects/file.pdf
         String[] parts = url.split("/");
         String lastPart = parts[parts.length - 1];
         String folder = parts[parts.length - 2];
-        // for raw files keep the extension in the public_id
         return folder + "/" + lastPart;
     }
 }

@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
-@Table(name = "semestres")
+@Table(name = "semesters")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -14,11 +14,11 @@ public class Semester {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(nullable = false)
+    @Column(name = "number", nullable = false)
     private Integer numero;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_pensum")
+    @JoinColumn(name = "study_plan_id")
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Pensum pensum;
 }

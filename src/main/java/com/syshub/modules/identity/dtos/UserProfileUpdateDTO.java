@@ -11,8 +11,8 @@ public class UserProfileUpdateDTO {
     @Email
     private String email;
     @NotBlank private String username;
-    @NotBlank private String nombreCompleto;
-    private String registroAcademico;
-    private Integer carreraId;
+    @NotBlank private String fullName;
+    private String academicRecord;
+    private Integer majorId;
     @Size(min = 8) private String password;
 }

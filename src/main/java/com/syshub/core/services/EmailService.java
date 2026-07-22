@@ -30,12 +30,12 @@ public class EmailService {
 
             helper.setText(htmlContent, true);
             helper.setTo(to);
-            helper.setSubject("Recuperación de Contraseña - Syshub");
+            helper.setSubject("Password Recovery - Syshub");
             helper.setFrom(fromEmail);
 
             mailSender.send(mimeMessage);
         } catch (MessagingException e) {
-            throw new RuntimeException("Error al enviar el correo electrónico", e);
+            throw new RuntimeException("Error sending email", e);
         }
     }
 
@@ -46,15 +46,15 @@ public class EmailService {
                 "            <h1 style=\"color: #ffffff; margin: 0; font-size: 28px; font-weight: 800; letter-spacing: -0.025em;\">syshub</h1>" +
                 "        </div>" +
                 "        <div style=\"padding: 40px;\">" +
-                "            <h2 style=\"margin-top: 0; color: #0f172a; font-size: 20px;\">Recuperar credenciales</h2>" +
-                "            <p style=\"line-height: 1.6; color: #64748b;\">Hola, <strong>" + username + "</strong>.</p>" +
-                "            <p style=\"line-height: 1.6; color: #64748b;\">Recibimos una solicitud para recuperar el acceso a tu cuenta académica. Haz clic en el botón de abajo para establecer una nueva contraseña.</p>" +
+                "            <h2 style=\"margin-top: 0; color: #0f172a; font-size: 20px;\">Recover Your Credentials</h2>" +
+                "            <p style=\"line-height: 1.6; color: #64748b;\">Hi, <strong>" + username + "</strong>.</p>" +
+                "            <p style=\"line-height: 1.6; color: #64748b;\">We received a request to recover access to your academic account. Click the button below to set a new password.</p>" +
                 "            <div style=\"text-align: center; margin: 35px 0;\">" +
-                "                <a href=\"" + url + "\" style=\"background-color: #1e40af; color: #ffffff; padding: 14px 28px; border-radius: 8px; text-decoration: none; font-weight: bold; display: inline-block; box-shadow: 0 4px 6px -1px rgba(30, 64, 175, 0.2);\">Restablecer Contraseña</a>" +
+                "                <a href=\"" + url + "\" style=\"background-color: #1e40af; color: #ffffff; padding: 14px 28px; border-radius: 8px; text-decoration: none; font-weight: bold; display: inline-block; box-shadow: 0 4px 6px -1px rgba(30, 64, 175, 0.2);\">Reset Password</a>" +
                 "            </div>" +
-                "            <p style=\"font-size: 14px; color: #94a3b8; line-height: 1.6;\">Este enlace es válido por los próximos <strong>15 minutos</strong>. Tu nombre de usuario es: <strong>" + username + "</strong>.</p>" +
+                "            <p style=\"font-size: 14px; color: #94a3b8; line-height: 1.6;\">This link is valid for the next <strong>15 minutes</strong>. Your username is: <strong>" + username + "</strong>.</p>" +
                 "            <hr style=\"border: 0; border-top: 1px solid #f1f5f9; margin: 30px 0;\">" +
-                "            <p style=\"font-size: 12px; color: #94a3b8; text-align: center; margin: 0;\">© 2026 Syshub CUNOC - División de Ingeniería</p>" +
+                "            <p style=\"font-size: 12px; color: #94a3b8; text-align: center; margin: 0;\">© 2026 Syshub CUNOC - Engineering Division</p>" +
                 "        </div>" +
                 "    </div>" +
                 "</div>";

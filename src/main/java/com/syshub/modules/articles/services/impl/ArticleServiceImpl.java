@@ -60,7 +60,7 @@ public class ArticleServiceImpl implements IArticleService {
         Course course = courseRepository.findById(request.getCourseId())
                 .orElseThrow(() -> new AppException("Curso no encontrado", HttpStatus.NOT_FOUND));
 
-        String slug = generateSlug(request.getTitulo());
+        String slug = generateSlug(request.getTitle());
         if (articleRepository.existsBySlug(slug)) {
             slug = slug + "-" + System.currentTimeMillis() % 1000;
         }
@@ -76,14 +76,14 @@ public class ArticleServiceImpl implements IArticleService {
                 .collect(Collectors.toSet());
 
         Article article = Article.builder()
-                .titulo(request.getTitulo())
+                .title(request.getTitle())
                 .slug(slug)
-                .extracto(request.getExtracto())
-                .contenido(request.getContenido())
+                .slug(request.getExcerpt())
+                .content(request.getContent())
                 .status(request.getStatus() != null && request.getStatus().equals("DRAFT")
                         ? Article.ArticleStatus.DRAFT : Article.ArticleStatus.PUBLISHED)
-                .autor(author)
-                .curso(course)
+                .author(author)
+                .course(course)
                 .tags(articleTags)
                 .build();
 
@@ -137,14 +137,14 @@ public class ArticleServiceImpl implements IArticleService {
         List<CommentResponseDTO> comentariosDto = comments.stream().map(comment -> {
             CommentResponseDTO dto = new CommentResponseDTO();
             dto.setId(comment.getId());
-            dto.setContenido(comment.getContenido());
+            dto.setContenido(comment.getContent());
             dto.setCreatedAt(comment.getCreatedAt());
 
             UserResponseDTO userDto = new UserResponseDTO();
-            userDto.setId(comment.getAutor().getId());
-            userDto.setUsername(comment.getAutor().getUsername());
-            userDto.setNombreCompleto(comment.getAutor().getNombreCompleto());
-            userDto.setRoleId(comment.getAutor().getRol().getId());
+            userDto.setId(comment.getAuthor().getId());
+            userDto.setUsername(comment.getAuthor().getUsername());
+            userDto.setFullName(comment.getAuthor().getFullName());
+            userDto.setRoleId(comment.getAuthor().getRole().getId());
             dto.setAutor(userDto);
 
             return dto;
@@ -171,12 +171,12 @@ public class ArticleServiceImpl implements IArticleService {
         Article article = articleRepository.findById(articleId)
                 .orElseThrow(() -> new AppException("Artículo no encontrado", HttpStatus.NOT_FOUND));
 
-        if (article.getPuntos() == null) {
-            article.setPuntos(0);
+        if (article.getPoints() == null) {
+            article.setPoints(0);
         }
 
-        Optional<Vote> existingVote = voteRepository.findByUsuarioIdAndTargetIdAndTargetType(
-                user.getId(), articleId, "ARTICULO");
+        Optional<Vote> existingVote = voteRepository.findByUserIdAndTargetIdAndTargetType(
+                user.getId(), articleId, "ARTICLE");
 
         int pointsAdjustment = 0;
 
@@ -184,33 +184,33 @@ public class ArticleServiceImpl implements IArticleService {
 
         if (existingVote.isPresent()) {
             Vote vote = existingVote.get();
-            if (vote.getValor().equals(value)) {
+            if (vote.getValue().equals(value)) {
                 voteRepository.delete(vote);
                 pointsAdjustment = -value;
                 dto.setVote(0);
             } else {
                 pointsAdjustment = value * 2;
-                vote.setValor(value);
+                vote.setValue(value);
                 voteRepository.save(vote);
                 dto.setVote(value);
             }
         } else {
             Vote newVote = Vote.builder()
-                    .usuario(user)
+                    .user(user)
                     .targetId(articleId)
-                    .targetType("ARTICULO")
-                    .valor(value)
+                    .targetType("ARTICLE")
+                    .value(value)
                     .build();
             voteRepository.save(newVote);
             pointsAdjustment = value;
             dto.setVote(value);
         }
 
-        article.setPuntos(article.getPuntos() + pointsAdjustment);
+        article.setPoints(article.getPoints() + pointsAdjustment);
         articleRepository.save(article);
 
         dto.setArticleId(article.getId());
-        dto.setNewPoints(article.getPuntos());
+        dto.setNewPoints(article.getPoints());
 
         return dto;
     }
@@ -226,14 +226,14 @@ public class ArticleServiceImpl implements IArticleService {
                 .orElseThrow(() -> new AppException("Artículo no encontrado", HttpStatus.NOT_FOUND));
 
         Optional<ArticleFavorite> favorite = articleFavoriteRepository
-                .findByUsuarioIdAndArticuloId(user.getId(), articleId);
+                .findByUserIdAndArticleId(user.getId(), articleId);
 
         if (favorite.isPresent()) {
             articleFavoriteRepository.delete(favorite.get());
         } else {
             ArticleFavorite newFavorite = ArticleFavorite.builder()
-                    .usuario(user)
-                    .articulo(article)
+                    .user(user)
+                    .article(article)
                     .build();
             articleFavoriteRepository.save(newFavorite);
         }
@@ -250,13 +250,13 @@ public class ArticleServiceImpl implements IArticleService {
         boolean isAdmin = SecurityContextHolder.getContext().getAuthentication().getAuthorities()
                 .stream().anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
 
-        if (!article.getAutor().getId().equals(currentUserId) && !isAdmin) {
+        if (!article.getAuthor().getId().equals(currentUserId) && !isAdmin) {
             throw new AppException("No tienes permiso para editar este artículo", HttpStatus.FORBIDDEN);
         }
 
-        article.setTitulo(request.getTitulo());
-        article.setContenido(request.getContenido());
-        article.setExtracto(request.getExtracto());
+        article.setTitle(request.getTitle());
+        article.setContent(request.getContent());
+        article.setSlug(request.getExcerpt());
         article.setStatus(Article.ArticleStatus.valueOf(request.getStatus()));
 
         return articleMapper.toDto(articleRepository.save(article), currentUserId);
@@ -272,7 +272,7 @@ public class ArticleServiceImpl implements IArticleService {
         boolean isAdmin = SecurityContextHolder.getContext().getAuthentication().getAuthorities()
                 .stream().anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
 
-        if (!article.getAutor().getId().equals(currentUserId) && !isAdmin) {
+        if (!article.getAuthor().getId().equals(currentUserId) && !isAdmin) {
             throw new AppException("No tienes permiso para eliminar este artículo", HttpStatus.FORBIDDEN);
         }
 
@@ -297,9 +297,9 @@ public class ArticleServiceImpl implements IArticleService {
             throw new AppException("Debes estar autenticado para ver tus favoritos", HttpStatus.UNAUTHORIZED);
         }
 
-        return articleFavoriteRepository.findByUsuarioId(currentUserId, pageable)
+        return articleFavoriteRepository.findByUserId(currentUserId, pageable)
                 .map(favorite -> {
-                    ArticleResponseDTO dto = articleMapper.toDto(favorite.getArticulo(), currentUserId);
+                    ArticleResponseDTO dto = articleMapper.toDto(favorite.getArticle(), currentUserId);
                     dto.setFavorite(true);
                     return dto;
                 });
@@ -316,24 +316,24 @@ public class ArticleServiceImpl implements IArticleService {
                 .orElseThrow(() -> new AppException("Artículo no encontrado", HttpStatus.NOT_FOUND));
 
         Comment comment = Comment.builder()
-                .contenido(request.getContenido())
-                .autor(user)
+                .content(request.getContenido())
+                .author(user)
                 .targetId(article.getId())
-                .targetType("ARTICULO")
+                .targetType("ARTICLE")
                 .build();
 
         comment = commentRepository.save(comment);
 
         CommentResponseDTO dto = new CommentResponseDTO();
         dto.setId(comment.getId());
-        dto.setContenido(comment.getContenido());
+        dto.setContenido(comment.getContent());
         dto.setCreatedAt(comment.getCreatedAt());
 
         UserResponseDTO userDto = new UserResponseDTO();
         userDto.setId(user.getId());
         userDto.setUsername(user.getUsername());
-        userDto.setNombreCompleto(user.getNombreCompleto());
-        userDto.setRoleId(user.getRol().getId());
+        userDto.setFullName(user.getFullName());
+        userDto.setRoleId(user.getRole().getId());
 
         dto.setAutor(userDto);
 

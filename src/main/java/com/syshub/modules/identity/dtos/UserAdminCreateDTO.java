@@ -17,11 +17,11 @@ public class UserAdminCreateDTO {
     @Email
     String email;
     @NotBlank String username;
-    @NotBlank String nombreCompleto;
-    String registroAcademico;
+    @NotBlank String fullName;
+    String academicRecord;
     String password;
     @NotNull
-    Integer rolId;
-    Integer carreraId;
+    Integer roleId;
+    Integer majorId;
     boolean enabled = true;
 }

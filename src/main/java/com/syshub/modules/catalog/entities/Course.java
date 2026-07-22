@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
-@Table(name = "cursos")
+@Table(name = "courses")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -14,23 +14,23 @@ public class Course {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(nullable = false)
+    @Column(name = "code", nullable = false)
     private String codigo;
 
-    @Column(nullable = false)
+    @Column(name = "name", nullable = false)
     private String nombre;
 
-    @Column(nullable = false)
+    @Column(name = "credits", nullable = false)
     private Integer creditos;
 
-    @Column(nullable = false)
+    @Column(name = "required", nullable = false)
     private Boolean obligatorio;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_semestre", nullable = false)
+    @JoinColumn(name = "semester_id", nullable = false)
     private Semester semester;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_area", nullable = false)
+    @JoinColumn(name = "area_id", nullable = false)
     private TechnicalArea area;
 }

@@ -9,12 +9,12 @@ import java.util.Set;
 @Data
 public class ArticleRequestDTO {
     @NotBlank(message = "El título es obligatorio")
-    private String titulo;
+    private String title;
 
-    private String extracto;
+    private String excerpt;
 
     @NotBlank(message = "El contenido no puede estar vacío")
-    private String contenido;
+    private String content;
 
     @NotNull(message = "Debe asignar el artículo a un curso")
     private Integer courseId;

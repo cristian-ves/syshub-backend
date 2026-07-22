@@ -8,7 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "votos")
+@Table(name = "votes")
 @Data
 @Builder
 @NoArgsConstructor
@@ -21,15 +21,15 @@ public class ArticleVote {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
-    private User usuario;
+    private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "target_id")
-    private Article articulo;
+    private Article article;
 
     @Column(nullable = false)
-    private Integer valor; // 1 o -1
+    private Integer value; // 1 or -1
 
     @Column(name = "target_type", nullable = false)
-    private String targetType = "ARTICULO";
+    private String targetType = "ARTICLE";
 }
