@@ -15,7 +15,7 @@ public class Semester {
     private Integer id;
 
     @Column(name = "number", nullable = false)
-    private Integer numero;
+    private Integer number;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "study_plan_id")

@@ -14,14 +14,14 @@ public class CatalogMapper {
 
         return CourseResponseDTO.builder()
                 .id(course.getId())
-                .codigo(course.getCodigo())
-                .nombre(course.getNombre())
-                .creditos(course.getCreditos())
-                .obligatorio(course.getObligatorio())
-                .areaNombre(course.getArea().getNombre())
+                .code(course.getCode())
+                .name(course.getName())
+                .credits(course.getCredits())
+                .required(course.getRequired())
+                .areaName(course.getArea().getName())
                 .areaColor(course.getArea().getColor())
-                .semestre(course.getSemester().getNumero())
-                .pensumNombre(course.getSemester().getPensum().getNombre())
+                .semester(course.getSemester().getNumber())
+                .pensumName(course.getSemester().getPensum().getName())
                 .build();
     }
 
@@ -30,7 +30,7 @@ public class CatalogMapper {
 
         TagResponseDTO dto = new TagResponseDTO();
         dto.setId(tag.getId());
-        dto.setNombre(tag.getNombre());
+        dto.setName(tag.getName());
         dto.setColor(tag.getColor());
         return dto;
     }

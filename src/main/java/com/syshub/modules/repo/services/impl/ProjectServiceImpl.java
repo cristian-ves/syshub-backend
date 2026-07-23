@@ -55,9 +55,9 @@ public class ProjectServiceImpl implements IProjectService {
         Course course = courseRepository.findById(request.getCourseId()).orElseThrow(() -> new AppException("Curso no encontrado", HttpStatus.NOT_FOUND));
 
         // Tags handler
-        Set<Tag> projectTags = request.getTags().stream().map(tagInput -> tagRepository.findByNombreIgnoreCase(tagInput.getNombre()).orElseGet(() -> {
+        Set<Tag> projectTags = request.getTags().stream().map(tagInput -> tagRepository.findByNameIgnoreCase(tagInput.getNombre()).orElseGet(() -> {
             Tag newTag = new Tag();
-            newTag.setNombre(tagInput.getNombre());
+            newTag.setName(tagInput.getNombre());
             newTag.setColor(tagInput.getColor() != null ? tagInput.getColor() : "#64748b");
             return tagRepository.save(newTag);
         })).collect(Collectors.toSet());

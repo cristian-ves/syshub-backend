@@ -4,7 +4,6 @@ import com.syshub.modules.repo.dtos.AttachmentDTO;
 import com.syshub.modules.repo.dtos.ProjectResponseDTO;
 import com.syshub.modules.repo.dtos.RepositoryTagDTO;
 import com.syshub.modules.repo.entities.Project;
-import com.syshub.modules.catalog.entities.Tag;
 import org.springframework.stereotype.Component;
 import java.util.stream.Collectors;
 import java.util.ArrayList;
@@ -22,16 +21,16 @@ public class ProjectMapper {
         dto.setRepoUrl(project.getRepoUrl());
         dto.setDestacado(project.isDestacado());
         dto.setAutorNombre(project.getAutor().getFullName());
-        dto.setCursoNombre(project.getCurso().getNombre());
-        dto.setPensumNombre(project.getCurso().getSemester().getPensum().getNombre());
+        dto.setCursoNombre(project.getCurso().getName());
+        dto.setPensumNombre(project.getCurso().getSemester().getPensum().getName());
         dto.setFechaSubida(project.getFechaSubida());
         dto.setAreaColor(project.getCurso().getArea().getColor());
-        dto.setAreaNombre(project.getCurso().getArea().getNombre());
+        dto.setAreaNombre(project.getCurso().getArea().getName());
 
         dto.setTags(project.getTags().stream()
                 .map(tag->{
                     RepositoryTagDTO tagDTO = new RepositoryTagDTO();
-                    tagDTO.setNombre(tag.getNombre());
+                    tagDTO.setNombre(tag.getName());
                     tagDTO.setColor(tag.getColor());
                     return tagDTO;
                 })

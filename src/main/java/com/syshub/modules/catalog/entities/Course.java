@@ -15,16 +15,16 @@ public class Course {
     private Integer id;
 
     @Column(name = "code", nullable = false)
-    private String codigo;
+    private String code;
 
     @Column(name = "name", nullable = false)
-    private String nombre;
+    private String name;
 
     @Column(name = "credits", nullable = false)
-    private Integer creditos;
+    private Integer credits;
 
     @Column(name = "required", nullable = false)
-    private Boolean obligatorio;
+    private Boolean required;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "semester_id", nullable = false)

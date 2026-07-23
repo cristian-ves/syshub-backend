@@ -15,7 +15,7 @@ public class Pensum {
     private Integer id;
 
     @Column(name = "name", nullable = false)
-    private String nombre;
+    private String name;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "major_id")

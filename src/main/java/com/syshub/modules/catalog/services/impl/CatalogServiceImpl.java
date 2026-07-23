@@ -30,7 +30,7 @@ public class CatalogServiceImpl implements ICatalogService {
 
     @Override
     public List<Semester> getSemestersByPensum(Integer pensumId) {
-        return semesterRepository.findByPensumIdOrderByNumeroAsc(pensumId);
+        return semesterRepository.findByPensumIdOrderByNumberAsc(pensumId);
     }
 
     @Override
@@ -47,14 +47,14 @@ public class CatalogServiceImpl implements ICatalogService {
 
     @Override
     public List<CourseResponseDTO> getCoursesBySemester(Integer semesterNum) {
-        return courseRepository.findBySemesterNumero(semesterNum).stream()
+        return courseRepository.findBySemesterNumber(semesterNum).stream()
                 .map(catalogMapper::toCourseDTO)
                 .collect(Collectors.toList());
     }
 
     @Override
     public List<CourseResponseDTO> searchCourses(String query) {
-        return courseRepository.findByNombreContainingIgnoreCaseOrCodigoContainingIgnoreCase(query, query)
+        return courseRepository.findByNameContainingIgnoreCaseOrCodeContainingIgnoreCase(query, query)
                 .stream()
                 .map(catalogMapper::toCourseDTO)
                 .collect(Collectors.toList());

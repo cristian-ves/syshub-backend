@@ -6,9 +6,9 @@ import java.util.List;
 
 public interface CourseRepository extends JpaRepository<Course, Integer> {
 
-    List<Course> findBySemesterNumero(Integer semesterId);
+    List<Course> findBySemesterNumber(Integer semesterId);
 
     List<Course> findByAreaId(Integer areaId);
 
-    List<Course> findByNombreContainingIgnoreCaseOrCodigoContainingIgnoreCase(String nombre, String codigo);
+    List<Course> findByNameContainingIgnoreCaseOrCodeContainingIgnoreCase(String name, String code);
 }

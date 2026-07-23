@@ -15,7 +15,7 @@ public class Tag {
     private Integer id;
 
     @Column(name = "name", unique = true, nullable = false)
-    private String nombre;
+    private String name;
 
     @Column(length = 7)
     private String color;

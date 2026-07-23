@@ -15,10 +15,10 @@ public class TechnicalArea {
     private Integer id;
 
     @Column(name = "name", unique = true, nullable = false)
-    private String nombre;
+    private String name;
 
     @Column(name = "description", columnDefinition = "TEXT")
-    private String descripcion;
+    private String description;
 
     @Column(length = 7)
     private String color;

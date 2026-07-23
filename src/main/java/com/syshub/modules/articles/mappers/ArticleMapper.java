@@ -39,8 +39,8 @@ public class ArticleMapper {
         if (article.getCourse() != null) {
             CourseResponseDTO courseDto = new CourseResponseDTO();
             courseDto.setId(article.getCourse().getId());
-            courseDto.setNombre(article.getCourse().getNombre());
-            courseDto.setCodigo(article.getCourse().getCodigo());
+            courseDto.setName(article.getCourse().getName());
+            courseDto.setCode(article.getCourse().getCode());
             dto.setCourse(courseDto);
         }
 
@@ -48,7 +48,7 @@ public class ArticleMapper {
                 .map(tag -> {
                     TagResponseDTO tagDto = new TagResponseDTO();
                     tagDto.setId(tag.getId());
-                    tagDto.setNombre(tag.getNombre());
+                    tagDto.setName(tag.getName());
                     tagDto.setColor(tag.getColor());
                     return tagDto;
                 })
