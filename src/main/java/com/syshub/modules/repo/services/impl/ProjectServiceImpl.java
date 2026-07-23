@@ -49,21 +49,21 @@ public class ProjectServiceImpl implements IProjectService {
     public ProjectResponseDTO createProject(ProjectRequestDTO request, List<MultipartFile> files) {
         // Get authenticated user
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        User author = userRepository.findByUsername(username).orElseThrow(() -> new AppException("Usuario no encontrado", HttpStatus.NOT_FOUND));
+        User author = userRepository.findByUsername(username).orElseThrow(() -> new AppException("The user was not found", HttpStatus.NOT_FOUND));
 
         // Get course
         Course course = courseRepository.findById(request.getCourseId()).orElseThrow(() -> new AppException("Curso no encontrado", HttpStatus.NOT_FOUND));
 
         // Tags handler
-        Set<Tag> projectTags = request.getTags().stream().map(tagInput -> tagRepository.findByNameIgnoreCase(tagInput.getNombre()).orElseGet(() -> {
+        Set<Tag> projectTags = request.getTags().stream().map(tagInput -> tagRepository.findByNameIgnoreCase(tagInput.getName()).orElseGet(() -> {
             Tag newTag = new Tag();
-            newTag.setName(tagInput.getNombre());
+            newTag.setName(tagInput.getName());
             newTag.setColor(tagInput.getColor() != null ? tagInput.getColor() : "#64748b");
             return tagRepository.save(newTag);
         })).collect(Collectors.toSet());
 
         // Create project
-        Project project = Project.builder().titulo(request.getTitulo()).descripcion(request.getDescripcion()).repoUrl(request.getRepoUrl()).autor(author).curso(course).tags(projectTags).archivos(new ArrayList<>()).build();
+        Project project = Project.builder().title(request.getTitle()).description(request.getDescription()).repoUrl(request.getRepoUrl()).author(author).course(course).tags(projectTags).files(new ArrayList<>()).build();
 
         // File processing
         if (files != null && !files.isEmpty()) {
@@ -80,8 +80,8 @@ public class ProjectServiceImpl implements IProjectService {
                     contentType = "application/octet-stream";
                 }
 
-                Attachment attachment = Attachment.builder().nombreOriginal(file.getOriginalFilename()).nombreArchivo(storedName).tipoArchivo(contentType).proyecto(project).build();
-                project.getArchivos().add(attachment);
+                Attachment attachment = Attachment.builder().originalName(file.getOriginalFilename()).fileName(storedName).fileType(contentType).project(project).build();
+                project.getFiles().add(attachment);
             }
         }
 
@@ -101,22 +101,22 @@ public class ProjectServiceImpl implements IProjectService {
     @Override
     @Transactional
     public ProjectResponseDTO toggleFeatured(Integer id, boolean featured) {
-        Project project = projectRepository.findById(id).orElseThrow(() -> new AppException("Proyecto no encontrado", HttpStatus.NOT_FOUND));
+        Project project = projectRepository.findById(id).orElseThrow(() -> new AppException("Project not found", HttpStatus.NOT_FOUND));
 
-        project.setDestacado(featured);
+        project.setFeatured(featured);
         return projectMapper.toDto(projectRepository.save(project));
     }
 
     @Override
     @Transactional(readOnly = true)
     public List<ProjectResponseDTO> getProjectsByCourse(Integer courseId) {
-        return projectRepository.findByCursoId(courseId).stream().map(projectMapper::toDto).collect(Collectors.toList());
+        return projectRepository.findByCourseId(courseId).stream().map(projectMapper::toDto).collect(Collectors.toList());
     }
 
     @Override
     @Transactional(readOnly = true)
     public ProjectResponseDTO getProjectById(Integer id) {
-        Project project = projectRepository.findById(id).orElseThrow(() -> new AppException("Proyecto no encontrado", HttpStatus.NOT_FOUND));
+        Project project = projectRepository.findById(id).orElseThrow(() -> new AppException("Project not found", HttpStatus.NOT_FOUND));
         return projectMapper.toDto(project);
     }
 

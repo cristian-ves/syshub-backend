@@ -1,7 +1,6 @@
 package com.syshub.modules.repo.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -18,16 +17,16 @@ public class Attachment {
     private Integer id;
 
     @Column(name = "original_name")
-    private String nombreOriginal;
+    private String originalName;
 
     @Column(name = "file_name")
-    private String nombreArchivo;
+    private String fileName;
 
     @Column(name = "file_type")
-    private String tipoArchivo;
+    private String fileType;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "project_id")
     @JsonIgnore
-    private Project proyecto;
+    private Project project;
 }

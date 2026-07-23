@@ -2,7 +2,7 @@ package com.syshub.modules.catalog.controllers;
 
 import com.syshub.modules.catalog.dtos.CourseResponseDTO;
 import com.syshub.modules.catalog.dtos.TagResponseDTO;
-import com.syshub.modules.catalog.entities.Pensum;
+import com.syshub.modules.catalog.entities.StudyPlan;
 import com.syshub.modules.catalog.entities.Semester;
 import com.syshub.modules.catalog.entities.TechnicalArea;
 import com.syshub.modules.catalog.services.ICatalogService;
@@ -20,13 +20,13 @@ public class CatalogController {
     private final ICatalogService catalogService;
 
     @GetMapping("/pensums")
-    public ResponseEntity<List<Pensum>> getPensums() {
-        return ResponseEntity.ok(catalogService.getAllPensums());
+    public ResponseEntity<List<StudyPlan>> getPensums() {
+        return ResponseEntity.ok(catalogService.getAllStudyPlans());
     }
 
     @GetMapping("/semesters")
     public ResponseEntity<List<Semester>> getSemesters(@RequestParam Integer pensumId) {
-        return ResponseEntity.ok(catalogService.getSemestersByPensum(pensumId));
+        return ResponseEntity.ok(catalogService.getSemestersByStudyPlan(pensumId));
     }
 
     @GetMapping("/courses")

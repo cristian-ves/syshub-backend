@@ -5,8 +5,8 @@ import java.util.List;
 
 @Data
 public class ProjectRequestDTO {
-    private String titulo;
-    private String descripcion;
+    private String title;
+    private String description;
     private String repoUrl;
     private Integer courseId;
     private List<RepositoryTagDTO> tags;

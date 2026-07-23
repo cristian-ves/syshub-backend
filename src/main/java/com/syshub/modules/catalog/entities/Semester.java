@@ -20,5 +20,5 @@ public class Semester {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "study_plan_id")
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-    private Pensum pensum;
+    private StudyPlan studyPlan;
 }

@@ -7,6 +7,6 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import java.util.List;
 
 public interface ProjectRepository extends JpaRepository<Project, Integer>, JpaSpecificationExecutor<Project> {
-    List<Project> findByCursoId(Integer courseId);
-    List<Project> findByDestacadoTrue();
+    List<Project> findByCourseId(Integer courseId);
+    List<Project> findByFeaturedTrue();
 }

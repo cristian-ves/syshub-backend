@@ -1,6 +1,5 @@
 package com.syshub.modules.repo.dtos;
 
-import com.syshub.modules.catalog.dtos.TagResponseDTO;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -10,16 +9,16 @@ import java.util.Set;
 @Data
 public class ProjectResponseDTO {
     private Integer id;
-    private String titulo;
-    private String descripcion;
+    private String title;
+    private String description;
     private String repoUrl;
-    private boolean destacado;
-    private String autorNombre;
-    private String cursoNombre;
-    private String areaNombre;
+    private boolean featured;
+    private String authorName;
+    private String courseName;
+    private String areaName;
     private String areaColor;
-    private String pensumNombre;
+    private String studyPlanName;
     private Set<RepositoryTagDTO> tags;
-    private List<AttachmentDTO> archivos;
-    private LocalDateTime fechaSubida;
+    private List<AttachmentDTO> files;
+    private LocalDateTime uploadDate;
 }

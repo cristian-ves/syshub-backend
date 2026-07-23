@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class CatalogServiceImpl implements ICatalogService {
 
-    private final PensumRepository pensumRepository;
+    private final StudyPlanRepository studyPlanRepository;
     private final SemesterRepository semesterRepository;
     private final CourseRepository courseRepository;
     private final TagRepository tagRepository;
@@ -24,13 +24,13 @@ public class CatalogServiceImpl implements ICatalogService {
     private final CatalogMapper catalogMapper;
 
     @Override
-    public List<Pensum> getAllPensums() {
-        return pensumRepository.findAll();
+    public List<StudyPlan> getAllStudyPlans() {
+        return studyPlanRepository.findAll();
     }
 
     @Override
-    public List<Semester> getSemestersByPensum(Integer pensumId) {
-        return semesterRepository.findByPensumIdOrderByNumberAsc(pensumId);
+    public List<Semester> getSemestersByStudyPlan(Integer studyPlanId) {
+        return semesterRepository.findByStudyPlanIdOrderByNumberAsc(studyPlanId);
     }
 
     @Override

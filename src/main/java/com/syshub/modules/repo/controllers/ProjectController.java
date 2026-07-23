@@ -39,17 +39,17 @@ public class ProjectController {
     @GetMapping
     public ResponseEntity<Page<ProjectResponseDTO>> getProjects(
             @RequestParam(required = false) String tag,
-            @RequestParam(required = false) Boolean destacado,
-            @RequestParam(required = false) String cursoNombre,
-            @RequestParam(required = false) Integer semestreNum,
+            @RequestParam(required = false) Boolean featured,
+            @RequestParam(required = false) String courseName,
+            @RequestParam(required = false) Integer semesterNum,
             @RequestParam(required = false) UUID userId,
-            @RequestParam(required = false) Integer pensumId,
+            @RequestParam(required = false) Integer studyPlanId,
             @RequestParam(required = false) Integer areaId,
             @RequestParam(required = false) String search,
-            @PageableDefault(size = 10, sort = {"destacado", "fechaSubida"}, direction = Sort.Direction.DESC) Pageable pageable
+            @PageableDefault(size = 10, sort = {"featured", "uploadDate"}, direction = Sort.Direction.DESC) Pageable pageable
     ) {
 //        retrieve projects by filter
-        return ResponseEntity.ok(projectService.getProjects(tag, destacado, cursoNombre, semestreNum, userId, pensumId, areaId, search, pageable));
+        return ResponseEntity.ok(projectService.getProjects(tag, featured, courseName, semesterNum, userId, studyPlanId, areaId, search, pageable));
     }
 
     @PreAuthorize("hasAnyRole('ROLE_AUXILIAR', 'ROLE_ADMIN')")

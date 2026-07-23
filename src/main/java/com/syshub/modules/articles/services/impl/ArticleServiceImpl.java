@@ -66,10 +66,10 @@ public class ArticleServiceImpl implements IArticleService {
         }
 
         Set<Tag> articleTags = request.getTags().stream()
-                .map(tagInput -> tagRepository.findByNameIgnoreCase(tagInput.getNombre())
+                .map(tagInput -> tagRepository.findByNameIgnoreCase(tagInput.getName())
                         .orElseGet(() -> {
                             Tag newTag = new Tag();
-                            newTag.setName(tagInput.getNombre());
+                            newTag.setName(tagInput.getName());
                             newTag.setColor(tagInput.getColor() != null ? tagInput.getColor() : "#64748b");
                             return tagRepository.save(newTag);
                         }))

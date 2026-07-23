@@ -25,29 +25,29 @@ public class Project {
     private Integer id;
 
     @Column(name = "title", nullable = false)
-    private String titulo;
+    private String title;
 
     @Column(name = "description", columnDefinition = "TEXT")
-    private String descripcion;
+    private String description;
 
     @Column(name = "repo_url")
     private String repoUrl;
 
     @Column(name = "featured")
-    private boolean destacado = false;
+    private boolean featured = false;
 
     @Column(name = "upload_date")
-    private LocalDateTime fechaSubida;
+    private LocalDateTime uploadDate;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-    private User autor;
+    private User author;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "course_id")
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-    private Course curso;
+    private Course course;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
@@ -58,11 +58,11 @@ public class Project {
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Set<Tag> tags;
 
-    @OneToMany(mappedBy = "proyecto", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Attachment> archivos = new ArrayList<>();
+    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Attachment> files = new ArrayList<>();
 
     @PrePersist
     protected void onCreate() {
-        this.fechaSubida = LocalDateTime.now();
+        this.uploadDate = LocalDateTime.now();
     }
 }

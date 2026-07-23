@@ -4,6 +4,6 @@ import lombok.Data;
 
 @Data
 public class RepositoryTagDTO {
-    private String nombre;
+    private String name;
     private String color;
 }

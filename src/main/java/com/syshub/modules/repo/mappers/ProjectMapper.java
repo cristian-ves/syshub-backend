@@ -16,39 +16,39 @@ public class ProjectMapper {
 
         ProjectResponseDTO dto = new ProjectResponseDTO();
         dto.setId(project.getId());
-        dto.setTitulo(project.getTitulo());
-        dto.setDescripcion(project.getDescripcion());
+        dto.setTitle(project.getTitle());
+        dto.setDescription(project.getDescription());
         dto.setRepoUrl(project.getRepoUrl());
-        dto.setDestacado(project.isDestacado());
-        dto.setAutorNombre(project.getAutor().getFullName());
-        dto.setCursoNombre(project.getCurso().getName());
-        dto.setPensumNombre(project.getCurso().getSemester().getPensum().getName());
-        dto.setFechaSubida(project.getFechaSubida());
-        dto.setAreaColor(project.getCurso().getArea().getColor());
-        dto.setAreaNombre(project.getCurso().getArea().getName());
+        dto.setFeatured(project.isFeatured());
+        dto.setAuthorName(project.getAuthor().getFullName());
+        dto.setCourseName(project.getCourse().getName());
+        dto.setStudyPlanName(project.getCourse().getSemester().getStudyPlan().getName());
+        dto.setUploadDate(project.getUploadDate());
+        dto.setAreaColor(project.getCourse().getArea().getColor());
+        dto.setAreaName(project.getCourse().getArea().getName());
 
         dto.setTags(project.getTags().stream()
                 .map(tag->{
                     RepositoryTagDTO tagDTO = new RepositoryTagDTO();
-                    tagDTO.setNombre(tag.getName());
+                    tagDTO.setName(tag.getName());
                     tagDTO.setColor(tag.getColor());
                     return tagDTO;
                 })
                 .collect(Collectors.toSet()));
 
-        if (project.getArchivos() != null) {
-            dto.setArchivos(project.getArchivos().stream()
+        if (project.getFiles() != null) {
+            dto.setFiles(project.getFiles().stream()
                     .map(att -> {
                         AttachmentDTO attDto = new AttachmentDTO();
                         attDto.setId(att.getId());
-                        attDto.setNombreOriginal(att.getNombreOriginal());
-                        attDto.setTipoArchivo(att.getTipoArchivo());
-                        attDto.setNombreArchivo(att.getNombreArchivo());
+                        attDto.setOriginalName(att.getOriginalName());
+                        attDto.setFileType(att.getFileType());
+                        attDto.setFileName(att.getFileName());
                         return attDto;
                     })
                     .collect(Collectors.toList()));
         } else {
-            dto.setArchivos(new ArrayList<>());
+            dto.setFiles(new ArrayList<>());
         }
 
         return dto;
