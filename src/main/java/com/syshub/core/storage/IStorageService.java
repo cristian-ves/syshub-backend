@@ -6,9 +6,5 @@ import java.nio.file.Path;
 import java.util.stream.Stream;
 
 public interface IStorageService {
-    void init();
     String store(MultipartFile file);
-    Path load(String filename);
-    Resource loadAsResource(String filename);
-    void delete(String filename);
 }

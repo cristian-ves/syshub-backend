@@ -91,9 +91,9 @@ public class ProjectServiceImpl implements IProjectService {
 
     @Override
     @Transactional(readOnly = true)
-    public Page<ProjectResponseDTO> getProjects(String tag, Boolean destacado, String cursoNombre, Integer semestreNum, UUID userId, Integer pensumId, Integer areaId, String search, Pageable pageable) {
+    public Page<ProjectResponseDTO> getProjects(String tag, Boolean featured, String courseName, Integer semesterNum, UUID userId, Integer sutdyPlanId, Integer areaId, String search, Pageable pageable) {
 
-        Specification<Project> spec = ProjectSpecifications.filterProjects(tag, destacado, cursoNombre, semestreNum, userId, pensumId, areaId, search);
+        Specification<Project> spec = ProjectSpecifications.filterProjects(tag, featured, courseName, semesterNum, userId, sutdyPlanId, areaId, search);
 
         return projectRepository.findAll(spec, pageable).map(projectMapper::toDto);
     }
@@ -119,11 +119,4 @@ public class ProjectServiceImpl implements IProjectService {
         Project project = projectRepository.findById(id).orElseThrow(() -> new AppException("Project not found", HttpStatus.NOT_FOUND));
         return projectMapper.toDto(project);
     }
-
-    @Override
-    @Transactional(readOnly = true)
-    public Resource downloadFile(String filename) {
-        return storageService.loadAsResource(filename);
-    }
-
 }

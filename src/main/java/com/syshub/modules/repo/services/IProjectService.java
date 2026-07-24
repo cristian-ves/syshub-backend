@@ -17,15 +17,13 @@ public interface IProjectService {
 
     ProjectResponseDTO getProjectById(Integer id);
 
-    Resource downloadFile(String filename);
-
     Page<ProjectResponseDTO> getProjects(
             String tag,
-            Boolean destacado,
-            String cursoNombre,
-            Integer semestreNum,
+            Boolean featured,
+            String courseName,
+            Integer semesterNum,
             UUID userId,
-            Integer pensumId,
+            Integer sutdyPlanId,
             Integer areaId,
             String search,
             Pageable pageable);

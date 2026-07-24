@@ -27,17 +27,6 @@ public class StorageServiceImpl implements IStorageService {
     }
 
     @Override
-    @PostConstruct
-    public void init() {
-        try {
-            Files.createDirectories(rootLocation);
-            System.out.println("Storage initialized in: " + rootLocation.toAbsolutePath());
-        } catch (IOException e) {
-            throw new RuntimeException("Couldn't initialize upload directory", e);
-        }
-    }
-
-    @Override
     public String store(MultipartFile file) {
         try {
             if (file.isEmpty()) {
@@ -59,37 +48,7 @@ public class StorageServiceImpl implements IStorageService {
             throw new RuntimeException("Failed to save file.", e);
         }
     }
-
-    @Override
-    public Path load(String filename) {
-        return rootLocation.resolve(filename);
-    }
-
-    @Override
-    public Resource loadAsResource(String filename) {
-        try {
-            Path file = load(filename);
-            Resource resource = new UrlResource(file.toUri());
-            if (resource.exists() || resource.isReadable()) {
-                return resource;
-            } else {
-                throw new RuntimeException("Couldn't read file: " + filename);
-            }
-        } catch (MalformedURLException e) {
-            throw new RuntimeException("Error in file URL: " + filename, e);
-        }
-    }
-
-    @Override
-    public void delete(String filename) {
-        try {
-            Path file = load(filename);
-            Files.deleteIfExists(file);
-        } catch (IOException e) {
-            throw new RuntimeException("Error deleting file", e);
-        }
-    }
-
+    
     private String getFileExtension(String fileName) {
         if (fileName == null) return "";
         int lastIndex = fileName.lastIndexOf('.');

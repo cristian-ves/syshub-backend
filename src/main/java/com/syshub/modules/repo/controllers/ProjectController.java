@@ -4,12 +4,10 @@ import com.syshub.modules.repo.dtos.ProjectRequestDTO;
 import com.syshub.modules.repo.dtos.ProjectResponseDTO;
 import com.syshub.modules.repo.services.IProjectService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -74,13 +72,4 @@ public class ProjectController {
         return ResponseEntity.ok(projectService.getProjectById(id));
     }
 
-    @GetMapping("/files/{filename:.+}")
-    public ResponseEntity<Resource> getFile(@PathVariable String filename) {
-        // Method to serve files as downloadable resources
-        Resource file = projectService.downloadFile(filename);
-
-        return ResponseEntity.ok()
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getFilename() + "\"")
-                .body(file);
-    }
 }
