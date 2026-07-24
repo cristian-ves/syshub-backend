@@ -22,11 +22,6 @@ public class CloudinaryStorageServiceImpl implements IStorageService {
     private final Cloudinary cloudinary;
 
     @Override
-    public void init() {
-        System.out.println("Cloudinary storage initialized.");
-    }
-
-    @Override
     public String store(MultipartFile file) {
         try {
             if (file.isEmpty()) {
@@ -60,36 +55,6 @@ public class CloudinaryStorageServiceImpl implements IStorageService {
             if(lower.endsWith(".mp4") || lower.endsWith("move")) return "video";
         }
         return "raw";
-    }
-
-    @Override
-    public Path load(String filename) {
-        throw new UnsupportedOperationException("Path not supported in Cloudinary.");
-    }
-
-    @Override
-    public Resource loadAsResource(String filename) {
-        try {
-            Resource resource = new UrlResource(filename);
-            if (resource.exists() || resource.isReadable()) {
-                return resource;
-            } else {
-                throw new RuntimeException("Can't read file with URL: " + filename);
-            }
-        } catch (MalformedURLException e) {
-            throw new RuntimeException("Error in file URL: " + filename, e);
-        }
-    }
-
-    @Override
-    public void delete(String filename) {
-        try {
-            String publicId = extractPublicId(filename);
-            cloudinary.uploader().destroy(publicId, ObjectUtils.asMap("resource_type", "raw"));
-            cloudinary.uploader().destroy(publicId, ObjectUtils.asMap("resource_type", "image"));
-        } catch (IOException e) {
-            throw new RuntimeException("Error al borrar el archivo en Cloudinary", e);
-        }
     }
 
     private String extractPublicId(String url) {

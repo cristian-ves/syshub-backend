@@ -33,7 +33,7 @@ public class UserServiceImpl implements IUserService {
     @Transactional
     public void deleteUser(UUID id) {
         User user = userRepository.findById(id)
-                .orElseThrow(() -> new AppException("User not found", HttpStatus.NOT_FOUND));
+                .orElseThrow(() -> new AppException("The user was not found", HttpStatus.NOT_FOUND));
 
         userRepository.delete(user);
     }
@@ -131,10 +131,10 @@ public class UserServiceImpl implements IUserService {
 
     private void validateUniqueness(User current, String newEmail, String newUsername) {
         if (!current.getEmail().equals(newEmail) && userRepository.existsByEmail(newEmail)) {
-            throw new RuntimeException("The email is already taken");
+            throw new AppException("The username is already taken", HttpStatus.CONFLICT);
         }
         if (!current.getUsername().equals(newUsername) && userRepository.existsByUsername(newUsername)) {
-            throw new RuntimeException("The username is already taken");
+            throw new AppException("The username is already taken", HttpStatus.CONFLICT);
         }
     }
 }

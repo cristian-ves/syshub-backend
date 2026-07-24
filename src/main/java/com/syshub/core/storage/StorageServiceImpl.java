@@ -48,7 +48,7 @@ public class StorageServiceImpl implements IStorageService {
             throw new RuntimeException("Failed to save file.", e);
         }
     }
-    
+
     private String getFileExtension(String fileName) {
         if (fileName == null) return "";
         int lastIndex = fileName.lastIndexOf('.');
