@@ -16,7 +16,7 @@ public class ArticleRequestDTO {
     @NotBlank(message = "The content cannot be empty")
     private String content;
 
-    @NotNull(message = "The article must be asigned to a course")
+    @NotNull(message = "The article must be assigned to a course")
     private Integer courseId;
 
     private Set<RepositoryTagDTO> tags;
