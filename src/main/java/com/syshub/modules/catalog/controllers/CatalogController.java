@@ -19,14 +19,14 @@ public class CatalogController {
 
     private final ICatalogService catalogService;
 
-    @GetMapping("/pensums")
-    public ResponseEntity<List<StudyPlan>> getPensums() {
+    @GetMapping("/study-plans")
+    public ResponseEntity<List<StudyPlan>> getStudyPlans() {
         return ResponseEntity.ok(catalogService.getAllStudyPlans());
     }
 
     @GetMapping("/semesters")
-    public ResponseEntity<List<Semester>> getSemesters(@RequestParam Integer pensumId) {
-        return ResponseEntity.ok(catalogService.getSemestersByStudyPlan(pensumId));
+    public ResponseEntity<List<Semester>> getSemesters(@RequestParam Integer studyPlanId) {
+        return ResponseEntity.ok(catalogService.getSemestersByStudyPlan(studyPlanId));
     }
 
     @GetMapping("/courses")

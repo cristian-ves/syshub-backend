@@ -50,7 +50,7 @@ public class ProjectController {
         return ResponseEntity.ok(projectService.getProjects(tag, featured, courseName, semesterNum, userId, studyPlanId, areaId, search, pageable));
     }
 
-    @PreAuthorize("hasAnyRole('ROLE_AUXILIAR', 'ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole('ROLE_ASSISTANT', 'ROLE_ADMIN')")
     @PatchMapping("/{id}/featured")
     public ResponseEntity<ProjectResponseDTO> updateFeatured(
             @PathVariable Integer id,

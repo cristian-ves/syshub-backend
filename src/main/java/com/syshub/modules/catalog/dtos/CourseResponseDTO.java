@@ -20,5 +20,5 @@ public class CourseResponseDTO {
     private String areaName;
     private String areaColor;
     private Integer semester;
-    private String pensumName;
+    private String studyPlanName;
 }

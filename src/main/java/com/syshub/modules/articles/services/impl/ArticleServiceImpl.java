@@ -316,7 +316,7 @@ public class ArticleServiceImpl implements IArticleService {
                 .orElseThrow(() -> new AppException("The user was nopt found", HttpStatus.NOT_FOUND));
 
         Comment comment = Comment.builder()
-                .content(request.getContenido())
+                .content(request.getContent())
                 .author(user)
                 .targetId(article.getId())
                 .targetType("ARTICLE")

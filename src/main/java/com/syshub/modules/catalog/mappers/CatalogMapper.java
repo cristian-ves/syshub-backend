@@ -21,7 +21,7 @@ public class CatalogMapper {
                 .areaName(course.getArea().getName())
                 .areaColor(course.getArea().getColor())
                 .semester(course.getSemester().getNumber())
-                .pensumName(course.getSemester().getStudyPlan().getName())
+                .studyPlanName(course.getSemester().getStudyPlan().getName())
                 .build();
     }
 
