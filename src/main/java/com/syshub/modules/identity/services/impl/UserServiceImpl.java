@@ -117,6 +117,10 @@ public class UserServiceImpl implements IUserService {
         user.setAcademicRecord(dto.getAcademicRecord());
         user.setEnabled(dto.isEnabled());
 
+        if(dto.getPassword() != null && !dto.getPassword().isBlank()) {
+            user.setPassword(passwordEncoder.encode(dto.getPassword()));
+        }
+
         Role newRole = roleRepository.findById(dto.getRoleId())
                 .orElseThrow(() -> new RuntimeException("Role not found"));
         user.setRole(newRole);

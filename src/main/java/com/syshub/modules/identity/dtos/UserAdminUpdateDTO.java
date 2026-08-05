@@ -17,4 +17,6 @@ public class UserAdminUpdateDTO {
     @NotNull
     private Integer roleId;
     @NotNull private boolean enabled;
+
+    private String password;
 }
